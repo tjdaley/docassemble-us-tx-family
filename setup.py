@@ -55,5 +55,5 @@ setup(name='docassemble.us_tx_family',
       namespace_packages=['docassemble'],
       install_requires=[],
       zip_safe=False,
-      package_data=find_package_data(where='docassemble/us-tx-family/', package='docassemble.us-tx-family'),
+      package_data=find_package_data(where='docassemble/us_tx_family/', package='docassemble.us_tx_family'),
      )
