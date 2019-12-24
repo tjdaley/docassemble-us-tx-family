@@ -9,7 +9,7 @@ metadata:
   revision_date: 2019-12-23
 ---
 modules:
-  - docassemble.us-tx-family
+  - docassemble.us_tx_family
 ---
 mandatory: True
 code: |
