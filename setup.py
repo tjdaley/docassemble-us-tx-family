@@ -42,8 +42,8 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
                 out.setdefault(package, []).append(prefix+name)
     return out
 
-setup(name='docassemble.us-tx-family',
-      version='0.0.1',
+setup(name='docassemble.us_tx_family',
+      version='0.0.5',
       description=('A docassemble extension for Texas Family Law cases by Thomas J. Daley, J.D.'),
       long_description=u'# docassemble-us-tx-family\r\nA docassemble extension for Texas Family Law cases by Thomas J. Daley, J.D.\r\n\r\n  \r\n## Version History\r\n\r\n* 0.0.1 - Development/Test version.',
       long_description_content_type='text/markdown',
