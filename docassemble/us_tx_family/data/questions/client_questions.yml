@@ -6,7 +6,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
-  revision_date: 2019-12-23
+  revision_date: 2019-12-24
 ---
 modules:
   - docassemble.us_tx_family
@@ -19,18 +19,6 @@ comment: |
   This code is executed first.
 ---
 generic object: Individual
-question: |
-  ${ x.is_are_you(capitalize=True)} the respondent in this case?
-yesno: x.is_respondent
-right: The *respondent* is the person who wasoriginally served with the lawsuit.
----
-generic object: Individual
-question: |
-  ${ x.is_are_you(capitalize=True)} the petitioner in this case?
-yesno: x.is_petitioner
-right: The *petitioner* is the person who originally filed the lawsuit.
----
-generic object: Individual
 field: x.marital_status
 question: |
   What is ${ x.possessive('marital status')}?
@@ -39,4 +27,15 @@ choices:
   - Single: Single
 comment: |
   In Texas, you are either married or your are not. There is no legal separation.
+---
+question: |
+  Tell me about your case.
+mandatory: False
+fields:
+  - County: case.county
+    help: This is the county within ${case.state} where your case was filed.
+  - Court number: case.court_number
+  - Cause number: case.cause_number
+  - Footer text: case.footer
+    help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
 ---
