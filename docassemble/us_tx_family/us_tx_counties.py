@@ -35,6 +35,10 @@ class UsTxCounties(object):
             self.counties = self.retrieve()
             self.save()
             self.source = URL
+        except:
+            self.counties = self.retrieve()
+            self.save()
+            self.source = URL
 
     def get_counties(self) -> list:
         """
