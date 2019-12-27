@@ -6,9 +6,10 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 from lxml import html
 import requests
 import json
+import os
 
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
-STORE = 'data/static/us_tx_counties.json'
+STORE = './us_tx_counties.json'
 
 class UsTxCounties(object):
     """
@@ -85,6 +86,7 @@ def main():
     counties = UsTxCounties()
     print(counties.get_counties())
     print("Source:", counties.source)
+    print(os.path.dirname(os.path.abspath(__file__)))
 
 
 if __name__ == '__main__':
