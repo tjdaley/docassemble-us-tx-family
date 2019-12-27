@@ -10,6 +10,7 @@ metadata:
 ---
 modules:
   - docassemble.us_tx_family
+  - docassemble.us_tx_family.functions
 ---
 mandatory: True
 code: |
