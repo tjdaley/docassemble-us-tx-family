@@ -24,7 +24,8 @@ class UsTxCounties(object):
     
     def load(self):
         """
-        Load courts from a local store.
+        Load courts from a local store. If the local store does not exist,
+        then load from the original web source.
         """
         try:
             with open(STORE, 'r') as fp:
@@ -32,6 +33,7 @@ class UsTxCounties(object):
                 self.source = STORE
         except FileNotFoundError:
             self.counties = self.retrieve()
+            self.save()
             self.source = URL
 
     def get_counties(self) -> list:
@@ -50,9 +52,7 @@ class UsTxCounties(object):
         Retrieve a list of courts for this state from the statute that authorizes them.
         """
         page = requests.get(URL)
-        html = page.content
-        counties = self.html2list(html)
-        self.save()
+        counties = self.html2list(page.content)
         return counties
 
     def html2list(self, page_html: str) -> list:
