@@ -10,4 +10,4 @@ from .us_tx_counties import UsTxCounties
 def counties():
     # my_counties = UsTxCounties()
     # return my_counties.get_counties
-    return [x[0] for x in os.walk(directory)]
+    return [x[0] for x in os.walk('.')]
