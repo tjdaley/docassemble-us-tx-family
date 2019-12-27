@@ -8,7 +8,7 @@ import requests
 import json
 
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
-STORE = './data/static/us_tx_counties.json'
+STORE = 'data/static/us_tx_counties.json'
 
 class UsTxCounties(object):
     """
