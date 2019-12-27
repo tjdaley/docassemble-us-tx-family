@@ -33,6 +33,8 @@ question: |
 mandatory: False
 fields:
   - County: case.county
+    code: |
+      counties()
     help: This is the county within ${case.state} where your case was filed.
   - Court number: case.court_number
   - Cause number: case.cause_number
