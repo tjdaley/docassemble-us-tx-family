@@ -8,6 +8,6 @@ from .us_tx_counties import UsTxCounties
 
 
 def counties():
-    # my_counties = UsTxCounties()
-    # return my_counties.get_counties
-    return [x[0] for x in os.walk(os.path.dirname(os.path.abspath(__file__)))]
+    my_counties = UsTxCounties()
+    return my_counties.get_counties
+    # return [x[0] for x in os.walk(os.path.dirname(os.path.abspath(__file__)))]

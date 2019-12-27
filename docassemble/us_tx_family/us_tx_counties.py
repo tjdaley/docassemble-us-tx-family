@@ -10,6 +10,7 @@ import os
 
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
 STORE = '{}/us_tx_counties.json'.format(os.path.dirname(os.path.abspath(__file__)))
+STORE = '~/us_tx_counties.json'
 
 class UsTxCounties(object):
     """
