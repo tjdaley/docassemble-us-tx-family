@@ -75,7 +75,7 @@ class UsTxCourts(object):
         if county_idx in self.courts_by_county:
             if not show_jurisdiction:
                 return self.courts_by_county[county_idx]
-            return ["{} - {}".format(court, self.courts[court]['focus'])
+            return [(court, "{} - {}".format(court, self.courts[court]['focus']))
                    for court in self.courts_by_county[county_idx]]
         return None
 
