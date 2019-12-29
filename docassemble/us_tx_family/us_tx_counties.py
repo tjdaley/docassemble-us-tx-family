@@ -28,7 +28,7 @@ class UsTxCounties(object):
         then load from the original web source.
         """
         counties = self.read()
-        if not counties:
+        if counties is None:
             counties = self.retrieve()
         return counties
 
@@ -73,8 +73,11 @@ class UsTxCounties(object):
         """
         infile = DAFile()
         infile.initialize(filename=STORE)
-        json_text = infile.slurp()
-        result = json.loads(json_text)
+        try:
+            json_text = infile.slurp()
+            result = json.loads(json_text)
+        except:
+            result = None
         return result
 
     def save(self, counties):
