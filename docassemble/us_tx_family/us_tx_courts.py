@@ -12,7 +12,7 @@ import json
 DEV_MODE = False
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
-VERSION = 'A'
+VERSION = 'B'
 
 if not DEV_MODE:
     from docassemble.base.core import DAFile
@@ -75,7 +75,7 @@ class UsTxCourts(object):
         if county_idx in self.courts_by_county:
             if not show_jurisdiction:
                 return self.courts_by_county[county_idx]
-            return ["{} - {}".format(court['number'], court['focus'])
+            return ["{} - {}".format(court, self.courts[court]['focus'])
                    for court in self.courts_by_county[county_idx]]
         return None
 
