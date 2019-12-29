@@ -7,8 +7,10 @@ from lxml import html
 import requests
 import json
 
+from docassemble.base.core import DAFile
+
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
-STORE = './us_tx_counties.json'
+STORE = 'us_tx_counties.json'
 
 class UsTxCounties(object):
     """
@@ -18,27 +20,17 @@ class UsTxCounties(object):
         """
         Initialize and instance.
         """
-        self.counties = None
-        self.source = None
-        self.load()
+        self.counties = self.load()
     
-    def load(self):
+    def load(self) -> list:
         """
         Load courts from a local store. If the local store does not exist,
         then load from the original web source.
         """
-        try:
-            with open(STORE, 'r') as fp:
-                self.counties = json.load(fp)['counties']
-                self.source = STORE
-        except FileNotFoundError:
-            self.counties = self.retrieve()
-            self.save()
-            self.source = URL
-        except:
-            self.counties = self.retrieve()
-            self.save()
-            self.source = URL
+        counties = self.read()
+        if not counties:
+            counties = self.retrieve()
+        return counties
 
     def get_counties(self) -> list:
         """
@@ -53,10 +45,12 @@ class UsTxCounties(object):
 
     def retrieve(self):
         """
-        Retrieve a list of courts for this state from the statute that authorizes them.
+        Retrieve a list of counties from the state's search screen and save
+        them to file storage.
         """
         page = requests.get(URL)
         counties = self.html2list(page.content)
+        self.save(counties)
         return counties
 
     def html2list(self, page_html: str) -> list:
@@ -73,18 +67,29 @@ class UsTxCounties(object):
         # First name in the retrieved list is "All Counties". We don't need that.
         return counties[1:]
 
-    def save(self):
+    def read(self) -> dict:
         """
-        Persist the list of courts to local storage.
+        Read the list of counties from file storage.
         """
-        with open(STORE, 'w') as fp:
-            json.dump({'counties': self.counties}, fp)
+        infile = DAFile()
+        infile.initialize(STORE)
+        json_text = infile.slurp()
+        result = json.loads(json_text)
+        return result
+
+    def save(self, counties):
+        """
+        Persist the list of counties to file storage.
+        """
+        outfile = DAFile()
+        outfile.initialize(STORE)
+        outfile.set_attributes(persistent=True)
+        outfile.write(json.dumps({'counties': counties}))
 
 
 def main():
     counties = UsTxCounties()
     print(counties.get_counties())
-    print("Source:", counties.source)
 
 
 if __name__ == '__main__':
