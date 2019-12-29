@@ -41,13 +41,13 @@ question: |
 subquestion: |
   You are all done with the interview.
   
-  |---------|---------|
-  | **Obligor** | ${obligor} |
-  | **Petitioner** | ${petitioner} |
-  | **Respondent** | ${respondent} |
-  | **Children** | ${child} |
-  | **Cause number** | ${case.cause_number} |
-  | **County** | ${case.county} County |
+  ||---------|---------|
+  || **Obligor** | ${obligor} |
+  || **Petitioner** | ${petitioner} |
+  || **Respondent** | ${respondent} |
+  || **Children** | ${child} |
+  || **Cause number** | ${case.cause_number} |
+  || **County** | ${case.county} County |
   
 mandatory: True
 attachment:
