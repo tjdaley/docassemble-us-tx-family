@@ -45,7 +45,7 @@ subquestion: |
   | **Obligor** | ${obligor} |
   | **Petitioner** | ${petitioner} |
   | **Respondent** | ${respondent} |
-  | **Children** | ${child) |
+  | **Children** | ${child} |
   | **Cause number** | ${case.cause_number} |
   | **County** | ${case.county} County |
   
