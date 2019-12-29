@@ -5,12 +5,16 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from datetime import date
 from lxml import html
+import re
 import requests
 import json
 
-DEV_MODE = False
+DEV_MODE = True
 
-from .ml_stripper import MLStripper
+# Change *VERSION* to force the cached *STORE* file to be refreshed.
+VERSION = 'A'
+
+from ml_stripper import MLStripper
 if not DEV_MODE:
     from docassemble.base.core import DAFile
 
@@ -56,7 +60,7 @@ class UsTxCourts(object):
             return self.courts[court]
         return None
 
-    def get_courts(self, county: str) -> list:
+    def get_courts(self, county: str, show_jurisdiction: bool = True) -> list:
         """
         Retrieve a list of courts for the given county.
 
@@ -67,7 +71,10 @@ class UsTxCourts(object):
         """
         county_idx = str(county).strip().upper()
         if county_idx in self.courts_by_county:
-            return self.courts_by_county[county_idx]
+            if not show_jurisdiction:
+                return self.courts_by_county[county_idx]
+            return ["{} - {}".format(court['number'], court['focus'])
+                   for court in self.courts_by_county[county_idx]]
         return None
 
     def retrieve(self) -> dict:
@@ -79,26 +86,45 @@ class UsTxCourts(object):
         courts = self.html2dict(html)
         return courts
 
-    def html2dict(self, html: str):
+    def html2dict(self, page_html: str):
         """
         Convert the html we retrieve from *URL_DISTRICT* to a dict.
 
         Args:
-            html (str): HTML retrieved from *URL_DISTRICT*.
+            page_html (str): HTML retrieved from *URL_DISTRICT*.
         Returns:
             (dict): dict indexed by court number.
         """
         result = {}
 
         stripper = MLStripper()
-        stripper.feed(html)
+        stripper.feed(page_html)
         text = stripper.get_data()
 
+        # Extract courts
         for court_number in range(1000):
             court_text = find_court(court_number, text)
             if court_text is not None:
                 court_dict = parse_court_text(court_number, court_text)
                 result[str(court_number)] = court_dict
+
+        # Extract specializations, which can be funky in Harris County
+        tree = html.fromstring(page_html)
+        paragraphs = tree.xpath('//p//text()')
+        search = r'\)\s*The(.*)[Dd]istrict [Cc]ourt[s]{0,1} shall give preference to ([a-zA-Z0-9,\s]*)\.'
+        for paragraph in paragraphs:
+            for match in re.finditer(search, paragraph, re.IGNORECASE):
+                courts = extract_courts(match.group(1))
+                focus = match.group(2)
+                for court in courts:
+                    result[court]['focus'] = focus
+        search = r'The(.*)[Dd]istrict [Cc]ourt[s]{0,1} shall hear ([a-zA-Z0-9,\s]*)\.'
+        for paragraph in paragraphs:
+            for match in re.finditer(search, paragraph, re.IGNORECASE):
+                courts = extract_courts(match.group(1))
+                focus = match.group(2)
+                for court in courts:
+                    result[court]['focus'] = focus
 
         return result
 
@@ -217,13 +243,13 @@ def parse_court_text(court_number: int, text: str) -> dict:
         text (str): The statute that enables a district (from *find_court()*).
     Returns:
         (dict): Having court number, a list of counties, a list of
-                jurisdictions, and the year the district was established.
+                specializations, and the year the district was established.
     """
     court = str(court_number)
     return {
         'court': court,
         'counties': court_counties(text),
-        'jurisdictions': court_jurisdictions(text),
+        'focus': 'general jurisdiction',
         'year_established': court_year(text)
     }
 
@@ -242,6 +268,17 @@ def court_counties(text: str)-> list:
             .replace('county', '')
             .replace('counties', '')
             .strip() for x in counties]
+
+
+def extract_courts(s: str)-> list:
+    my_s = re.sub(r'[^0-9\s]', '', s)
+    my_s = re.sub(r'\s{2,}', ' ', my_s)
+    courts = my_s.strip().split(' ')
+    result = []
+    for court in courts:
+        if court not in result:
+            result.append(court)
+    return sorted(result)
 
 
 def court_jurisdictions(text: str)-> list:
@@ -264,7 +301,7 @@ def refresh_key()-> str:
     operation . . . let's just be safe for now.
     """
     today = date.today()
-    return '{}-{}'.format(today.year, today.month)
+    return '{}-{}-{}'.format(today.year, today.month, VERSION)
 
 
 def main():
