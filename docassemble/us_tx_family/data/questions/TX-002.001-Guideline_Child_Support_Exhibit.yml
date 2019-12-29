@@ -26,6 +26,7 @@ include:
   - docassemble.us_tx_family:client_questions.yml
   - docassemble.us_tx_family:child_support_questions.yml
   - docassemble.us_tx_family:child_questions.yml
+  - docassemble.us_tx_family:employment_questions.yml
   - docassemble.us_tx_family:all_docs.yml
   - basic-questions.yml
 ---
@@ -41,13 +42,14 @@ question: |
 subquestion: |
   You are all done with the interview.
   
-  ||---------|---------|
-  || **Obligor** | ${obligor} |
-  || **Petitioner** | ${petitioner} |
-  || **Respondent** | ${respondent} |
-  || **Children** | ${child} |
-  || **Cause number** | ${case.cause_number} |
-  || **County** | ${case.county} County |
+  nbsp; | nbsp;
+  ---------|---------
+  **Obligor** | ${obligor}
+  **Petitioner** | ${petitioner}
+  **Respondent** | ${respondent}
+  **Children** | ${child}
+  **Cause number** | ${case.cause_number}
+  **County** | ${case.county} County
   
 mandatory: True
 attachment:

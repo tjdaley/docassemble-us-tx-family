@@ -1,0 +1,92 @@
+---
+modules:
+  - .objects
+---
+objects:
+  - job: |
+      DAList.using(
+        object_type=Job,
+        there_are_any=True)
+  - income: |
+      DAList.using(
+        object_type=Income,
+        there_are_any=True)
+---
+generic object: Job
+question: |
+  Describe the ${ ordinal(i) } job.
+fields:
+  - Employer name or d/b/a: x.employer
+  - Self employed?: x.self_employed
+    choices:
+      - Yes: True
+      - No: False
+    required: True
+  - Income: x.income.value
+    required: True
+  - Frequency: x.income.period
+    required: True
+    choices:
+      - Weekly: 52
+      - Every other week: 26
+      - Twice per month: 24
+      - Monthly: 12
+      - Annually: 1
+  - Union dues: x.union_dues.value
+    required: False
+  - Frequency: x.union_dues.period
+    required: False
+    choices:
+      - Weekly: 52
+      - Every other week: 26
+      - Twice per month: 24
+      - Monthly: 12
+      - Annually: 1
+---
+question: |
+  Would you like to add another job?
+subquestion: So far you have entered ${ job }.
+yesno: job.there_is_another
+---
+generic object: Income
+question: |
+  Describe the ${ ordinal(i) } source of income.
+fields:
+  - Income is from: x.type
+    required: True
+    choices:
+      - Severance Pay: SEVPAY
+      - Retirement: RETIRE
+      - Social Security (old-age): SOCSEC
+      - Social Security (disability): SOCDIS
+      - Veterans Disability: VAXDIS
+      - Unemployment: UNEMPL
+      - Worker's Comp: WORCMP
+      - Alimony: ALIMON
+      - Child Support: CHILDS
+      - Rental Income: RENTAL
+      - Interest Income: INTINC
+      - Capital Gains: CAPGAI
+      - Trust Distributions: TRUSTS
+      - Annuities: ANNUIT
+      - Gifts: GIFTSX
+      - Prizes: PRIZES
+      - Advances on Inheritance: INHERI
+      - Scholarships: SCHOLA
+  - Description: x.description
+  - Amount: x.income.value
+    required: True
+  - Frequency: x.income.period
+    required: True
+    choices:
+      - Weekly: 52
+      - Every other week: 26
+      - Twice per month: 24
+      - Monthly: 12
+      - Annually: 1
+---
+question: |
+  Would you like to add another source of income?
+subquestion: So far you have entered ${ income }.
+yesno: income.there_is_another
+---
