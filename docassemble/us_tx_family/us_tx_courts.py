@@ -10,7 +10,7 @@ import json
 
 DEV_MODE = False
 
-from lib.ml_stripper import MLStripper
+from .ml_stripper import MLStripper
 if not DEV_MODE:
     from docassemble.base.core import DAFile
 
