@@ -43,7 +43,7 @@ question: |
 fields:
   - Court number: case.court_number
     code: |
-      courts(${case.county})
+      courts(case.county)
   - Cause number: case.cause_number
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
