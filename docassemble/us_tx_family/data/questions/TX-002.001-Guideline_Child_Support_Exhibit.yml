@@ -1,0 +1,59 @@
+---
+metadata:
+  title: |
+    Texas Child Support Calculation
+  short title: |
+    Texas Child Support
+  description: |
+    An interview to produce a child support exhibit.
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2019-12-29
+---
+features:
+  centered: False
+---
+objects:
+  - case: Case
+  - doc: DADict
+  - petitioner: Individual
+  - respondent: Individual
+  - obligor: Individual
+  - child: ChildList
+---
+include:
+  - docassemble.us_tx_family:client_questions.yml
+  - docassemble.us_tx_family:child_support_questions.yml
+  - docassemble.us_tx_family:child_questions.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - basic-questions.yml
+---
+mandatory: True
+code: |
+  case.is_divorce = True
+  doc.title = "GUIDELINE CHILD SUPPORT EXHIBIT"
+  doc.sensitive_data = True
+  child.there_are_any = True
+---
+question: |
+  Congratulations!
+subquestion: |
+  You are all done with the interview.
+  
+  |---------|---------|
+  | **Obligor** | ${obligor} |
+  | **Petitioner** | ${petitioner} |
+  | **Respondent** | ${respondent} |
+  | **Children** | ${child) |
+  | **Cause number** | ${case.cause_number} |
+  | **County** | ${case.county} County |
+  
+mandatory: True
+attachment:
+  name: Child Support Exhibit
+  filename: child_support_exhibit
+  docx template file: TX-002.001-Guideline_Child_Support_Exhibit.docx
+  valid formats:
+    - pdf
+    - docx

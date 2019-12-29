@@ -1,0 +1,6 @@
+---
+mandatory: True
+code: |
+  case.state = "TEXAS"
+  case.country = "USA"
+---
