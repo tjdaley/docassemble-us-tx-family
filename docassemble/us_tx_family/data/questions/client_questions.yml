@@ -30,14 +30,19 @@ comment: |
   In Texas, you are either married or your are not. There is no legal separation.
 ---
 question: |
-  Tell me about your case.
+  What county has your case been filed in?
 mandatory: False
 fields:
   - County: case.county
     code: |
       counties()
     help: This is the county within ${case.state} where your case was filed.
+---
+question: |
+  Tell me a little more about your case.
   - Court number: case.court_number
+    code: |
+      courts("${case.county}")
   - Cause number: case.cause_number
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
