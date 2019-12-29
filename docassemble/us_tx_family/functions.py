@@ -15,6 +15,7 @@ def counties():
 
 
 def courts(county: str):
+    return [county]
     court_db = UsTxCourts()
     court_list = court_db.get_courts(county)
     court_list.append("(NOT FILED)")
