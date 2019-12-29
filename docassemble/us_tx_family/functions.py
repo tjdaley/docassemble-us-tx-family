@@ -17,5 +17,5 @@ def counties():
 def courts(county: str):
     court_db = UsTxCourts()
     court_list = court_db.get_courts(county)
-    court_list.insert(0, ("(NOT FILED)", None))
+    court_list.insert(0, (None, "(NOT FILED)"))
     return court_list
