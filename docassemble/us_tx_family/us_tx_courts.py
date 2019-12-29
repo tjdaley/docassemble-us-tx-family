@@ -9,14 +9,16 @@ import re
 import requests
 import json
 
-DEV_MODE = True
+DEV_MODE = False
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
 VERSION = 'A'
 
-from ml_stripper import MLStripper
 if not DEV_MODE:
     from docassemble.base.core import DAFile
+    from .ml_stripper import MLStripper
+else:
+    from ml_stripper import MLStripper
 
 URL = 'https://statutes.capitol.texas.gov/Docs/GV/htm/GV.24.htm'
 STORE = 'us_tx_courts.json'
