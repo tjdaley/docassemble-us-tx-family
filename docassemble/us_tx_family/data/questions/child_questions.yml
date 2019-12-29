@@ -1,0 +1,29 @@
+---
+question: |
+  Who is the
+  ${ ordinal(i) } child?
+fields:
+  - First Name: child[i].name.first
+    default: ${ child[i].first_name_hint() }
+  - Middle Name: child[i].name.middle
+    required: False
+  - Last Name: child[i].name.last
+    default: ${ child[i].last_name_hint() }
+  - Suffix: child[i].name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Geek: child[i].geek
+  - Gender: child[i].gender
+    choices:
+     - Male: male
+     - Female: female
+     - Other: other
+  - Birth date: child[i].birthdate
+    datatype: date
+---
+question: |
+  Would you like to add another child?
+subquestion: So far you have entered ${ child }.
+yesno: child.there_is_another
+---

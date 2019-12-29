@@ -19,6 +19,12 @@ code: |
 comment: |
   This code is executed first.
 ---
+question: |
+  Divorce or Anulment?
+subquestion: |
+  Is this form being used in a marriage dissolution case (divorce or anulment)?
+yesno: case.is_divorce
+---
 generic object: Individual
 field: x.marital_status
 question: |
