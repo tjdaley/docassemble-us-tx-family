@@ -72,7 +72,7 @@ class UsTxCounties(object):
         Read the list of counties from file storage.
         """
         infile = DAFile()
-        infile.initialize(STORE)
+        infile.initialize(filename=STORE)
         json_text = infile.slurp()
         result = json.loads(json_text)
         return result
@@ -82,7 +82,7 @@ class UsTxCounties(object):
         Persist the list of counties to file storage.
         """
         outfile = DAFile()
-        outfile.initialize(STORE)
+        outfile.initialize(filename=STORE)
         outfile.set_attributes(persistent=True)
         outfile.write(json.dumps({'counties': counties}))
 
