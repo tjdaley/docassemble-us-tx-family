@@ -10,8 +10,9 @@ from docassemble.base.util import DAList, DAObject, PeriodicValue, word
 __all__ = ['Job', 'JobList', 'Income', 'IncomeList']
 
 class MyPeriodicValue(PeriodicValue):
-    def __init__(self):
+    def init(self, *pargs, **kwargs):
         self.exists = True
+        super(MyPeriodicValue, self).init(*pargs, **kwargs)
 
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
