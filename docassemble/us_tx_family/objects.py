@@ -11,7 +11,6 @@ class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
         self.complete_attribute = 'job_complete'
-        self.there_are_any = False
         super(JobList, self).init(*pargs, **kwargs)
 
 
