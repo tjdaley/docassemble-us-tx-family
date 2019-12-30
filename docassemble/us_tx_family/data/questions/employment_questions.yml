@@ -9,12 +9,10 @@ objects:
 question: |
   Does the *obligor* have any income from employment, even self-employment?
 yesno: jobs.there_are_any
-mandatory: True
 ---
 question: |
   Does the *obligor* have any other sources of income?
 yesno: incomes.there_are_any
-mandatory: True
 ---
 generic object: Job
 question: |

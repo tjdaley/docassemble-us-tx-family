@@ -45,6 +45,8 @@ subquestion: |
   &nbsp; | &nbsp;
   ---------|---------
   **Obligor** | ${obligor}
+  **Jobs** | ${jobs}
+  **Income** | ${incomes}
   **Petitioner** | ${petitioner}
   **Respondent** | ${respondent}
   **Children** | ${child}
