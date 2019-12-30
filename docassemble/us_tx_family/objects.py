@@ -32,7 +32,7 @@ class Job(DAObject):
         super(Job, self).init(*pargs, **kwargs)
 
     def summary(self):
-        return self.employer
+        return self.employer or "*NONE*"
 
     @property
     def job_complete(self):
