@@ -5,11 +5,11 @@ modules:
 objects:
   - job: |
       DAList.using(
-        object_type=Job,
+        object_type=DADict,
         there_are_any=True)
   - income: |
       DAList.using(
-        object_type=Income,
+        object_type=DADict,
         there_are_any=True)
 ---
 question: |
