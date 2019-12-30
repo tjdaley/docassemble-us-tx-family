@@ -6,29 +6,26 @@ objects:
   - jobs: JobList
   - incomes: IncomeList
 ---
-generic object: Job
 question: |
   Does the *obligor* have any income from employment, even self-employment?
-yesno: x.there_are_any
+yesno: jobs.there_are_any
 ---
-generic object: Income
 question: |
   Does the *obligor* have any other sources of income?
-yesno: x.there_are_any
+yesno: incomes.there_are_any
 ---
-generic object: Job
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
   - Employer name or d/b/a: x[i].employer
-  - Self employed?: x[i].self_employed
+  - Self employed?: job[i].self_employed
     choices:
       - Yes: True
       - No: False
     required: True
-  - Income: x[i].income.value
+  - Income: job[i].income.value
     required: True
-  - Frequency: x[i].income.period
+  - Frequency: job[i].income.period
     required: True
     choices:
       - Weekly: 52
@@ -36,9 +33,9 @@ fields:
       - Twice per month: 24
       - Monthly: 12
       - Annually: 1
-  - Union dues: x[i].union_dues.value
+  - Union dues: job[i].union_dues.value
     required: False
-  - Frequency: x[i].union_dues.period
+  - Frequency: job[i].union_dues.period
     required: False
     choices:
       - Weekly: 52
@@ -47,11 +44,10 @@ fields:
       - Monthly: 12
       - Annually: 1
 ---
-generic object: Job
 question: |
   Would you like to add another job?
 subquestion: So far you have entered ${ jobs }.
-yesno: x.there_is_another
+yesno: jobs.there_is_another
 ---
 generic object: Income
 question: |
