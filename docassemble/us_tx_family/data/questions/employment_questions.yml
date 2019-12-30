@@ -6,12 +6,12 @@ objects:
   - jobs: JobList
   - incomes: IncomeList
 ---
-generic object: Jobs
+generic object: Job
 question: |
   Does the *obligor* have any income from employment, even self-employment?
 yesno: x.there_are_any
 ---
-generic object: Incomes
+generic object: Income
 question: |
   Does the *obligor* have any other sources of income?
 yesno: x.there_are_any
