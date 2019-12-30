@@ -6,10 +6,12 @@ objects:
   - jobs: JobList
   - incomes: IncomeList
 ---
+generic object: Job
 question: |
   Does the *obligor* have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
+generic object: Income
 question: |
   Does the *obligor* have any other sources of income?
 yesno: incomes.there_are_any
@@ -45,6 +47,7 @@ fields:
       - Monthly: 12
       - Annually: 1
 ---
+generic object: Job
 question: |
   Would you like to add another job?
 subquestion: So far you have entered ${ jobs }.
@@ -87,6 +90,7 @@ fields:
       - Monthly: 12
       - Annually: 1
 ---
+generic object: Income
 question: |
   Would you like to add another source of income?
 subquestion: So far you have entered ${ incomes }.
