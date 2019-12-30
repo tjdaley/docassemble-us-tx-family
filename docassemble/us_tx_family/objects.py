@@ -39,7 +39,7 @@ class Job(DAObject):
         super(Job, self).init(*pargs, **kwargs)
 
     def summary(self):
-        return self.employer or "*NONE*"
+        return self.employer or "**NONE**"
 
     @property
     def job_complete(self):
@@ -50,6 +50,13 @@ class Job(DAObject):
 
     def __unicode__(self):
         return self.summary()
+
+
+class IncomeList(DAList):
+    def init(self, *pargs, **kwargs):
+        self.object_type = Income
+        self.complete_attribute = 'income_complete'
+        super(IncomeList, self).init(*pargs, **kwargs)
 
 
 class Income(DAObject):
@@ -70,13 +77,10 @@ class Income(DAObject):
         super(Income, self).init(*pargs, **kwargs)
 
     def summary(self):
-        s = self.description + ' ' + word('earning') + ' ' + self.income.value + ' ' + word('per') + ' ' + word(self.income.period)
-        if self.is_taxable:
-            return s + " (" + word('taxable') + ")"
-        return s
+        return self.description or "**NONE**"
 
     @property
-    def job_complete(self):
+    def income_complete(self):
         self.description
         self.income
         self.is_taxable
@@ -84,11 +88,3 @@ class Income(DAObject):
 
     def __unicode__(self):
         return self.summary()
-
-
-class IncomeList(DAList):
-    def init(self, *pargs, **kwargs):
-        self.object_type = Income
-        self.complete_attribute = 'job_complete'
-        super(IncomeList, self).init(*pargs, **kwargs)
-

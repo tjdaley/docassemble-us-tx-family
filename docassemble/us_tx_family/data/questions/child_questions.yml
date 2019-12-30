@@ -1,4 +1,11 @@
 ---
+objects:
+  - child: ChildList
+---
+question: |
+  Does this case involve children?
+yesno: child.there_are_any
+---
 question: |
   Who is the
   ${ ordinal(i) } child?

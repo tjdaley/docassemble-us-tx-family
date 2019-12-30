@@ -20,7 +20,6 @@ objects:
   - petitioner: Individual
   - respondent: Individual
   - obligor: Individual
-  - child: ChildList
 ---
 include:
   - docassemble.us_tx_family:client_questions.yml

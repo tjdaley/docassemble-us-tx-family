@@ -4,7 +4,7 @@ modules:
 ---
 objects:
   - jobs: JobList.using(there_are_any=True)
-  - incomes: IncomeList
+  - incomes: IncomeList(there_are_any=True)
 ---
 question: |
   Does ${obligor} have any income from employment, even self-employment?
