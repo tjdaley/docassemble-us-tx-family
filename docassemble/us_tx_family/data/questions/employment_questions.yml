@@ -6,11 +6,11 @@ objects:
   - job: |
       DAList.using(
         object_type=DADict,
-        there_are_any=False)
+        there_are_any=True)
   - income: |
       DAList.using(
         object_type=DADict,
-        there_are_any=False)
+        there_are_any=True)
 ---
 question: |
   Does the *obligor* have any income from employment, even self-employment?

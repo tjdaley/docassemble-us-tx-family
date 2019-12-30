@@ -42,7 +42,7 @@ question: |
 subquestion: |
   You are all done with the interview.
   
-  nbsp; | nbsp;
+  &nbsp; | &nbsp;
   ---------|---------
   **Obligor** | ${obligor}
   **Petitioner** | ${petitioner}
