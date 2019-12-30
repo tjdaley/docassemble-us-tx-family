@@ -42,7 +42,7 @@ class Job(DAObject):
         return self.employer or "**NONE**"
 
     @property
-    def job_complete(self):
+    def complete(self):
         self.employer
         self.self_employed
         self.income
