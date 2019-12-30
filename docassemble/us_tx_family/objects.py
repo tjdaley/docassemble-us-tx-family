@@ -31,11 +31,8 @@ class Job(DAObject):
             self.initializeAttribute('union_dues', PeriodicValue)
         super(Job, self).init(*pargs, **kwargs)
 
-    def xsummary(self):
-        s = self.employer + ' ' + word('earning') + ' ' + self.income.value + ' ' + word('per') + ' ' + word(self.income.period)
-        if self.self_employed:
-            return word('Self-employed') + ' ' + word('d/b/a') + ' ' + s
-        return s
+    def summary(self):
+        return self.employer
 
     @property
     def job_complete(self):
@@ -45,7 +42,7 @@ class Job(DAObject):
         self.union_dues
 
     def __unicode__(self):
-        return self.xsummary()
+        return self.employer
 
 
 class Income(DAObject):
