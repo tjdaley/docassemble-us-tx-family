@@ -13,7 +13,6 @@ fields:
     required: False
     code: |
       name_suffix()
-  - Geek: child[i].geek
   - Gender: child[i].gender
     choices:
      - Male: male
