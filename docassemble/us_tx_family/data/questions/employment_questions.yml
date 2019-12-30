@@ -17,15 +17,15 @@ yesno: incomes.there_are_any
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
-  - Employer name or d/b/a: job[i].employer
-  - Self employed?: job[i].self_employed
+  - Employer name or d/b/a: jobs[i].employer
+  - Self employed?: jobs[i].self_employed
     choices:
       - Yes: True
       - No: False
     required: True
-  - Income: job[i].income.value
+  - Income: jobs[i].income.value
     required: True
-  - Frequency: job[i].income.period
+  - Frequency: jobs[i].income.period
     required: True
     choices:
       - Weekly: 52
@@ -33,9 +33,9 @@ fields:
       - Twice per month: 24
       - Monthly: 12
       - Annually: 1
-  - Union dues: job[i].union_dues.value
+  - Union dues: jobs[i].union_dues.value
     required: False
-  - Frequency: job[i].union_dues.period
+  - Frequency: jobs[i].union_dues.period
     required: False
     choices:
       - Weekly: 52
