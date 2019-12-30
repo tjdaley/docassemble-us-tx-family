@@ -5,10 +5,12 @@ modules:
 objects:
   - job: |
       DAList.using(
-        object_type=DADict)
+        object_type=DADict,
+        there_are_any=False)
   - income: |
       DAList.using(
-        object_type=DADict)
+        object_type=DADict,
+        there_are_any=False)
 ---
 question: |
   Does the *obligor* have any income from employment, even self-employment?
