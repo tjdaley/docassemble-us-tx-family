@@ -7,6 +7,14 @@ from docassemble.base.util import DAList, DAObject, PeriodicValue, word
 
 __all__ = ['Job', 'JobList', 'Income', 'IncomeList']
 
+class JobList(DAList):
+    def init(self, *pargs, **kwargs):
+        self.object_type = Job
+        self.complete_attribute = 'job_complete'
+        self.there_are_any = False
+        super(JobList, self).init(*pargs, **kwargs)
+
+
 class Job(DAObject):
     """
     A Job is an income stream through employment and is subject to
@@ -39,13 +47,6 @@ class Job(DAObject):
 
     def __unicode__(self):
         return self.summary()
-
-
-class JobList(DAList):
-    def init(self, *pargs, **kwargs):
-        self.object_type = Job
-        self.complete_attribute = 'job_complete'
-        super(JobList, self).init(*pargs, **kwargs)
 
 
 class Income(DAObject):
