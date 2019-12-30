@@ -6,15 +6,15 @@ objects:
   - jobs: JobList
   - incomes: IncomeList
 ---
-generic object: Job
+generic object: Jobs
 question: |
   Does the *obligor* have any income from employment, even self-employment?
-yesno: jobs.there_are_any
+yesno: x.there_are_any
 ---
-generic object: Income
+generic object: Incomes
 question: |
   Does the *obligor* have any other sources of income?
-yesno: incomes.there_are_any
+yesno: x.there_are_any
 ---
 generic object: Job
 question: |
@@ -51,7 +51,7 @@ generic object: Job
 question: |
   Would you like to add another job?
 subquestion: So far you have entered ${ jobs }.
-yesno: jobs.there_is_another
+yesno: x.there_is_another
 ---
 generic object: Income
 question: |
@@ -94,5 +94,5 @@ generic object: Income
 question: |
   Would you like to add another source of income?
 subquestion: So far you have entered ${ incomes }.
-yesno: incomes.there_is_another
+yesno: x.there_is_another
 ---
