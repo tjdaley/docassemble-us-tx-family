@@ -3,9 +3,15 @@ objects.py - Objects used in the us-tx-family pacakge.
 
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
-from docassemble.base.util import DAList, DAObject, PeriodicValue, word
+from decimal import Decimal
+
+from docassemble.base.util import DAList, DAObject, PeriodicValue word
 
 __all__ = ['Job', 'JobList', 'Income', 'IncomeList']
+
+class MyPeriodicValue(PeriodicValue):
+    def __init__(self):
+        self.exists = True
 
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
@@ -26,9 +32,9 @@ class Job(DAObject):
         if 'employer' not in kwargs:
             self.employer = None
         if 'income' not in kwargs:
-            self.initializeAttribute('income', PeriodicValue)
+            self.initializeAttribute('income', MyPeriodicValue)
         if 'union_dues' not in kwargs:
-            self.initializeAttribute('union_dues', PeriodicValue)
+            self.initializeAttribute('union_dues', MyPeriodicValue)
         super(Job, self).init(*pargs, **kwargs)
 
     def summary(self):
@@ -55,7 +61,7 @@ class Income(DAObject):
         if 'description' not in kwargs:
             self.description = None
         if 'income' not in kwargs:
-            self.initializeAttribute('income', PeriodicValue)
+            self.initializeAttribute('income', MyPeriodicValue)
         if 'is_taxable' not in kwargs:
             self.is_taxable = False
         if 'type' not in kwargs:
