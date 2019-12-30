@@ -3,7 +3,7 @@ modules:
   - .objects
 ---
 objects:
-  - jobs: DAList  #JobList.using(there_are_any=True)
+  - jobs: JobList  #JobList.using(there_are_any=True)
   - incomes: DAList  #IncomeList.using(there_are_any=True)
 ---
 question: |
