@@ -3,7 +3,9 @@ objects.py - Objects used in the us-tx-family pacakge.
 
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
-from docassemble.base.util import DAObject, PeriodicValue, word
+from docassemble.base.util import DAList, DAObject, PeriodicValue, word
+
+__all__ = ['Job', 'JobList', 'Income', 'IncomeList']
 
 class Job(DAObject):
     """
@@ -28,6 +30,23 @@ class Job(DAObject):
             return word('Self-employed') + ' ' + word('d/b/a') + ' ' + s
         return s
 
+    @property
+    def job_complete(self):
+        self.employer
+        self.self_employed
+        self.income
+        self.union_dues
+
+    def __unicode__(self):
+        return self.summary()
+
+
+class JobList(DAList):
+    def init(self, *pargs, **kwargs):
+        self.object_type = Job
+        self.complete_attribute = 'job_complete'
+        super(JobList, self).init(*pargs, **kwargs)
+
 
 class Income(DAObject):
     """
@@ -51,3 +70,21 @@ class Income(DAObject):
         if self.is_taxable:
             return s + " (" + word('taxable') + ")"
         return s
+
+    @property
+    def job_complete(self):
+        self.description
+        self.income
+        self.is_taxable
+        self.type
+
+    def __unicode__(self):
+        return self.summary()
+
+
+class IncomeList(DAList):
+    def init(self, *pargs, **kwargs):
+        self.object_type = Income
+        self.complete_attribute = 'job_complete'
+        super(IncomeList, self).init(*pargs, **kwargs)
+
