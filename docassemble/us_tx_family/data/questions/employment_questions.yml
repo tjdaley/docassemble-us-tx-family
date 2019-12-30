@@ -3,16 +3,16 @@ modules:
   - .objects
 ---
 objects:
-  - job: JobList
-  - income: IncomeList
+  - jobs: JobList
+  - incomes: IncomeList
 ---
 question: |
   Does the *obligor* have any income from employment, even self-employment?
-yesno: job.there_are_any
+yesno: jobs.there_are_any
 ---
 question: |
   Does the *obligor* have any other sources of income?
-yesno: income.there_are_any
+yesno: incomes.there_are_any
 ---
 generic object: Job
 question: |
