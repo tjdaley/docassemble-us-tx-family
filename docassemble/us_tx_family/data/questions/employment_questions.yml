@@ -47,8 +47,8 @@ fields:
 ---
 question: |
   Would you like to add another job?
-subquestion: So far you have entered ${ job }.
-yesno: job.there_is_another
+subquestion: So far you have entered ${ jobs }.
+yesno: jobs.there_is_another
 ---
 generic object: Income
 question: |
@@ -89,6 +89,6 @@ fields:
 ---
 question: |
   Would you like to add another source of income?
-subquestion: So far you have entered ${ income }.
-yesno: income.there_is_another
+subquestion: So far you have entered ${ incomes }.
+yesno: incomes.there_is_another
 ---
