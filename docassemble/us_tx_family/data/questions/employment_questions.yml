@@ -5,12 +5,10 @@ modules:
 objects:
   - job: |
       DAList.using(
-        object_type=DADict,
-        there_are_any=True)
+        object_type=DADict)
   - income: |
       DAList.using(
-        object_type=DADict,
-        there_are_any=True)
+        object_type=DADict)
 ---
 question: |
   Does the *obligor* have any income from employment, even self-employment?
@@ -24,15 +22,15 @@ generic object: Job
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
-  - Employer name or d/b/a: x.employer
-  - Self employed?: x.self_employed
+  - Employer name or d/b/a: x[i].employer
+  - Self employed?: x[i].self_employed
     choices:
       - Yes: True
       - No: False
     required: True
-  - Income: x.income.value
+  - Income: x[i].income.value
     required: True
-  - Frequency: x.income.period
+  - Frequency: x[i].income.period
     required: True
     choices:
       - Weekly: 52
@@ -40,9 +38,9 @@ fields:
       - Twice per month: 24
       - Monthly: 12
       - Annually: 1
-  - Union dues: x.union_dues.value
+  - Union dues: x[i].union_dues.value
     required: False
-  - Frequency: x.union_dues.period
+  - Frequency: x[i].union_dues.period
     required: False
     choices:
       - Weekly: 52
@@ -60,7 +58,7 @@ generic object: Income
 question: |
   Describe the ${ ordinal(i) } source of income.
 fields:
-  - Income is from: x.type
+  - Income is from: x[i].type
     required: True
     choices:
       - Severance Pay: SEVPAY
@@ -81,10 +79,10 @@ fields:
       - Prizes: PRIZES
       - Advances on Inheritance: INHERI
       - Scholarships: SCHOLA
-  - Description: x.description
-  - Amount: x.income.value
+  - Description: x[i].description
+  - Amount: x[i].income.value
     required: True
-  - Frequency: x.income.period
+  - Frequency: x[i].income.period
     required: True
     choices:
       - Weekly: 52
