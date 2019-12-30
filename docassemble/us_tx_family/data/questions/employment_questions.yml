@@ -3,21 +3,21 @@ modules:
   - .objects
 ---
 objects:
-  - jobs: JobList
+  - jobs: JobList.using(there_are_any=True)
   - incomes: IncomeList
 ---
 question: |
-  Does the *obligor* have any income from employment, even self-employment?
+  Does ${obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
 question: |
-  Does the *obligor* have any other sources of income?
+  Does ${obligor} have any other sources of income?
 yesno: incomes.there_are_any
 ---
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
-  - Employer name or d/b/a: x[i].employer
+  - Employer name or d/b/a: job[i].employer
   - Self employed?: job[i].self_employed
     choices:
       - Yes: True
