@@ -42,7 +42,7 @@ class Job(DAObject):
         self.union_dues
 
     def __unicode__(self):
-        return self.employer
+        return self.summary()
 
 
 class Income(DAObject):
