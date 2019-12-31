@@ -3,20 +3,22 @@ metadata:
   description: |
     This question file contains questions that are common in
     Texas Family Law-related interviews.
+
+    ---
+    modules:
+      - docassemble.us_tx_family
+      - docassemble.us_tx_family.functions
+    ---
+    objects:
+      - case: Case
+      - doc: DADict
+      - petitioner: Individual
+      - respondent: Individual
+    ---
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
   revision_date: 2019-12-24
----
-modules:
-  - docassemble.us_tx_family
-  - docassemble.us_tx_family.functions
----
-objects:
-  - case: Case
-  - doc: DADict
-  - petitioner: Individual
-  - respondent: Individual
 ---
 mandatory: True
 code: |

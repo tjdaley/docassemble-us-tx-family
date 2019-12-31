@@ -1,10 +1,13 @@
 ---
-modules:
-  - .objects
----
-objects:
-  - jobs: DAList #JobList
-  - incomes: IncomeList
+metadata:
+  description: |
+    This set of requestion requires
+    
+    modules:
+      - .objects
+    objects:
+      - jobs: JobList
+      - incomes: IncomeList
 ---
 question: |
   Does ${obligor} have any income from employment, even self-employment?

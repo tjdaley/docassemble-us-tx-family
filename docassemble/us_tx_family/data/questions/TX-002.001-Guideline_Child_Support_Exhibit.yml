@@ -14,8 +14,20 @@ metadata:
 features:
   centered: False
 ---
+modules:
+  - .objects
+  - docassemble.us_tx_family
+  - docassemble.us_tx_family.functions
+---
 objects:
   - obligor: Individual
+  - jobs: DAList
+  - incomes: IncomeList
+  - child: ChildList
+  - case: Case
+  - doc: DADict
+  - petitioner: Individual
+  - respondent: Individual
 ---
 include:
   - basic-questions.yml
