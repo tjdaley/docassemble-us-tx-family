@@ -1,0 +1,22 @@
+---
+modules:
+  - .objects
+  - docassemble.us_tx_family
+  - docassemble.us_tx_family.functions
+---
+objects:
+  - obligor: Individual
+  - jobs: JobList
+  - incomes: IncomeList
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:employment_questions.yml
+---
+mandatory: True
+question: Job Summary
+subquestion: |
+  ## Jobs
+
+  ${jobs}
+---

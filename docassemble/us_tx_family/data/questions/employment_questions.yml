@@ -8,6 +8,7 @@ metadata:
     objects:
       - jobs: JobList
       - incomes: IncomeList
+      - obligor: Individual
 ---
 question: |
   Does ${obligor} have any income from employment, even self-employment?
