@@ -44,9 +44,9 @@ class Job(DAObject):
         #if 'employer' not in kwargs:
         #    self.employer = None
         #if 'income' not in kwargs:
-        #    self.initializeAttribute('income', MyPeriodicValue)
+        self.initializeAttribute('income', MyPeriodicValue)
         #if 'union_dues' not in kwargs:
-        #    self.initializeAttribute('union_dues', MyPeriodicValue)
+        self.initializeAttribute('union_dues', MyPeriodicValue)
         super(Job, self).init(*pargs, **kwargs)
 
     def summary(self):
