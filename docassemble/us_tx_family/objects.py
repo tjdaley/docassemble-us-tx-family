@@ -39,14 +39,14 @@ class Job(DAObject):
     income taxes.
     """
     def init(self, *pargs, **kwargs):
-        if 'self_employed' not in kwargs:
-            self.self_employed = False
-        if 'employer' not in kwargs:
-            self.employer = None
-        if 'income' not in kwargs:
-            self.initializeAttribute('income', MyPeriodicValue)
-        if 'union_dues' not in kwargs:
-            self.initializeAttribute('union_dues', MyPeriodicValue)
+        #if 'self_employed' not in kwargs:
+        #    self.self_employed = False
+        #if 'employer' not in kwargs:
+        #    self.employer = None
+        #if 'income' not in kwargs:
+        #    self.initializeAttribute('income', MyPeriodicValue)
+        #if 'union_dues' not in kwargs:
+        #    self.initializeAttribute('union_dues', MyPeriodicValue)
         super(Job, self).init(*pargs, **kwargs)
 
     def summary(self):
