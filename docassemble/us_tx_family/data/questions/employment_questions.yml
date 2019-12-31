@@ -3,7 +3,7 @@ modules:
   - .objects
 ---
 objects:
-  - jobs: JobList
+  - jobs: DAList #JobList
   - incomes: IncomeList
 ---
 question: |
@@ -19,12 +19,12 @@ question: |
 fields:
   - Employer name or d/b/a: jobs[i].employer
   - Self employed?: jobs[i].self_employed
-    choices:
-      - Yes: True
-      - No: False
+    datatype: yesnoradio
     required: True
   - Income: jobs[i].income.value
     required: True
+    datatype: currency
+    minimum: 0.00
   - Frequency: jobs[i].income.period
     required: True
     choices:
@@ -36,6 +36,8 @@ fields:
   - Union dues: jobs[i].union_dues.value
     required: True
     default: 0.00
+    minimum: 0.00
+    datatype: currency
   - Frequency: jobs[i].union_dues.period
     required: True
     default: 1
@@ -78,6 +80,7 @@ fields:
   - Description: incomes[i].description
   - Amount: incomes[i].income.value
     required: True
+    datatype: currency
   - Frequency: incomes[i].income.period
     required: True
     choices:
