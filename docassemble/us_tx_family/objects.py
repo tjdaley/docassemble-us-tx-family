@@ -3,7 +3,7 @@ objects.py - Objects used in the us-tx-family pacakge.
 
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
-from decimal import Decimal, getcontext
+from decimal import Decimal
 
 from docassemble.base.util import DAList, DAObject, PeriodicValue, word
 
@@ -77,15 +77,10 @@ class IncomeList(DAList):
             (Decimal): Total gross income per desired_period.
         """
         self._trigger_gather()
-        old_precision = getcontext().prec
-        getcontext().prec = 2
         result = Decimal(0)
         for item in self.elements:
             result += item.income.amount(desired_period)
-            #result += Decimal(item.value) * Decimal(item.period)
-        #result = Decimal(result / desired_period)
-        getcontext().prec = old_precision
-        return(result)
+        return(Decimal(result))
 
 
 class Income(DAObject):
