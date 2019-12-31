@@ -7,6 +7,9 @@ objects:
   - incomes: DAList  #IncomeList.using(there_are_any=True)
   - obligor: Individual
 ---
+include:
+  - basic-questions.yml
+---
 question: |
   Does ${obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
