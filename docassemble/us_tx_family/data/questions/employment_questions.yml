@@ -92,3 +92,8 @@ question: |
 subquestion: So far you have entered ${ incomes }.
 yesno: incomes.there_is_another
 ---
+mandatory: True
+question: You've completed the interview!!
+subquestion: |
+  JOBS: ${jobs}
+  INCOME: ${incomes}
