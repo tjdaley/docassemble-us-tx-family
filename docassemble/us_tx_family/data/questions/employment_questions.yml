@@ -101,6 +101,8 @@ question: You've completed the interview!!
 subquestion: |
   JOBS: ${jobs}
 
-  Total Income From Employment: ${jobs.total()}
+  Total Income From Employment per Month: ${jobs.total(12)}
+
+  Total Income From Employment per Week: ${jobs.total(52)}
 
   INCOME: ${incomes}
