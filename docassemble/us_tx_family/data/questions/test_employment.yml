@@ -1,7 +1,6 @@
 ---
 modules:
   - .objects
-  - docassemble.us_tx_family
   - docassemble.us_tx_family.functions
 ---
 objects:
