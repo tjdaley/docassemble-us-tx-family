@@ -15,19 +15,14 @@ features:
   centered: False
 ---
 objects:
-  - case: Case
-  - doc: DADict
-  - petitioner: Individual
-  - respondent: Individual
   - obligor: Individual
 ---
 include:
   - docassemble.us_tx_family:client_questions.yml
-  - docassemble.us_tx_family:child_support_questions.yml
   - docassemble.us_tx_family:child_questions.yml
+  - docassemble.us_tx_family:child_support_questions.yml
   - docassemble.us_tx_family:employment_questions.yml
   - docassemble.us_tx_family:all_docs.yml
-  - basic-questions.yml
 ---
 mandatory: True
 code: |

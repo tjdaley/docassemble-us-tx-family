@@ -14,6 +14,7 @@ class MyPeriodicValue(PeriodicValue):
         self.exists = True
         super(MyPeriodicValue, self).init(*pargs, **kwargs)
 
+
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
