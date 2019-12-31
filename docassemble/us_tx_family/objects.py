@@ -25,10 +25,9 @@ class JobList(DAList):
         """Returns the total value in the list, gathering the list items if necessary."""
         # TODO: TEST THIS
         self._trigger_gather()
-        result = 0
-        for item in sorted(self.elements.keys()):
-            if self[item].exists:
-                result += Decimal(self[item].income.value)
+        result = Decimal(0)
+        for item in self.elements:
+            result += Decimal(item.income.value)
         return(result)
 
 
