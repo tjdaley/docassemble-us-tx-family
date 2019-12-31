@@ -33,7 +33,7 @@ class JobList(DAList):
         self._trigger_gather()
         result = Decimal(0)
         for item in self.elements:
-            result += Decimal(item.income.value * item.income.period)
+            result += Decimal(item.income.value * int(item.income.period))
         result = Decimal(result / desired_period)
         return(result)
 
@@ -80,7 +80,7 @@ class IncomeList(DAList):
         self._trigger_gather()
         result = Decimal(0)
         for item in self.elements:
-            result += Decimal(item.income.value * item.income.period)
+            result += Decimal(item.income.value * int(item.income.period))
         result = Decimal(result / desired_period)
         return(result)
 
