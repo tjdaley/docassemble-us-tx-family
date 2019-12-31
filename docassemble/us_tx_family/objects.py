@@ -35,9 +35,8 @@ class JobList(DAList):
         getcontext().prec = 2
         result = Decimal(0)
         for item in self.elements:
-            result += item.amount(desired_period)
-        # result = Decimal(result / desired_period)
-        result = Decimal(result)
+            result += Decimal(item.value) * Decimal(item.period)
+        result = Decimal(result / desired_period)
         getcontext().prec = old_precision
         return(result)
 
@@ -86,8 +85,8 @@ class IncomeList(DAList):
         getcontext().prec = 2
         result = Decimal(0)
         for item in self.elements:
-            result += item.amount(desired_period)
-        result = Decimal(result)
+            result += Decimal(item.value) * Decimal(item.period)
+        result = Decimal(result / desired_period)
         getcontext().prec = old_precision
         return(result)
 
