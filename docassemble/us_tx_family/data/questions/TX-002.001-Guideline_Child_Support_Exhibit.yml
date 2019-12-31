@@ -21,7 +21,7 @@ modules:
 ---
 objects:
   - obligor: Individual
-  - jobs: DAList
+  - jobs: JobList
   - incomes: IncomeList
   - child: ChildList
   - case: Case
