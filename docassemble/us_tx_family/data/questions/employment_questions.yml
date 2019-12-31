@@ -100,4 +100,7 @@ mandatory: True
 question: You've completed the interview!!
 subquestion: |
   JOBS: ${jobs}
+
+  Total Income From Employment: ${jobs.total()}
+
   INCOME: ${incomes}
