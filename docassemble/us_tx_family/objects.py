@@ -68,6 +68,22 @@ class IncomeList(DAList):
         self.complete_attribute = 'complete'
         super(IncomeList, self).init(*pargs, **kwargs)
 
+    def total(self, desired_period: int = 12):
+        """
+        Returns the total value in the list, gathering the list items if necessary.
+
+        Args:
+            desired_period (int): 1=Annually, 12=Monthly, etc. Default=12.
+        Returns:
+            (Decimal): Total gross income per desired_period.
+        """
+        self._trigger_gather()
+        result = Decimal(0)
+        for item in self.elements:
+            result += Decimal(item.income.value * item.income.period)
+        result = Decimal(result / desired_period)
+        return(result)
+
 
 class Income(DAObject):
     """
