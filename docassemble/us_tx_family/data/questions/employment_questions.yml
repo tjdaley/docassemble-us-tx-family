@@ -24,7 +24,7 @@ fields:
   - Income: jobs[i].income.value
     required: True
     datatype: currency
-    minimum: 0.00
+    min: 0.00
   - Frequency: jobs[i].income.period
     required: True
     choices:
@@ -36,7 +36,7 @@ fields:
   - Union dues: jobs[i].union_dues.value
     required: True
     default: 0.00
-    minimum: 0.00
+    min: 0.00
     datatype: currency
   - Frequency: jobs[i].union_dues.period
     required: True
@@ -81,6 +81,7 @@ fields:
   - Amount: incomes[i].income.value
     required: True
     datatype: currency
+    min: 0.00
   - Frequency: incomes[i].income.period
     required: True
     choices:
