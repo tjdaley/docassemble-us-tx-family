@@ -31,15 +31,10 @@ class JobList(DAList):
             (Decimal): Total gross income per desired_period.
         """
         self._trigger_gather()
-        old_precision = getcontext().prec
-        getcontext().prec = 2
         result = Decimal(0)
         for item in self.elements:
             result += item.income.amount(desired_period)
-            #result += Decimal(item.value) * Decimal(item.period)
-        #result = Decimal(result / desired_period)
-        getcontext().prec = old_precision
-        return(result)
+        return(Decimal(result))
 
 
 class Job(DAObject):
