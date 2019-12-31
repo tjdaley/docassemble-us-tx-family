@@ -54,10 +54,10 @@ class Job(DAObject):
 
     @property
     def complete(self):
-        self.employer
-        self.self_employed
-        self.income
-        self.union_dues
+        return self.employer is not None
+        #self.self_employed
+        #self.income
+        #self.union_dues
 
     def __unicode__(self):
         return self.summary()
