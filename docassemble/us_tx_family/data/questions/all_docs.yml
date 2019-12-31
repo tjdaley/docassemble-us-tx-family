@@ -18,9 +18,6 @@ objects:
   - petitioner: Individual
   - respondent: Individual
 ---
-include:
-  - basic-questions.yml
----
 mandatory: True
 code: |
   case.state = "TEXAS"

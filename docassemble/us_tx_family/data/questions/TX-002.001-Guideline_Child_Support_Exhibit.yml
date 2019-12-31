@@ -18,6 +18,7 @@ objects:
   - obligor: Individual
 ---
 include:
+  - basic-questions.yml
   - docassemble.us_tx_family:client_questions.yml
   - docassemble.us_tx_family:child_questions.yml
   - docassemble.us_tx_family:child_support_questions.yml
