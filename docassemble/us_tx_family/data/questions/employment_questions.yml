@@ -4,7 +4,7 @@ modules:
 ---
 objects:
   - jobs: JobList  #JobList.using(there_are_any=True)
-  - incomes: DAList  #IncomeList.using(there_are_any=True)
+  - incomes: IncomeList  #IncomeList.using(there_are_any=True)
   - obligor: Individual
 ---
 include:

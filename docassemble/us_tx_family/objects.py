@@ -18,7 +18,7 @@ class MyPeriodicValue(PeriodicValue):
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
-        # self.complete_attribute = 'job_complete'
+        self.complete_attribute = 'complete'
         super(JobList, self).init(*pargs, **kwargs)
 
     def total(self):
