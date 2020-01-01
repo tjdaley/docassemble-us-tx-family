@@ -57,3 +57,5 @@ subquestion: |
   **Cause number** | ${case.cause_number}
   **County** | ${case.county} County
   **Jobs** | ${jobs}
+  
+mandatory: True
