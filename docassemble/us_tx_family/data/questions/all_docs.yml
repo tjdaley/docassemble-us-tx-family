@@ -23,6 +23,16 @@ code: |
   case.state = "TEXAS"
   case.country = "USA"
 ---
+event: on_error
+question: |
+  We have encountered an error.
+subquestion: |
+  My apologies. We've encountered an error. It has been reported
+  to the help desk. Please try again later. /tjd/
+buttons:
+  - Exit: exit
+    url: https://www.powerdaley.com
+---
 question: |
   Divorce or Anulment?
 subquestion: |

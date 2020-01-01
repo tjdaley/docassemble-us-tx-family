@@ -6,6 +6,14 @@ metadata:
     Texas Child Support
   description: |
     An interview to produce a child support exhibit.
+  tab title: |
+    Child Support
+  tags:
+    - family law
+    - child support
+    - trial exhibits
+  logo: ATTORNEY.BOT
+  error action: on_error
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
