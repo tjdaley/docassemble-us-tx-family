@@ -58,7 +58,7 @@ subquestion: So far you have entered ${ jobs }.
 yesno: jobs.there_is_another
 ---
 question: |
-  Describe the ${ ordinal(i) } source of income.
+  Describe the ${ ordinal(i) } source of additional income.
 fields:
   - Income is from: incomes[i].type
     required: True

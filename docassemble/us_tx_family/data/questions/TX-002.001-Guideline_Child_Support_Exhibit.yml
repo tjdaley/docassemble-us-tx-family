@@ -9,7 +9,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2019-12-29
+  revision_date: 2019-12-31
 ---
 features:
   centered: False
@@ -56,12 +56,4 @@ subquestion: |
   **Children** | ${child}
   **Cause number** | ${case.cause_number}
   **County** | ${case.county} County
-  
-mandatory: True
-attachment:
-  name: Child Support Exhibit
-  filename: child_support_exhibit
-  docx template file: TX-002.001-Guideline_Child_Support_Exhibit.docx
-  valid formats:
-    - pdf
-    - docx
+  **Jobs** | ${jobs}
