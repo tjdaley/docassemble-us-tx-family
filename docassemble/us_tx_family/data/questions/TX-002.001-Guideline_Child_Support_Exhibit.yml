@@ -9,7 +9,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2019-12-31
+  revision_date: 2020-01-01
 ---
 features:
   centered: False
@@ -19,26 +19,20 @@ modules:
   - .functions
 ---
 objects:
-  - obligor: Individual
-  - jobs: JobList
-  - incomes: IncomeList
   - child: ChildList
   - case: Case
   - doc: DADict
-  - petitioner: Individual
-  - respondent: Individual
 ---
 include:
   - basic-questions.yml
+  - docassemble.us_tx_family:all_docs.yml
   - docassemble.us_tx_family:client_questions.yml
   - docassemble.us_tx_family:child_questions.yml
   - docassemble.us_tx_family:child_support_questions.yml
   - docassemble.us_tx_family:employment_questions.yml
-  - docassemble.us_tx_family:all_docs.yml
 ---
 mandatory: True
 code: |
-  case.is_divorce = True
   doc.title = "GUIDELINE CHILD SUPPORT EXHIBIT"
   doc.sensitive_data = True
   child.there_are_any = True

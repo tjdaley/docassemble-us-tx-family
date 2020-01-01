@@ -1,14 +1,16 @@
 ---
 metadata:
   description: |
-    This set of requestion requires
-    
-    modules:
-      - .objects
-    objects:
-      - jobs: JobList
-      - incomes: IncomeList
-      - obligor: Individual
+    This set of questions inquires about the Obligor's
+    jobs (income from employment or self-employment)
+    and incomes (income from other sources).
+---    
+modules:
+  - .objects
+objects:
+  - jobs: JobList
+  - incomes: IncomeList
+  - obligor: Individual
 ---
 question: |
   Does ${obligor} have any income from employment, even self-employment?

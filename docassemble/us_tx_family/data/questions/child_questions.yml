@@ -1,9 +1,6 @@
 ---
-metadata:
-  description: |
-    This set of questions requires:
-      objects:
-      - child: Childlist
+objects:
+  - child: Childlist
 ---
 question: |
   Does this case involve children?
