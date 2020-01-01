@@ -36,6 +36,12 @@ class JobList(DAList):
             result += item.income.amount(desired_period)
         return(Decimal(result))
 
+    @property
+    def count(self) -> int:
+        """
+        Returns the number of jobs we have defined.
+        """
+        return len(self.elements)
 
 class Job(DAObject):
     """
