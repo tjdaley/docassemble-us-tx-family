@@ -1,6 +1,6 @@
 ---
 objects:
-  - child: Childlist
+  - child: ChildList
 ---
 question: |
   Does this case involve children?
