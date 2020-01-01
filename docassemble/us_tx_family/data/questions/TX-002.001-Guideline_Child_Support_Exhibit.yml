@@ -16,8 +16,7 @@ features:
 ---
 modules:
   - .objects
-  - docassemble.us_tx_family
-  - docassemble.us_tx_family.functions
+  - .functions
 ---
 objects:
   - obligor: Individual
