@@ -69,8 +69,8 @@ subquestion: |
   &nbsp; | &nbsp;
   ---------|---------
   **Obligor** | ${obligor}
-  **Petitioner** | ${petitioner}
-  **Respondent** | ${respondent}
+  **Petitioner** | ${case.petitioner}
+  **Respondent** | ${case.respondent}
   **Children** | ${child}
   **Cause number** | ${case.cause_number}
   **County** | ${case.county} County
