@@ -25,8 +25,8 @@ code: |
   case.country = "USA"
   case.court.name = "DIXTRIXT"
   #case.set_action_type('petitioner respondent')
-  #del case.plaintiff
-  #del case.defendant
+  del case.plaintiff
+  del case.defendant
   case.initializeAttribute('petitioner', PartyList)
   case.initializeAttribute('respondent', PartyList)
   case.firstParty = case.petitioner
