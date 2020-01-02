@@ -43,7 +43,6 @@ modules:
 objects:
   - child: ChildList
   - case: Case
-  - doc: DADict
 ---
 include:
   - basic-questions.yml
