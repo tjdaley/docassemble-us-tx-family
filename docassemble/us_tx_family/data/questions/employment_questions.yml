@@ -24,18 +24,19 @@ question: |
 yesno: incomes.there_are_any
 ---
 section: employment
+generic object: Job
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
-  - Employer name or d/b/a: jobs[i].employer
-  - Self employed?: jobs[i].self_employed
+  - Employer name or d/b/a: x.employer
+  - Self employed?: x.self_employed
     datatype: yesnoradio
     required: True
-  - Income: jobs[i].income.value
+  - Income: x.income.value
     required: True
     datatype: currency
     min: 0.00
-  - Frequency: jobs[i].income.period
+  - Frequency: x.income.period
     required: True
     choices:
       - Weekly: 52
@@ -43,12 +44,12 @@ fields:
       - Twice per month: 24
       - Monthly: 12
       - Annually: 1
-  - Union dues: jobs[i].union_dues.value
+  - Union dues: x.union_dues.value
     required: True
     default: 0.00
     min: 0.00
     datatype: currency
-  - Frequency: jobs[i].union_dues.period
+  - Frequency: x.union_dues.period
     required: True
     default: 1
     choices:
