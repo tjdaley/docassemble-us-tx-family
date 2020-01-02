@@ -3,13 +3,13 @@ question: |
   Which party is the *obligor*?
 field: obligor_role
 choices:
-  - Petitioner (${ petitioner.name }): P
-  - Respondent (${ respondent.name }): R
+  - Petitioner (${ case.petitioner.name }): P
+  - Respondent (${ case.respondent.name }): R
 ---
 code: |
   if obligor_role == "P":
-    obligor = petitioner
+    obligor = case.petitioner
   else:
-    obligor = respondent
+    obligor = case.respondent
 mandatory: True
 ---
