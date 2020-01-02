@@ -23,8 +23,8 @@ mandatory: True
 code: |
   case.state = "TEXAS"
   case.country = "USA"
-  del case.plaintiff
-  del case.defendant
+  #del case.plaintiff
+  #del case.defendant
   case.initializeAttribute('petitioner', PartyList)
   case.initializeAttribute('respondent', PartyList)
   case.firstParty = case.petitioner
