@@ -28,7 +28,7 @@ generic object: JobList
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
-  - Employer name or d/b/a: x.employer
+  - Employer name or d/b/a: x[i].employer
   - Self employed?: x[i].self_employed
     datatype: yesnoradio
     required: True
