@@ -27,8 +27,8 @@ code: |
   del doc.case.defendant
   doc.case.initializeAttribute('petitioner', PartyList)
   doc.case.initializeAttribute('respondent', PartyList)
-  doc.case.firstParty = case.petitioner
-  doc.case.secondParty = case.respondent
+  doc.case.firstParty = doc.case.petitioner
+  doc.case.secondParty = doc.case.respondent
 ---
 #event: on_error
 question: |
