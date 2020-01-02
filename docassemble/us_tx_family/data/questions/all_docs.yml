@@ -24,7 +24,7 @@ code: |
   case.state = "TEXAS"
   case.country = "USA"
   case.court.name = "District"
-  case.court.jurisdiction.state = "Texass"
+  case.court.jurisdiction = list('Texass')
   # case.set_action_type('petitioner respondent')
   # del case.plaintiff
   # del case.defendant
