@@ -10,8 +10,26 @@ metadata:
 ---
 language: en
 auto terms:
+  cause number: |
+    The *cause number* is the number that the District Clerk uses to
+    keep track of the case. It can be a number or a series of letters
+    and numbers. You can find the cause number at the top of the
+    the citation or other paperwork in the case.
+
+    The cause number may be referred to as "Cause", "Cause Number",
+    "No.", "Number" or another label, centered at the top of the first
+    page.
+  dissolution: |
+    Marriage *dissolution* is the broad term that refers to any case
+    that seeks to terminate or *dissolve* a marriage. Most dissolution
+    cases are divorce cases but they can alson include annulments and
+    suits to declare a marriage void.
   obligee: |
     The *obligee* is the person who receives child support.
   obligor: |
     The *obligor* is the person who pays child support.
+  petitioner: |
+    The *petitioner* is the person who originally filed the lawsuit.
+  respondent: |
+    The *respondent* is the person who was served with the lawsuit.
 ---

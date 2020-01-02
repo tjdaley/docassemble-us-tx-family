@@ -5,8 +5,6 @@ field: obligor_role
 choices:
   - Petitioner (${ petitioner.name }): P
   - Respondent (${ respondent.name }): R
-right: |
-  The *obligor* is the person who *pays* child support.
 ---
 code: |
   if obligor_role == "P":
