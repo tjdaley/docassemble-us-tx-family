@@ -19,8 +19,22 @@ metadata:
       organization: Power Daley PLLC
   revision_date: 2020-01-01
 ---
+language: en
+sections:
+  - intro: Introduction
+  - case: Your Case
+  - children: The Children
+  - income: Income
+    subsections:
+      - employment: Employment
+      - other_income: Other Income
+  - insurance: Health Insurance
+  - conclusion: Conclusion
+---
 features:
   centered: False
+  progress bar: True
+  navigation: True
 ---
 modules:
   - .objects
@@ -45,6 +59,7 @@ code: |
   doc.sensitive_data = True
   child.there_are_any = True
 ---
+section: conclusion
 question: |
   Congratulations!
 subquestion: |

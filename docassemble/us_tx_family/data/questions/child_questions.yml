@@ -2,10 +2,12 @@
 objects:
   - child: ChildList
 ---
+section: children
 question: |
   Does this case involve children?
 yesno: child.there_are_any
 ---
+section: children
 question: |
   Who is the
   ${ ordinal(i) } child?
@@ -28,6 +30,7 @@ fields:
   - Birth date: child[i].birthdate
     datatype: date
 ---
+section: children
 question: |
   Would you like to add another child?
 subquestion: So far you have entered ${ child }.

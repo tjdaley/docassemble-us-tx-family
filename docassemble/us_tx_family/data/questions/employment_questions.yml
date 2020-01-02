@@ -13,14 +13,17 @@ objects:
   - incomes: IncomeList
   - obligor: Individual
 ---
+section: employment
 question: |
   Does ${obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
+section: other_income
 question: |
   Does ${obligor} have any other sources of income?
 yesno: incomes.there_are_any
 ---
+section: employment
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
@@ -55,11 +58,13 @@ fields:
       - Monthly: 12
       - Annually: 1
 ---
+section: employment
 question: |
   Would you like to add another job?
 subquestion: So far you have entered ${ jobs }.
 yesno: jobs.there_is_another
 ---
+section: other_income
 question: |
   Describe the ${ ordinal(i) } source of additional income.
 fields:
@@ -98,6 +103,7 @@ fields:
       - Monthly: 12
       - Annually: 1
 ---
+section: other_income
 question: |
   Would you like to add another source of income?
 subquestion: So far you have entered ${ incomes }.

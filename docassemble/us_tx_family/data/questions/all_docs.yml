@@ -33,12 +33,14 @@ buttons:
   - Exit: exit
     url: https://www.powerdaley.com
 ---
+section: case
 question: |
   Divorce or Anulment?
 subquestion: |
   Is this form being used in a marriage dissolution case (divorce or anulment)?
 yesno: case.is_divorce
 ---
+section: case
 question: |
   What county has your case been filed in?
 mandatory: False
@@ -48,6 +50,7 @@ fields:
       counties()
     help: This is the county within ${case.state} where your case was filed.
 ---
+section: case
 question: |
   Tell me a little more about your case.
 fields:
