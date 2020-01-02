@@ -64,6 +64,8 @@ question: |
   Congratulations!
 subquestion: |
   You are all done with the interview.
+
+  ${doc.caption()}
   
   &nbsp; | &nbsp;
   ---------|---------

@@ -14,9 +14,7 @@ modules:
 ---
 objects:
   - case: Case
-  - doc: DADict
-  - petitioner: Individual
-  - respondent: Individual
+  - doc: LegalFiling
 ---
 include:
   - docassemble.us_tx_family:terms.yml
@@ -25,8 +23,14 @@ mandatory: True
 code: |
   case.state = "TEXAS"
   case.country = "USA"
+  del case.plaintiff
+  del case.defendant
+  case.initializeAttribute(name='petitioner', objectType=PartyList)
+  case.initializeAttribute(name='respondent', objectType=PartyList)
+  case.firstParty = case.petitioner
+  case.secondParty = case.respondent
 ---
-event: on_error
+#event: on_error
 question: |
   We have encountered an error.
 subquestion: |
