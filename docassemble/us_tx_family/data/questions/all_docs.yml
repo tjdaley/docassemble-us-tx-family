@@ -13,22 +13,22 @@ modules:
   - .functions
 ---
 objects:
-  - case: Case
   - doc: LegalFiling
+  - doc.case: Case
 ---
 include:
   - docassemble.us_tx_family:terms.yml
 ---
 mandatory: True
 code: |
-  case.state = "TEXAS"
-  case.country = "USA"
-  del case.plaintiff
-  del case.defendant
-  case.initializeAttribute('petitioner', PartyList)
-  case.initializeAttribute('respondent', PartyList)
-  case.firstParty = case.petitioner
-  case.secondParty = case.respondent
+  doc.case.state = "TEXAS"
+  doc.case.country = "USA"
+  del doc.case.plaintiff
+  del doc.case.defendant
+  doc.case.initializeAttribute('petitioner', PartyList)
+  doc.case.initializeAttribute('respondent', PartyList)
+  doc.case.firstParty = case.petitioner
+  doc.case.secondParty = case.respondent
 ---
 #event: on_error
 question: |
@@ -45,14 +45,14 @@ question: |
   Divorce or Anulment?
 subquestion: |
   Is this form being used in a marriage dissolution case (divorce or anulment)?
-yesno: case.is_divorce
+yesno: doc.case.is_divorce
 ---
 section: case
 question: |
   What county has your case been filed in?
 mandatory: False
 fields:
-  - County: case.county
+  - County: doc.case.county
     code: |
       counties()
     help: This is the county within ${case.state} where your case was filed.
@@ -61,10 +61,10 @@ section: case
 question: |
   Tell me a little more about your case.
 fields:
-  - Court number: case.court_number
+  - Court number: doc.case.court_number
     code: |
-      courts(case.county)
-  - Cause number: case.cause_number
-  - Footer text: case.footer
+      courts(doc.case.county)
+  - Cause number: doc.case.cause_number
+  - Footer text: doc.case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
 ---
