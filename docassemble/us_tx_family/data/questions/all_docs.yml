@@ -23,6 +23,7 @@ mandatory: True
 code: |
   case.state = "TEXAS"
   case.country = "USA"
+  case.court.name = "DIXTRIXT"
   #del case.plaintiff
   #del case.defendant
   case.initializeAttribute('petitioner', PartyList)
