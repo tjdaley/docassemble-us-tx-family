@@ -18,6 +18,9 @@ objects:
   - petitioner: Individual
   - respondent: Individual
 ---
+include:
+  - docassemble.us_tx_family:terms.yml
+---
 mandatory: True
 code: |
   case.state = "TEXAS"

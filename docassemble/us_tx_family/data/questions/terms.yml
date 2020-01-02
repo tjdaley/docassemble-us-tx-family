@@ -1,0 +1,17 @@
+---
+metadata:
+  description: |
+    This file defines terms that will be automatically
+    highlighted and defined in each question in which
+    a defined term appears.
+
+    As you add new terms, please insert them in alphabetical
+    order to make this file easier to manage.
+---
+language: en
+auto terms:
+  obligee: |
+    The *obligee* is the person who receives child support.
+  obligor: |
+    The *obligor* is the person who pays child support.
+---
