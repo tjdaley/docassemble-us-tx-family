@@ -66,10 +66,11 @@ subquestion: So far you have entered ${ jobs }.
 yesno: jobs.there_is_another
 ---
 section: other_income
+generic object: IncomeList
 question: |
   Describe the ${ ordinal(i) } source of additional income.
 fields:
-  - Income is from: incomes[i].type
+  - Income is from: x[i].type
     required: True
     choices:
       - Severance Pay: SEVPAY
@@ -90,12 +91,12 @@ fields:
       - Prizes: PRIZES
       - Advances on Inheritance: INHERI
       - Scholarships: SCHOLA
-  - Description: incomes[i].description
-  - Amount: incomes[i].income.value
+  - Description: x[i].description
+  - Amount: x[i].income.value
     required: True
     datatype: currency
     min: 0.00
-  - Frequency: incomes[i].income.period
+  - Frequency: x[i].income.period
     required: True
     choices:
       - Weekly: 52
