@@ -23,10 +23,10 @@ mandatory: True
 code: |
   case.state = "TEXAS"
   case.country = "USA"
-  case.court.name = "DIXTRIXT"
-  #case.set_action_type('petitioner respondent')
-  del case.plaintiff
-  del case.defendant
+  case.court.name = "District"
+  # case.set_action_type('petitioner respondent')
+  # del case.plaintiff
+  # del case.defendant
   case.initializeAttribute('petitioner', PartyList)
   case.initializeAttribute('respondent', PartyList)
   case.firstParty = case.petitioner
@@ -67,7 +67,7 @@ fields:
   - Court number: case.court_number
     code: |
       courts(case.county)
-  - Cause number: case.cause_number
+  - Cause number: case.case_id
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
 ---
