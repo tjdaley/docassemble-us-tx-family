@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: default
 title: Overview of docassemble-us-tx-family
 short_title: Documentation
 order: 20
