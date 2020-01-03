@@ -60,7 +60,7 @@ Other question files, which have more formal-looking names, are intended to be f
 [classes]: {{ site.baseurl }}/docs/classes.html
 [functions]: {{ site.baseurl }}/docs/functions.html
 [static files]: {{ site.baseurl }}/docs/static_files.html
-[variables]: {{ site.baseurl }}/docs/variables.html
+[variables]: variables.html
 [objects]: {{ site.baseurl }}/docs/objectgs.html
 
 [docassemble]: https://docassemble.org
