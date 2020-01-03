@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: default
 title: Variables
 short_title: Variables
 order: 20
