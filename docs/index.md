@@ -57,11 +57,10 @@ Other question files, which have more formal-looking names, are intended to be f
 {% endfor %}
 </ul>
 
-[classes]: {{ site.baseurl }}/docs/classes.md
-[functions]: {{ site.baseurl }}/docs/functions.md
-[static files]: {{ site.baseurl }}/docs/static_files.md
-[variables]: {{ site.baseurl }}/docs/variables.md
-[objects]: {{ site.baseurl }}/docs/objectgs.md
+[classes]: {{ site.baseurl }}/docs/classes.html
+[functions]: {{ site.baseurl }}/docs/functions.html
+[static files]: {{ site.baseurl }}/docs/static_files.html
+[variables]: {{ site.baseurl }}/docs/variables.html
+[objects]: {{ site.baseurl }}/docs/objectgs.html
 
 [docassemble]: https://docassemble.org
-[Hello World]: {{ site.baseurl }}/docs/helloworld.html
