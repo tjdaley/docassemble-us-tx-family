@@ -1,0 +1,28 @@
+---
+objects:
+  - doc: LegalFiling
+  - case: Case
+---
+include:
+  - basic-questions.yml
+---
+mandatory: True
+code: |
+  case.state = "TEXAS"
+  case.case_id = "DF-20-55555"
+  case.country = "US"
+  case.court.name = "District Court"
+  case.court.jurisdiction = list(['Texas', 'Dallas'])
+  case.initializeAttribute('petitioner', PartyList)
+  case.initializeAttribute('respondent', PartyList)
+  case.firstParty = case.petitioner
+  case.secondParty = case.respondent
+  doc.case = case
+  doc.case.case = case  # <-- Add this line to make it work
+  doc.title = "Test Pleading"
+---
+mandatory: True
+question: |
+  Here is your case's caption:
+subquestion: |
+  ${doc.caption()}
