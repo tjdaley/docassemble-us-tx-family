@@ -94,7 +94,7 @@ class UsTxCourtDirectory(object):
                 address=entry.get('address'),
                 city=entry.get('city'),
                 state='TX',
-                zip=entry.get('zip code',
+                zip=entry.get('zip code'),
                 country='US')
             )
             name = IndividualName()
