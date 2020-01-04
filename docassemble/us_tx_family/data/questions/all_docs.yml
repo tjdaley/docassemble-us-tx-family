@@ -11,11 +11,10 @@ metadata:
 ---
 modules:
   - .functions
-  - .objects
 ---
 objects:
   - doc: LegalFiling
-  - case: TexasFamilyCase
+  - case: Case
 ---
 include:
   - docassemble.us_tx_family:terms.yml
@@ -34,6 +33,7 @@ code: |
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
+  doc.case.case = case  # spackle over error in case_id_in_caption()
 ---
 #event: on_error
 question: |
