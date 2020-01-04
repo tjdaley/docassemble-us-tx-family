@@ -11,10 +11,11 @@ metadata:
 ---
 modules:
   - .functions
+  - .objects
 ---
 objects:
   - doc: LegalFiling
-  - case: Case
+  - case: TexasFamilyCase
 ---
 include:
   - docassemble.us_tx_family:terms.yml
@@ -24,7 +25,7 @@ code: |
   case.state = "TEXAS"
   case.country = "USA"
   case.court.name = "District"
-  case.court.jurisdiction = list('Texass')
+  case.court.jurisdiction = list('Texas')
   # case.set_action_type('petitioner respondent')
   # del case.plaintiff
   # del case.defendant

@@ -6,6 +6,7 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 from decimal import Decimal
 
 from docassemble.base.util import DAList, DAObject, PeriodicValue, word
+from docassemble.base.legal import Case
 
 __all__ = ['Job', 'JobList', 'Income', 'IncomeList']
 
@@ -116,3 +117,17 @@ class Income(DAObject):
 
     def __unicode__(self):
         return self.summary()
+
+
+class TexasFamilyCase(Case):
+    """
+    Extends docassemble's Case class, primarily to fix
+    the bug in case_id_in_caption().
+    """
+    def init(self, *pargs, **kwargs):
+        super(TexasFamilyCase, self).init(*pargs, **kwargs)
+
+    def case_id_in_caption(self, **kwargs):
+        if hasattr(self, 'case_id'):
+            return word('Cause No.') + " " + self.case_id
+        return word('Cause No.')
