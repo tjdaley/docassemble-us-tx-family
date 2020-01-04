@@ -23,7 +23,7 @@ mandatory: True
 code: |
   case.state = "TEXAS"
   case.country = "USA"
-  case.court.name = "District"
+  case.court.name = "District Court"
   case.court.jurisdiction = list('Texas')
   # case.set_action_type('petitioner respondent')
   # del case.plaintiff
