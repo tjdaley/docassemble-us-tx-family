@@ -1,0 +1,26 @@
+---
+objects:
+  - doc: LegalFiling
+  - case: Case
+---
+mandatory: True
+code: |
+  case.state = "TEXAS"
+  case.country = "USA"
+  case.court.name = "District Court"
+  case.court.jurisdiction = list('Texas')
+  # case.set_action_type('petitioner respondent')
+  # del case.plaintiff
+  # del case.defendant
+  case.initializeAttribute('petitioner', PartyList)
+  case.initializeAttribute('respondent', PartyList)
+  case.firstParty = case.petitioner
+  case.secondParty = case.respondent
+  doc.case = case
+  doc.case.case = case  # spackle over error in case_id_in_caption()
+---
+mandatory: True
+question: |
+  Here is your case's caption:
+subquestion: |
+  ${doc.caption()}

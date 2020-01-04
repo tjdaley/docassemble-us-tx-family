@@ -21,7 +21,7 @@ The **docassemble-us-tx-family** module defines or uses the following variables:
 
 **case.court.court_id** - Set to the number of the Judicial District that is handling this case.
 
-**case.court.jurisdiction** - A list containing in 'Texas'. This covers what I think is a bug in the docassemble base code or compensates for something I don't understand. *See*, ```Case.case_id_in_caption()```.
+**case.court.jurisdiction** - A list containing 'Texas'.
 
 **case.court.name** - "District Court"
 
