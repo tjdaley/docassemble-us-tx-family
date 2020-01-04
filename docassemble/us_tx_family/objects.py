@@ -119,7 +119,7 @@ class Income(DAObject):
         return self.summary()
 
 
-class TexasFamilyCase(Case):
+class TexasFamilyCase(DAObject):
     """
     Extends docassemble's Case class, primarily to fix
     the bug in case_id_in_caption().
