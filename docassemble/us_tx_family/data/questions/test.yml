@@ -3,12 +3,16 @@ objects:
   - doc: LegalFiling
   - case: Case
 ---
+include:
+  - basic-questions.yml
+---
 mandatory: True
 code: |
   case.state = "TEXAS"
-  case.country = "USA"
+  case.case_id = "DF-20-55555"
+  case.country = "US"
   case.court.name = "District Court"
-  case.court.jurisdiction = list('Texas')
+  case.court.jurisdiction = list('Texas', 'Dallas')
   # case.set_action_type('petitioner respondent')
   # del case.plaintiff
   # del case.defendant
