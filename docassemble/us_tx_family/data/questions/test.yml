@@ -21,7 +21,7 @@ code: |
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
-  doc.case.case = case  # spackle over error in case_id_in_caption()
+  # doc.case.case = case  # spackle over error in case_id_in_caption()
   doc.title = "Test Pleading"
 ---
 mandatory: True
