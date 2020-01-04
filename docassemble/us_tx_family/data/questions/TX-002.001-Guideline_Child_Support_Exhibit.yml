@@ -75,6 +75,12 @@ subquestion: |
   **Cause number** | ${case.case_id}
   **County** | ${case.county} County
   **Jobs** | ${jobs}
+
+  Mail your pleading to:
+    ${clerk_staff(case.county)}
+
+  Court staff:
+    ${court_staff(case.court.court_id)}
   
 mandatory: True
 attachment:

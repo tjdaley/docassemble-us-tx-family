@@ -6,6 +6,7 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 import os
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
+from .us_tx_court_directory import UsTxCourtDirectory
 
 
 def counties():
@@ -19,3 +20,13 @@ def courts(county: str):
     court_list = court_db.get_courts(county)
     court_list.insert(0, (None, "(NOT FILED)"))
     return court_list
+
+def court_staff(court: str):
+    directory = UsTxCourtDirectory()
+    staff_list = directory.get_court(court)
+    return staff_list
+
+def clerk_staff(county: str):
+    directory = UsTxCourtDirectory()
+    staff_list = directory.get_clerk(county)
+    return staff_list
