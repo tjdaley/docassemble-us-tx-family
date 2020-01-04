@@ -13,27 +13,27 @@ The **docassemble-us-tx-family** module defines or uses the following variables:
 
 **case.case_id** - The cause number
 
-**case.country** - "USA"
+**case.country** - "US"
 
 **case.county** - The name of the county this case will be or was filed in.
 
 **case.court** - Instance of *Court*
 
+**case.court.court_id** - Set to the number of the Judicial District that is handling this case.
+
 **case.court.jurisdiction** - A list containing in 'Texas'. This covers what I think is a bug in the docassemble base code or compensates for something I don't understand. *See*, ```Case.case_id_in_caption()```.
 
-**case.court.name** - "District"
+**case.court.name** - "District Court"
 
-**case.court_number** - Set to the number of the Judicial District that is handling this case.
-
-**case.firstParty** - Is set to ```case.petitioner```.
+**case.firstParty** - Is set to ```case.petitioner.```
 
 **case.footer** - An abbreviated version of the case title for document footers. For example, a case entitled "In the Matter of the Marriage of Jane Doe and John Doe" might use "IMMO DOE AND DOE" as the case footer. This is freeform text that is substituted in to the document footers.
 
-**case.petitioner** - A list of petitioners. In your forms, you'll probably expect one petitioner and therefore you'll probably want to use ```${case.petitioner[0].name}```. (Note the array index.)
+**case.petitioner** - A list of petitioners. In your forms, you'll probably expect one petitioner and therefore you'll probably want to use ```${case.petitioner[0].name}.``` (Note the array index.)
 
-**case.respondent** - A list of respondents. In your forms, you'll probably expect one respondent and therefore you'll probably want to use ```${case.respondent[0].name}```. (Note the array index.)
+**case.respondent** - A list of respondents. In your forms, you'll probably expect one respondent and therefore you'll probably want to use ```${case.respondent[0].name}.``` (Note the array index.)
 
-**case.secondParty** - Is set to ```case.respondent```.
+**case.secondParty** - Is set to ```case.respondent.```
 
 **case.state** - The political subdivision defining the jurisdiction of the case, i.e. "TEXAS"
 
@@ -61,7 +61,7 @@ Each child has these properties:
 
 **doc** - The current document. Instance of *LegalPleading*.
 
-**doc.case** - Is set to ```case```.
+**doc.case** - Is set to ```case.```
 
 ### jobs
 
