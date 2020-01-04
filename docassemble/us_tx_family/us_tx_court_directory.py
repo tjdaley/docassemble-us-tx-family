@@ -15,7 +15,7 @@ VERSION = 'A'
 
 if not DEV_MODE:
     from docassemble.base.core import DAFile, DAList
-    from docassemble.base.legal import Individual, Name, Address
+    from docassemble.base.util import Individual, IndividualName, Address
 
 URL = 'https://card.txcourts.gov/ExcelExportPublic.aspx?type=P&export=E&CommitteeID=0&Court=&SortBy=tblCounty.Sort_ID,%20Last_Name&Active_Flg=true&Last_Name=&First_Name=&Court_Type_CD=55&Court_Sub_Type_CD=0&County_ID=0&City_CD=0&Address_Type_CD=0&Annual_Report_CD=0&PersonnelType1=&PersonnelType2=&DistrictPrimaryLocOnly=1&AdminJudicialRegion=0&COADistrictId=0'
 STORE = 'us_tx_court_directory.json'
@@ -91,14 +91,14 @@ class UsTxCourtDirectory(object):
         for entry in directory:
             address = Address()
             address.init(
-                street=entry.get('address'),
+                address=entry.get('address'),
                 city=entry.get('city'),
                 state='TX',
-                zip=entry.get('zip code')
+                zip=entry.get('zip code',
+                country='US')
             )
-            name = Name()
+            name = IndividualName()
             name.init(
-                prefix=entry.get('prefix'),
                 first=entry.get('first name'),
                 middle=entry.get('middle name'),
                 last=entry.get('last name'),
