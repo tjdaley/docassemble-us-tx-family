@@ -116,12 +116,12 @@ class UsCaseList(object):
         infile = DAFile()
         infile.initialize(filename=self.store)
         infile.retrieve()
-        logmessage("Will be reading from {}".format(infile.path))
+        logmessage("Will be reading from {}".format(infile.path()))
         try:
             pickle_bytes = infile.slurp(auto_decode=False)
             result = pickle.loads(pickle_bytes.encode('utf-8'))
         except Exception as e:
-            logmessage("Error reading {}: {}".format(infile.path, str(e)))
+            logmessage("Error reading {}: {}".format(infile.path(), str(e)))
             result = None
         return result
 
@@ -142,7 +142,7 @@ class UsCaseList(object):
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases), binary=True)
         outfile.commit()
-        logmessage("Saved {} cases to {}".format(len(self.cases or []), outfile.path))
+        logmessage("Saved {} cases to {}".format(len(self.cases or []), outfile.path()))
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
