@@ -115,6 +115,7 @@ class UsCaseList(object):
         """
         infile = DAFile()
         infile.initialize(filename=self.store)
+        logmessage("Will be reading from {}".format(infile.path))
         try:
             pickle_bytes = infile.slurp(auto_decode=False)
             result = pickle.loads(pickle_bytes.encode('utf-8'))
