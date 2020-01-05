@@ -96,7 +96,7 @@ class UsCaseList(object):
             cases = self.dev_read()
         else:
             cases = self.prod_read()
-        logmessage("Retrieved {} cases from {}.".format(len(cases), self.store))
+        logmessage("Retrieved {} cases from {}.".format(len(cases or []), self.store))
         return cases
 
     def save(self, case) -> bool:
@@ -139,7 +139,7 @@ class UsCaseList(object):
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases), binary=True)
         outfile.commit()
-        logmessage("Saved {} cases to {}".format(len(self.cases), self.store))
+        logmessage("Saved {} cases to {}".format(len(self.cases or []), self.store))
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
