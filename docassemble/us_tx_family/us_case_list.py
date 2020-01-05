@@ -103,7 +103,7 @@ class UsCaseList(object):
         infile = DAFile()
         infile.initialize(filename=self.store)
         try:
-            pickle_text = infile.slurp()
+            pickle_text = infile.slurp(auto_decode=False)
             result = pickle.loads(pickle_text.encode('utf-8-sig'))
         except:
             result = None
@@ -124,7 +124,7 @@ class UsCaseList(object):
         outfile = DAFile()
         outfile.initialize(filename=self.store)
         outfile.set_attributes(persistent=True)
-        outfile.write(pickle.dumps(self.cases).decode('utf-8-sig'))
+        outfile.write(pickle.dumps(self.cases), binary=True)
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
