@@ -118,7 +118,8 @@ class UsCaseList(object):
         try:
             pickle_text = infile.slurp(auto_decode=False)
             result = pickle.loads(pickle_text.encode('utf-8-sig'))
-        except:
+        except Exception as e:
+            logmessage("Error in prod_read(): {}".format(str(e)))
             result = None
         return result
 
