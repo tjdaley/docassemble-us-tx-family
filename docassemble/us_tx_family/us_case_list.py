@@ -22,7 +22,7 @@ else:
         except Exception as e:
             sys.stderr.write('Unable to log: {}'.format(str(e)))
 
-STORE = 'us_case_list-{}.json'
+STORE = 'us_case_list-{}.pickle'
 
 class UsCaseList(object):
     """
@@ -44,7 +44,9 @@ class UsCaseList(object):
         self.cases = self.read() or {}
 
     def get_cases(self):
-        return [(case, 'key') for case in self.cases.items()]
+        case_list = [(case, 'key') for case in self.cases.items()]
+        logmessage(str(case_list))
+        return case_list
 
     def get_case(self, key: str):
         return self.cases.get(str, None)
@@ -91,8 +93,11 @@ class UsCaseList(object):
 
     def read(self) -> dict:
         if DEV_MODE:
-            return self.dev_read()
-        return self.prod_read()
+            cases = self.dev_read()
+        else:
+            cases = self.prod_read()
+        logmessage("Retrieved {} cases from {}.".format(len(cases), self.store))
+        return cases
 
     def save(self, case) -> bool:
         """
@@ -134,7 +139,7 @@ class UsCaseList(object):
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases), binary=True)
         outfile.commit()
-        logmessage("Saved cases to {}".format(self.store))
+        logmessage("Saved {} cases to {}".format(len(self.cases), self.store))
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
