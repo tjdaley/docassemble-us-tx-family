@@ -43,6 +43,16 @@ def get_case(user_id: str, case_key: str):
     case = case_db.get_case(case_key)
     return case
 
+def del_case(user_id: str, case_key: str):
+    case_db = UsCaseList(user_id)
+    case_db.del_case(case_key)
+
+def del_cases(user_id: str, confirm: bool = False):
+    if not isinstance(confirm, bool) or confirm != True:
+        return
+    case_db = UsCaseList(user_id)
+    case_db.del_cases()
+
 def save_case(user_id: str, case):
     case_db = UsCaseList(user_id)
     case_db.save(case)

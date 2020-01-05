@@ -15,7 +15,7 @@ DEV_MODE = False
 VERSION = 'B'
 
 if not DEV_MODE:
-    from docassemble.base.core import DAFile
+    from docassemble.base.util import DARedis
     from .ml_stripper import MLStripper
 else:
     from ml_stripper import MLStripper
@@ -144,13 +144,8 @@ class UsTxCourts(object):
         """
         Read the list of counties from file storage.
         """
-        infile = DAFile()
-        infile.initialize(filename=STORE)
-        try:
-            json_text = infile.slurp()
-            result = json.loads(json_text)
-        except:
-            result = None
+        the_redis = DARedis()
+        result = the_redis.get_data(STORE)
         return result
 
     def dev_read(self) -> dict:
@@ -164,10 +159,8 @@ class UsTxCourts(object):
         """
         Persist the list of counties to file storage.
         """
-        outfile = DAFile()
-        outfile.initialize(filename=STORE)
-        outfile.set_attributes(persistent=True)
-        outfile.write(json.dumps(cache_record(courts, courts_by_county)))
+        the_redis = DARedis()
+        the_redis.set_data(STORE, cache_record(courts, courts_by_county))
 
     def dev_save(self, courts, courts_by_county):
         with open(STORE, 'w') as fp:

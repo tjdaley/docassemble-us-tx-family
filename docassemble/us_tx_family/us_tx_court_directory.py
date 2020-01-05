@@ -14,8 +14,8 @@ DEV_MODE = False
 VERSION = 'A'
 
 if not DEV_MODE:
-    from docassemble.base.core import DAFile, DAList
-    from docassemble.base.util import Individual, IndividualName, Address
+    from docassemble.base.core import DAList
+    from docassemble.base.util import DARedis, Individual, IndividualName, Address
 
 URL = 'https://card.txcourts.gov/ExcelExportPublic.aspx?type=P&export=E&CommitteeID=0&Court=&SortBy=tblCounty.Sort_ID,%20Last_Name&Active_Flg=true&Last_Name=&First_Name=&Court_Type_CD=55&Court_Sub_Type_CD=0&County_ID=0&City_CD=0&Address_Type_CD=0&Annual_Report_CD=0&PersonnelType1=&PersonnelType2=&DistrictPrimaryLocOnly=1&AdminJudicialRegion=0&COADistrictId=0'
 STORE = 'us_tx_court_directory.json'
@@ -183,13 +183,8 @@ class UsTxCourtDirectory(object):
         """
         Read the list of counties from file storage.
         """
-        infile = DAFile()
-        infile.initialize(filename=STORE)
-        try:
-            json_text = infile.slurp()
-            result = json.loads(json_text)
-        except:
-            result = None
+        the_redis = DARedis()
+        result = the_redis.get_data(STORE)
         return result
 
     def dev_read(self) -> dict:
@@ -203,10 +198,8 @@ class UsTxCourtDirectory(object):
         """
         Persist the directory info to file storage.
         """
-        outfile = DAFile()
-        outfile.initialize(filename=STORE)
-        outfile.set_attributes(persistent=True)
-        outfile.write(json.dumps(cache_record(courts, clerks)))
+        the_redis = DARedis()
+        the_redis.set_data(STORE, cache_record(courts, clerks))
 
     def dev_save(self, courts, clerks):
         with open(STORE, 'w') as fp:

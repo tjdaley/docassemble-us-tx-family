@@ -7,7 +7,7 @@ from lxml import html
 import requests
 import json
 
-from docassemble.base.core import DAFile
+from docassemble.base.util import DARedis
 
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
 STORE = 'us_tx_counties.json'
@@ -71,23 +71,16 @@ class UsTxCounties(object):
         """
         Read the list of counties from file storage.
         """
-        infile = DAFile()
-        infile.initialize(filename=STORE)
-        try:
-            json_text = infile.slurp()
-            result = json.loads(json_text)
-        except:
-            result = None
+        the_redis = DARedis()
+        result = the_redis.get_data(STORE)
         return result
 
     def save(self, counties):
         """
         Persist the list of counties to file storage.
         """
-        outfile = DAFile()
-        outfile.initialize(filename=STORE)
-        outfile.set_attributes(persistent=True)
-        outfile.write(json.dumps({'counties': counties}))
+        the_redis = DARedis()
+        the_redis.set_data(STORE, counties)
 
 
 def main():

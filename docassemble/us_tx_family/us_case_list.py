@@ -55,45 +55,22 @@ class UsCaseList(object):
         logmessage("Retrieved case {}".format(str(case)))
         return case
 
-    def dalist_of_individuals(self, directory: list):
-        """
-        Converts a list of Python dicts into a DAList of Individual instances.
+    def del_case(self, key: str):
+        logmessage("Trying to delete case, key={}".format(key))
+        if key in self.cases:
+            del self.cases[key]
+            self.save(None)
+        else:
+            logmessage("Could not find case having key={}".format(key))
 
-        Args:
-            directory (list): List of dicts where each dict defines a person.
-        Returns:
-            DAList: List of instances of Individual
-        """
-        individuals = []
-        for entry in directory:
-            address = Address()
-            address.init(
-                address=entry.get('address'),
-                city=entry.get('city'),
-                state='TX',
-                zip=entry.get('zip code'),
-                country='US'
-            )
-            name = IndividualName()
-            name.init(
-                first=entry.get('first name'),
-                middle=entry.get('middle name'),
-                last=entry.get('last name'),
-                suffix=entry.get('suffix')
-            )
-            individual = Individual()
-            individual.init(
-                name=name,
-                address=address,
-                title=entry.get('title'),
-                phone=entry.get('phone'),
-                email=entry.get('email'),
-                ou=entry.get('court')
-            )
-            individuals.append(individual)
-        result = DAList()
-        result.init(object_type=Individual, elements=individuals)
-        return result
+    def del_cases(self):
+        if not DEV_MODE:
+            logmessage("Deleting all cases for user = {}".format(self.user_id))
+            the_redis = DARedis()
+            the_redis.set_data(self.store, None)
+            return
+
+        logmessage("Cannot delete all cases in DEV_MODE")
 
     def read(self) -> dict:
         if DEV_MODE:
@@ -107,15 +84,18 @@ class UsCaseList(object):
         """
         Save a case.
         """
-        key = case_key(case)
-        case.key = key
+        if case is not None:
+            key = case_key(case)
+            case.key = key
+        else:
+            key = None
         if DEV_MODE:
             return self.dev_save(key, case)
         return self.prod_save(key, case)
 
     def prod_read(self) -> dict:
         """
-        Read the list of cases for this user from file storage.
+        Read the list of cases for this user from cross-session storage.
         """
         the_redis = DARedis()
         return the_redis.get_data(self.store)
@@ -129,14 +109,16 @@ class UsCaseList(object):
 
     def prod_save(self, key: str, case):
         """
-        Persist the directory info to file storage.
+        Persist the directory info to cross-session storage.
         """
-        self.cases[key] = case
+        if case is not None:
+            self.cases[key] = case
         the_redis = DARedis()
         the_redis.set_data(self.store, self.cases)
 
     def dev_save(self, key: str, case):
-        self.cases[key] = case
+        if case is not None:
+            self.cases[key] = case
         with open(self.store, 'w') as fp:
             pickle.dump(self.cases, fp)
 
