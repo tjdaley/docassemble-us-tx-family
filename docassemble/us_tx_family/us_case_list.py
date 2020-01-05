@@ -49,6 +49,8 @@ class UsCaseList(object):
         return case_list
 
     def get_case(self, key: str):
+        logmessage("Found {} cases to look through.".format(len(self.cases)))
+        logmessage("Searching for {}'s case, key={}".format(self.user_id, key))
         case = self.cases.get(key)
         logmessage("Retrieved case {}".format(str(case)))
         return case
