@@ -58,7 +58,7 @@ question: |
 subquestion: |
   If this ${doc.title} pertains to one of these cases, please indicate which one.
   If it does NOT pertain to one of these cases, please select **(add new case)**.
-fields: |
+fields:
   - Case: case_key
     code: |
       my_cases()
