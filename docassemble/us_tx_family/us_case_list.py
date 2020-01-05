@@ -44,7 +44,7 @@ class UsCaseList(object):
         self.cases = self.read() or {}
 
     def get_cases(self):
-        case_list = [(case.key, case) for case in self.cases.items()]
+        case_list = [(case['key'], case) for case in self.cases.items()]
         logmessage(str(case_list))
         return case_list
 
