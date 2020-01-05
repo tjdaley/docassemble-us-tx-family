@@ -12,8 +12,8 @@ import sys
 DEV_MODE = False
 
 if not DEV_MODE:
-    from docassemble.base.core import DAFile, DAList
-    from docassemble.base.util import Individual, IndividualName, Address
+    from docassemble.base.core import DAList
+    from docassemble.base.util import DARedis, Individual, IndividualName, Address
     from docassemble.base.logger import logmessage
 else:
     def logmessage(message: str):
@@ -22,18 +22,18 @@ else:
         except Exception as e:
             sys.stderr.write('Unable to log: {}'.format(str(e)))
 
-STORE = 'us_case_list-{}.pickle'
+STORE = '{}:us_case_list'
 
 class UsCaseList(object):
     """
-    Encapsulates the behavior of a datasource for district court personel in Texas.
+    Persists  users' case information between sessions and interviews
     """
     def __init__(self, user_id: str):
         """
         Initialize and instance.
         """
         self.cases = {}
-        self.user_id = user_id.replace('@', '_').replace('.', '_', 1)
+        self.user_id = user_id  # .replace('@', '_').replace('.', '_', 1)
         self.store = STORE.format(self.user_id)
         self.load()
     
@@ -113,18 +113,8 @@ class UsCaseList(object):
         """
         Read the list of cases for this user from file storage.
         """
-        infile = DAFile()
-        infile.init(filename=self.store)
-        infile.initialize(filename=self.store)
-        infile.retrieve()
-        logmessage("Will be reading from {}".format(infile.path()))
-        try:
-            pickle_bytes = infile.slurp(auto_decode=False)
-            result = pickle.loads(pickle_bytes.encode('utf-8'))
-        except Exception as e:
-            logmessage("Error reading {}: {}".format(infile.path(), str(e)))
-            result = None
-        return result
+        the_redis = DARedis()
+        return the_redis.get_data(self.store)
 
     def dev_read(self) -> dict:
         try:
@@ -138,19 +128,13 @@ class UsCaseList(object):
         Persist the directory info to file storage.
         """
         self.cases[key] = case
-        outfile = DAFile()
-        outfile.initialize(filename=self.store, persistent=True)
-        #outfile.set_attributes(persistent=True)
-
-        outfile.write(pickle.dumps(self.cases), binary=True)
-        outfile.commit()
-        logmessage("Saved {} cases to {}".format(len(self.cases or []), outfile.path()))
+        the_redis = DARedis()
+        the_redis.set_data(self.store, self.cases)
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
         with open(self.store, 'w') as fp:
             pickle.dump(self.cases, fp)
-        logmessage("Saved cases to {}".format(self.store))
 
 
 def case_key(case):
