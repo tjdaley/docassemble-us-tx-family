@@ -104,7 +104,7 @@ class UsCaseList(object):
         infile.initialize(filename=self.store)
         try:
             pickle_text = infile.slurp()
-            result = pickle.loads(pickle_text.decode())
+            result = pickle.loads(pickle_text.encode())
         except:
             result = None
         return result
@@ -124,7 +124,7 @@ class UsCaseList(object):
         outfile = DAFile()
         outfile.initialize(filename=self.store)
         outfile.set_attributes(persistent=True)
-        outfile.write(pickle.dumps(self.cases).encode())
+        outfile.write(pickle.dumps(self.cases).decode())
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
