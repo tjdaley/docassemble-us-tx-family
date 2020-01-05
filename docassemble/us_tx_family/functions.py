@@ -7,7 +7,7 @@ import os
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
 from .us_tx_court_directory import UsTxCourtDirectory
-#from .us_case_list import UsCaseList
+from .us_case_list import UsCaseList
 
 
 def counties():
@@ -33,4 +33,7 @@ def clerk_staff(county: str):
     return staff_list
 
 def my_cases(user_id: str):
-    return ['(add new case)']
+    case_db = UsCaseList(user_id)
+    cases = case_db.get_cases()
+    cases.insert(0, (None, "(ADD NEW CASE)"))
+    return cases
