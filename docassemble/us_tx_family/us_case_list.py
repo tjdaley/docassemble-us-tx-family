@@ -8,7 +8,7 @@ import json
 import pickle
 import uuid
 
-DEV_MODE = True
+DEV_MODE = False
 
 if not DEV_MODE:
     from docassemble.base.core import DAFile, DAList
@@ -25,7 +25,8 @@ class UsCaseList(object):
         Initialize and instance.
         """
         self.cases = {}
-        self.user_id = user_id
+        self.user_id = user_id.replace('@', '_').replace('.', '_', 1)
+        self.store = STORE.format(self.user_id)
         self.load()
     
     def load(self):
@@ -100,8 +101,7 @@ class UsCaseList(object):
         Read the list of cases for this user from file storage.
         """
         infile = DAFile()
-        store = STORE.format(self.user_id)
-        infile.initialize(filename=store)
+        infile.initialize(filename=self.store)
         try:
             pickle_text = infile.slurp()
             result = pickle.loads(pickle_text)
@@ -111,8 +111,7 @@ class UsCaseList(object):
 
     def dev_read(self) -> dict:
         try:
-            store = STORE.format(self.user_id)
-            with open (store, 'r') as fp:
+            with open (self.store, 'r') as fp:
                 return pickle.load(fp)
         except:
             return None
@@ -123,15 +122,13 @@ class UsCaseList(object):
         """
         self.cases[key] = case
         outfile = DAFile()
-        store = STORE.format(self.user_id)
-        outfile.initialize(filename=store)
+        outfile.initialize(filename=self.store)
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases))
 
     def dev_save(self, key: str, case):
-        store = STORE.format(self.user_id)
         self.cases[key] = case
-        with open(store, 'w') as fp:
+        with open(self.store, 'w') as fp:
             pickle.dump(self.cases, fp)
 
 
