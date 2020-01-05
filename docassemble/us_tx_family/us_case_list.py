@@ -49,7 +49,9 @@ class UsCaseList(object):
         return case_list
 
     def get_case(self, key: str):
-        return self.cases.get(str, None)
+        case = self.cases.get(key)
+        logmessage("Retrieved case {}".format(str(case)))
+        return case
 
     def dalist_of_individuals(self, directory: list):
         """
