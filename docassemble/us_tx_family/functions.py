@@ -37,3 +37,12 @@ def my_cases(user_id: str):
     cases = case_db.get_cases()
     cases.insert(0, (None, "(ADD NEW CASE)"))
     return cases
+
+def get_case(user_id: str, case_key: str):
+    case_db = UsCaseList(user_id)
+    case = case_db.get_case(case_key)
+    return case
+
+def save_case(user_id: str, case):
+    case_db = UsCaseList(user_id)
+    case_db.save(case)

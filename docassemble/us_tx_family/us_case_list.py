@@ -6,6 +6,7 @@ Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 from datetime import date
 import json
 import pickle
+import uuid
 
 DEV_MODE = True
 
@@ -84,13 +85,15 @@ class UsCaseList(object):
             return self.dev_read()
         return self.prod_read()
 
-    def save(self, key: str, cases: list) -> bool:
+    def save(self, case) -> bool:
         """
-        Save a list of cases.
+        Save a case.
         """
+        key = case_key(case)
+        case.key = key
         if DEV_MODE:
-            return self.dev_save(key, cases)
-        return self.prod_save(key, cases)
+            return self.dev_save(key, case)
+        return self.prod_save(key, case)
 
     def prod_read(self) -> dict:
         """
@@ -123,19 +126,23 @@ class UsCaseList(object):
         store = STORE.format(self.user_id)
         outfile.initialize(filename=store)
         outfile.set_attributes(persistent=True)
-        outfile.write(pickle.dumps(cache_record(self.cases)))
+        outfile.write(pickle.dumps(self.cases))
 
-    def dev_save(self, key: str, case: list):
+    def dev_save(self, key: str, case):
         store = STORE.format()
         self.cases[key] = case
         with open(store, 'w') as fp:
-            pickle.dump(cache_record(self.cases), fp)
+            pickle.dump(self.cases, fp)
 
 
-def cache_record(cases: dict):
-    return {
-                'cases': cases
-    }
+def case_key(case):
+    """
+    Create a unique key for this case.
+    """
+    if hasattr(case, 'key'):
+        return case.key
+    case_id = uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot')
+    return case_id
 
 
 def main():
