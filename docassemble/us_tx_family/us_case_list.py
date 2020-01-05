@@ -139,9 +139,9 @@ class UsCaseList(object):
         """
         self.cases[key] = case
         outfile = DAFile()
-        outfile.init(filename=self.store)
-        outfile.initialize(filename=self.store)
-        outfile.set_attributes(persistent=True)
+        outfile.initialize(filename=self.store, persistent=True)
+        #outfile.set_attributes(persistent=True)
+
         outfile.write(pickle.dumps(self.cases), binary=True)
         outfile.commit()
         logmessage("Saved {} cases to {}".format(len(self.cases or []), outfile.path()))
