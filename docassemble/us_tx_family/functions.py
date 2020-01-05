@@ -7,7 +7,7 @@ import os
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
 from .us_tx_court_directory import UsTxCourtDirectory
-from .us_case_list import UsCaseList
+#from .us_case_list import UsCaseList
 
 
 def counties():
