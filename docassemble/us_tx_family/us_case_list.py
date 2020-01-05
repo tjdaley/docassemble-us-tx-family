@@ -129,7 +129,7 @@ class UsCaseList(object):
         outfile.write(pickle.dumps(self.cases))
 
     def dev_save(self, key: str, case):
-        store = STORE.format()
+        store = STORE.format(self.user_id)
         self.cases[key] = case
         with open(store, 'w') as fp:
             pickle.dump(self.cases, fp)
