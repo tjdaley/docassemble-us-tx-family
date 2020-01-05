@@ -114,7 +114,7 @@ class UsCaseList(object):
         Read the list of cases for this user from file storage.
         """
         infile = DAFile()
-        infile.initialize(filename=self.store)
+        infile.init(filename=self.store)
         infile.retrieve()
         logmessage("Will be reading from {}".format(infile.path()))
         try:
@@ -138,7 +138,7 @@ class UsCaseList(object):
         """
         self.cases[key] = case
         outfile = DAFile()
-        outfile.initialize(filename=self.store)
+        outfile.init(filename=self.store)
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases), binary=True)
         outfile.commit()
