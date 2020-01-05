@@ -44,7 +44,7 @@ class UsCaseList(object):
         self.cases = self.read() or {}
 
     def get_cases(self):
-        case_list = [(case, 'key') for case in self.cases.items()]
+        case_list = [(case.key, case) for case in self.cases.items()]
         logmessage(str(case_list))
         return case_list
 
@@ -143,7 +143,7 @@ def case_key(case):
     """
     if hasattr(case, 'key'):
         return case.key
-    case_id = uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot')
+    case_id = str(uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot'))
     return case_id
 
 
