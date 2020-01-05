@@ -7,12 +7,20 @@ from datetime import date
 import json
 import pickle
 import uuid
+import sys
 
 DEV_MODE = False
 
 if not DEV_MODE:
     from docassemble.base.core import DAFile, DAList
     from docassemble.base.util import Individual, IndividualName, Address
+    from docassemble.base.logger import logmessage
+else:
+    def logmessage(message: str):
+        try:
+            sys.stderr.write(message + '\n')
+        except Exception as e:
+            sys.stderr.write('Unable to log: {}'.format(str(e)))
 
 STORE = 'us_case_list-{}.json'
 
@@ -125,11 +133,14 @@ class UsCaseList(object):
         outfile.initialize(filename=self.store)
         outfile.set_attributes(persistent=True)
         outfile.write(pickle.dumps(self.cases), binary=True)
+        outfile.commit()
+        logmessage("Saved cases to {}".format(self.store))
 
     def dev_save(self, key: str, case):
         self.cases[key] = case
         with open(self.store, 'w') as fp:
             pickle.dump(self.cases, fp)
+        logmessage("Saved cases to {}".format(self.store))
 
 
 def case_key(case):
