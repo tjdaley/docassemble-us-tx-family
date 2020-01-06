@@ -45,7 +45,7 @@ class UsCaseList(object):
 
     def get_cases(self):
         case_list = [(key, case) for key, case in self.cases.items() if hasattr(case, 'case_id')]
-        logmessage("get_cases(): " + str(case_list))
+        logmessage("get_cases(): {} of {}".format(len(self.cases), len(case_list)) + str(case_list))
         return case_list
 
     def get_case(self, key: str):
