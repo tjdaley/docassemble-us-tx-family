@@ -149,7 +149,7 @@ def dump_object(key, obj):
     for attr in obj.__dict__.keys():
         logmessage("Attribute: {}".format(attr))
         if attr == 'attrList':
-            for la in obj.attrList:
+            for la in obj.attrList:  # why
                 logmessage(".......Attribute: {}".format(la))
     # for attr, value in obj.__dict__.items():
     #     logmessage("{} = {}".format(attr, value))
