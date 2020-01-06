@@ -116,9 +116,8 @@ class UsCaseList(object):
         Persist the directory info to cross-session storage.
         """
         if case is not None:
-            self.cases[key] = case
-        else:
             dump_object("PROD_SAVE", case)
+            self.cases[key] = case
         the_redis = DARedis()
         the_redis.set_data(self.store, self.cases)
 
