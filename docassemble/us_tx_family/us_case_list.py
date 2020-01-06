@@ -148,6 +148,9 @@ def dump_object(key, obj):
     logmessage("------------Dumping {} --------------".format(key))
     for attr in obj.__dict__.keys():
         logmessage("Attribute: {}".format(attr))
+        if attr == 'attrList':
+            for la in obj.attrList.__dict__.keys():
+                logmessage(".......Attribute: {}".format(la))
     # for attr, value in obj.__dict__.items():
     #     logmessage("{} = {}".format(attr, value))
     
