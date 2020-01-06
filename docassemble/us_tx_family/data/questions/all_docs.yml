@@ -25,8 +25,8 @@ code: |
   case.country = "US"
   case.court.name = "District Court"
   case.court.jurisdiction = list('Texas')
-  # del case.plaintiff
-  # del case.defendant
+  delattr(case, 'plaintiff')  # del case.plaintiff
+  delattr(case, 'defendant')  # del case.defendant
   case.initializeAttribute('petitioner', PartyList)
   case.initializeAttribute('respondent', PartyList)
   case.firstParty = case.petitioner
