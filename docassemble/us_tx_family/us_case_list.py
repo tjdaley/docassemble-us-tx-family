@@ -136,6 +136,7 @@ def case_key(case):
     key = str(uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot'))
     return key
 
+
 def dump_dict(obj):
     for key, value in obj.items():
         dump_object(str(key), value)
@@ -143,8 +144,10 @@ def dump_dict(obj):
 
 def dump_object(key, obj):
     logmessage("------------Dumping {} --------------".format(key))
-    for attr, value in obj.__dict__.items():
-        logmessage("{} = {}".format(attr, value))
+    for attr in obj.__dict__.keys():
+        logmessage("Attribute: {}".format(attr))
+    # for attr, value in obj.__dict__.items():
+    #     logmessage("{} = {}".format(attr, value))
     
 
 def main():
