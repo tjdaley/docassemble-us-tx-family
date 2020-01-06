@@ -46,7 +46,7 @@ class UsCaseList(object):
     def get_cases(self):
         case_list = [(key, case) for key, case in self.cases.items() if hasattr(case, 'case_id')]
         logmessage("get_cases(): {} of {}: ".format(len(case_list), len(self.cases)) + str(case_list))
-        dump_dict(self.cases)
+        dump_dict("get_cases()", self.cases)
         return case_list
 
     def get_case(self, key: str):
@@ -117,6 +117,8 @@ class UsCaseList(object):
         """
         if case is not None:
             self.cases[key] = case
+        else:
+            dump_object("PROD_SAVE", case)
         the_redis = DARedis()
         the_redis.set_data(self.store, self.cases)
 
@@ -137,7 +139,8 @@ def case_key(case):
     return key
 
 
-def dump_dict(obj):
+def dump_dict(note: str, obj):
+    logmessage("VVVVVVVVVVVV {} VVVVVVVVVV".format(note))
     for key, value in obj.items():
         dump_object(str(key), value)
 
