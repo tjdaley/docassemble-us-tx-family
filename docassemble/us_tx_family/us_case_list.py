@@ -18,9 +18,9 @@ if not DEV_MODE:
 else:
     def logmessage(message: str):
         try:
-            sys.stderr.write("@@@@@ " + message + '\n')
+            sys.stderr.write(message + '\n')
         except Exception as e:
-            sys.stderr.write('@@@@@ Unable to log: {}'.format(str(e)))
+            sys.stderr.write('Unable to log: {}'.format(str(e)))
 
 STORE = '{}:us_case_list'
 
@@ -33,7 +33,7 @@ class UsCaseList(object):
         Initialize and instance.
         """
         self.cases = {}
-        self.user_id = user_id  # .replace('@', '_').replace('.', '_', 1)
+        self.user_id = user_id
         self.store = STORE.format(self.user_id)
         self.load()
     
@@ -52,7 +52,10 @@ class UsCaseList(object):
         logmessage("get_case(): " + "Found {} cases to look through.".format(len(self.cases)))
         logmessage("get_case(): " + "Searching for {}'s case, key={}".format(self.user_id, key))
         case = self.cases.get(key)
-        logmessage("get_case(): " + "Retrieved case {}".format(str(case)))
+        if not hasattr(case, 'case_id'):
+            logmessage("get_case(): " + "Case key {} does not have a case_id".format(key))
+        else:
+            logmessage("get_case(): " + "Retrieved case {}".format(str(case)))
         return case
 
     def del_case(self, key: str):
