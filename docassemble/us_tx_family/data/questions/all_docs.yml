@@ -56,17 +56,6 @@ subquestion: |
 yesno: case.is_divorce
 ---
 section: case
-question: |
-  Select a case.
-subquestion: |
-  If this ${doc.title} pertains to one of these cases, please indicate which one.
-  If it does NOT pertain to one of these cases, please select **(ADD NEW)**.
-fields:
-  - Case: case_key
-    code: |
-      my_cases()
----
-section: case
 decoration: balance-scale
 question: |
   What county has your case been filed in?
