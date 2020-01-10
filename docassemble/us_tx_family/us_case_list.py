@@ -44,21 +44,10 @@ class UsCaseList(object):
         self.cases = self.read() or {}
 
     def get_cases(self):
-        case_list = [(key, case) for key, case in self.cases.items() if hasattr(case, 'case_id')]
-        for key, case in self.cases.items():
-            try:
-                logmessage("@@@@@ {} = {}".format(key, case))
-            except Exception as e:
-                logmessage("@@@@@ {}".format(str(e)))
-        logmessage("get_cases(): {} of {}: ".format(len(case_list), len(self.cases)) + str(case_list))
-        dump_dict("get_cases()", self.cases)
-        case_list.append(("key1", "self.cases = {}".format(len(self.cases))))
-        case_list.append(("key2", "case_list = {}".format(len(case_list))))
+        case_list = [(key, selection_text(case)) for key, case in self.cases.items() if hasattr(case, 'case_id')]
         return case_list
 
     def get_case(self, key: str):
-        logmessage("get_case(): " + "Found {} cases to look through.".format(len(self.cases)))
-        logmessage("get_case(): " + "Searching for {}'s case, key={}".format(self.user_id, key))
         case = self.cases.get(key)
         if not hasattr(case, 'case_id'):
             logmessage("get_case(): " + "Case key {} does not have a case_id".format(key))
@@ -67,7 +56,6 @@ class UsCaseList(object):
         return case
 
     def del_case(self, key: str):
-        logmessage("del_case(): " + "Trying to delete case, key={}".format(key))
         if key in self.cases:
             del self.cases[key]
             self.save(None)
@@ -80,7 +68,6 @@ class UsCaseList(object):
             the_redis = DARedis()
             the_redis.set_data(self.store, None)
             return
-
         logmessage("del_case(): " + "Cannot delete all cases in DEV_MODE")
 
     def read(self) -> dict:
@@ -88,7 +75,6 @@ class UsCaseList(object):
             cases = self.dev_read()
         else:
             cases = self.prod_read()
-        logmessage("read(): " + "Retrieved {} cases from {}.".format(len(cases or []), self.store))
         return cases
 
     def save(self, case) -> bool:
@@ -123,7 +109,6 @@ class UsCaseList(object):
         Persist the directory info to cross-session storage.
         """
         if case is not None:
-            dump_object("PROD_SAVE", case)
             self.cases[key] = case
         the_redis = DARedis()
         the_redis.set_data(self.store, self.cases)
@@ -143,24 +128,19 @@ def case_key(case):
         return case.key
     key = str(uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot'))
     return key
-
-
-def dump_dict(note: str, obj):
-    logmessage("VVVVVVVVVVVV {} VVVVVVVVVV".format(note))
-    for key, value in obj.items():
-        dump_object(str(key), value)
-
-
-def dump_object(key, obj):
-    logmessage("------------Dumping {} --------------".format(key))
-    for attr in obj.__dict__.keys():
-        logmessage("Attribute: {}".format(attr))
-        if attr == 'attrList':
-            for la in obj.attrList:  # why
-                logmessage(".......Attribute: {}".format(la))
-    # for attr, value in obj.__dict__.items():
-    #     logmessage("{} = {}".format(attr, value))
     
+
+def selection_text(case) -> str:
+    """
+    Create text that is used to populate a dropdown for case selection.
+
+    Args:
+        case (Case): The case to process
+    Returns:
+        (str): The text to display.
+    """
+    return "{} - {}".format(case.case_id, case.footer)
+
 
 def main():
     o = UsCaseList()
