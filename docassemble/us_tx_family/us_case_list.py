@@ -126,7 +126,7 @@ def case_key(case):
     """
     if hasattr(case, 'key'):
         return case.key
-    key = str(uuid.uuid3(uuid.NAMESPACE_DNS, 'attorney.bot'))
+    key = str(uuid.uuid1())
     return key
     
 
