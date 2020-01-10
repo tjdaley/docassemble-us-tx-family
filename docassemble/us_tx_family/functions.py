@@ -56,7 +56,7 @@ def get_case(user_id: str, case_key: str):
         logmessage("get_case(): Started")
     case_db = UsCaseList(user_id)
     case = case_db.get_case(case_key)
-    return case
+    return case or '*NONE*'
 
 def del_case(user_id: str, case_key: str):
     if TRACE:
