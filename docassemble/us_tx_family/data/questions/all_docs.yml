@@ -36,7 +36,8 @@ code: |
   case.secondParty = case.respondent
   doc.case = case
 ---
-#event: on_error
+event: on_error
+decoration: bomb
 question: |
   We have encountered an error.
 subquestion: |
@@ -47,6 +48,7 @@ buttons:
     url: https://www.powerdaley.com
 ---
 section: case
+decoration: balance-scale
 question: |
   Divorce or Anulment?
 subquestion: |
@@ -58,13 +60,14 @@ question: |
   Select a case.
 subquestion: |
   If this ${doc.title} pertains to one of these cases, please indicate which one.
-  If it does NOT pertain to one of these cases, please select **(add new case)**.
+  If it does NOT pertain to one of these cases, please select **(ADD NEW)**.
 fields:
   - Case: case_key
     code: |
       my_cases()
 ---
 section: case
+decoration: balance-scale
 question: |
   What county has your case been filed in?
 mandatory: False
@@ -74,6 +77,7 @@ fields:
       counties()
     help: This is the county within ${case.state} where your case was filed.
 ---
+decoration: balance-scale
 section: case
 question: |
   Tell me a little more about your case.
