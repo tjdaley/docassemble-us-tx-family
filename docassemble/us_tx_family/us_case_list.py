@@ -125,10 +125,8 @@ def case_key(case):
     Create a unique key for this case.
     """
     if hasattr(case, 'key'):
-        logmessage("@@@@@@@@@ Reusing Case Key: {}".format(case.key))
         return case.key
     key = str(uuid.uuid1())
-    logmessage("@@@@@@@@@ Generated Case Key: {}".format(key))
     return key
     
 
