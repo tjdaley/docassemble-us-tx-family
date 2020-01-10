@@ -45,8 +45,11 @@ class UsCaseList(object):
 
     def get_cases(self):
         case_list = [(key, case) for key, case in self.cases.items() if hasattr(case, 'case_id')]
-        for key, caes in self.cases.items():
-            logmessage("@@@@@ {} = {}".format(key, caes))
+        for key, case in self.cases.items():
+            try:
+                logmessage("@@@@@ {} = {}".format(key, case))
+            except Exception as e:
+                logmessage("@@@@@ {}".format(str(e)))
         logmessage("get_cases(): {} of {}: ".format(len(case_list), len(self.cases)) + str(case_list))
         dump_dict("get_cases()", self.cases)
         case_list.append(("key1", "self.cases = {}".format(len(self.cases))))
