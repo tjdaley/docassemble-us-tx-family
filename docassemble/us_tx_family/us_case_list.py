@@ -139,7 +139,7 @@ def selection_text(case) -> str:
     Returns:
         (str): The text to display.
     """
-    return "{} - {} - {}".format(case.key, case.case_id, case.footer)
+    return "{{} - {}".format(case.case_id, case.footer)
 
 
 def main():
