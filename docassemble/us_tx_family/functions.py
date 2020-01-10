@@ -48,7 +48,7 @@ def my_cases(user_id: str):
         logmessage("my_cases(): Started")
     case_db = UsCaseList(user_id)
     cases = case_db.get_cases()
-    cases.insert(0, (None, "(ADD NEW CASE)"))
+    cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
     return cases
 
 def get_case(user_id: str, case_key: str):
