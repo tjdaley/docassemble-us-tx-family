@@ -36,6 +36,6 @@ generic object: ChildList
 section: children
 question: |
   Would you like to add another child?
-subquestion: So far you have entered ${ child }.
+subquestion: So far you have entered ${ case.child }.
 yesno: x.there_is_another
 ---
