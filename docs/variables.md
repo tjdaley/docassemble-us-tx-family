@@ -76,9 +76,9 @@ Each child has these properties:
 **jobs** has a *count* property that can be tested in forms, e.g.:
 
 ```
-{% if jobs.count > 0 %}
-   ${obligor} has the following jobs: ${jobs}.
-{% endif %}
+    {% if jobs.count > 0 %}
+       ${obligor} has the following jobs: ${jobs}.
+    {% endif %}
 ```
 
 Each job has these properties:

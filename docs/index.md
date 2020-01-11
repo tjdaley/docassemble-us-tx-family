@@ -64,6 +64,12 @@ This module uses some custom [configuration] file variables to control how it op
 {% endfor %}
 </ul>
 
+<ul class="interiortoc">
+{% for section in site.collections %}
+<li>{{ section }}</li>
+{% endfor %}
+</ul>
+
 
 [classes]: {{ site.baseurl }}/classes.html
 [configuration]: {{ site.baseurl }}/configuration.html
