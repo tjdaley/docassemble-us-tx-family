@@ -77,15 +77,15 @@ This module uses some custom [configuration] file variables to control how it op
 {% endfor %}
 </ul>
 
-        <table>
-          {% for nav in site.navigation %}
-            {% if nav.url contains "://" %}
-              <tr><th><a href="{{ nav.url }}">{{ nav.title }}</a></th></tr>
-            {% else %}
-              <tr><th><a href="{{ nav.url | relative_url }}">{{ nav.title }}</a></th></tr>
-            {% endif %}
-          {% endfor %}
-        </table>
+<table>
+    {% for nav in site.navigation %}
+    {% if nav.url contains "://" %}
+        <tr><th><a href="{{ nav.url }}">{{ nav.title }}</a></th></tr>
+    {% else %}
+        <tr><th><a href="{{ nav.url | relative_url }}">{{ nav.title }}</a></th></tr>
+    {% endif %}
+    {% endfor %}
+</table>
 
 
 [classes]: {{ site.baseurl }}/classes.html
