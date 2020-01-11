@@ -1,4 +1,5 @@
 section: case
+decoration: hand-holding-usd
 question: |
   Which party is the *obligor*?
 field: obligor_role
@@ -7,9 +8,10 @@ choices:
   - Respondent (${ case.respondent[0].name }): R
 ---
 code: |
+  case.initializeAttribute('obligor', Individual)
   if obligor_role == "P":
-    obligor = case.petitioner[0]
+    case.obligor = case.petitioner[0]
   else:
-    obligor = case.respondent[0]
+    case.obligor = case.respondent[0]
 mandatory: True
 ---

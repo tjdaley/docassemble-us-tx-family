@@ -1,6 +1,16 @@
 """
 us_tx_counties.py - Retrieve a list of Counties in Texas.
 
+The first user invokes an interview that asks for the name of a county,
+a list of counties will be retrieved from *URL* and cached. After that,
+all requests will use the original cached version. This assumes that
+there will be no changes to Texas County names. Ever.
+
+We're retrieving a list of counties from a web-based UX. It's implemented
+as an ASP and for both of these reasons, the list may be a little
+fragile. Because of the potential fagility, we don't go checking this
+list on a regular basis.
+
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from lxml import html

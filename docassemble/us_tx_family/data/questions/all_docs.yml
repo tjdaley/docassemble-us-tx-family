@@ -74,8 +74,8 @@ fields:
       counties()
     help: This is the county within ${case.state} where your case was filed.
 ---
-decoration: balance-scale
 section: case
+decoration: balance-scale
 question: |
   Tell me a little more about your case.
 fields:

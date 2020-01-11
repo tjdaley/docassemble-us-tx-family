@@ -9,6 +9,8 @@ import re
 import requests
 import json
 
+from .local_config import local_config
+
 DEV_MODE = False
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
@@ -20,8 +22,14 @@ if not DEV_MODE:
 else:
     from ml_stripper import MLStripper
 
+# The URL where we retrieve the statute that defines all district courts
 URL = 'https://statutes.capitol.texas.gov/Docs/GV/htm/GV.24.htm'
+
+# The file name or redis key where we store the parsed court information.
 STORE = 'us_tx_courts.json'
+
+# The highest district court number that we look for.
+MAX_COURT_NUMBER = 1000
 
 class UsTxCourts(object):
     """
@@ -104,7 +112,10 @@ class UsTxCourts(object):
         text = stripper.get_data()
 
         # Extract courts
-        for court_number in range(1000):
+        # There are some gaps in the court numbers and, as of this day,
+        # there is a huge gap between the numbers of the last two
+        # courts. That's why I'm using a range.
+        for court_number in range(max_court_number()):
             court_text = find_court(court_number, text)
             if court_text is not None:
                 court_dict = parse_court_text(court_number, court_text)
@@ -249,6 +260,10 @@ def parse_court_text(court_number: int, text: str) -> dict:
     }
 
 
+def max_court_number():
+    return local_config('max court number', MAX_COURT_NUMBER, DEV_MODE)
+
+
 def court_counties(text: str)-> list:
     search = 'Judicial District is composed of '
     start_pos = text.find(search) + len(search)
@@ -296,7 +311,8 @@ def refresh_key()-> str:
     operation . . . let's just be safe for now.
     """
     today = date.today()
-    return '{}-{}-{}'.format(today.year, today.month, VERSION)
+    version = local_config('court list version', VERSION)
+    return '{}-{}-{}'.format(today.year, today.month, version)
 
 
 def main():

@@ -40,10 +40,6 @@ modules:
   - .objects
   - .functions
 ---
-objects:
-  - child: ChildList
-  - case: Case
----
 include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
@@ -56,7 +52,9 @@ mandatory: True
 code: |
   doc.title = "GUIDELINE CHILD SUPPORT EXHIBIT"
   doc.sensitive_data = True
-  child.there_are_any = True
+  case.child.there_are_any = True
+  case.child.gather(minimum=1)
+  save_case(user_info, case)
 ---
 section: conclusion
 question: |
@@ -71,7 +69,7 @@ subquestion: |
   **Obligor** | ${obligor}
   **Petitioner** | ${case.petitioner}
   **Respondent** | ${case.respondent}
-  **Children** | ${child}
+  **Children** | ${case.child}
   **Cause number** | ${case.case_id}
   **County** | ${case.county} County
   **Jobs** | ${jobs}

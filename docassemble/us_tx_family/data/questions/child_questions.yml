@@ -4,12 +4,14 @@ objects:
 ---
 generic object: ChildList
 section: children
+decoration: child
 question: |
   Does this case involve children?
 yesno: x.there_are_any
 ---
 generic object: ChildList
 section: children
+decoration: child
 question: |
   Who is the
   ${ ordinal(i) } child?
@@ -34,6 +36,7 @@ fields:
 ---
 generic object: ChildList
 section: children
+decoraction: child
 question: |
   Would you like to add another child?
 subquestion: So far you have entered ${ case.child }.

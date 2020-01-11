@@ -46,6 +46,14 @@ To make certain [objects] easier to work with in interviews, **docassemble-us-tx
 
 Other question files, which have more formal-looking names, are intended to be full interviews that result in the creation of a letter, pleading, discovery document, or trial exhibit. These [forms] are the interviews that end users will access to create documents.
 
+# <a name="pointers"></a>Pointers
+
+You can save yourself some grief by following these [pointers] in developing your interview.
+
+# <a name="pointers"></a>COnfiguration
+
+This module uses some custom [configuration] file variables to control how it operates and what external resources it tries to reference.
+
 # <a name="toc"></a>Sections of the documentation
 
 <ul class="interiortoc">
@@ -58,9 +66,10 @@ Other question files, which have more formal-looking names, are intended to be f
 </ul>
 
 [classes]: {{ site.baseurl }}/docs/classes.html
+[configuration]: {{ site.baseurl }}/docs/configuration.html
+[docassemble]: https://docassemble.org
 [functions]: {{ site.baseurl }}/docs/functions.html
+[objects]: {{ site.baseurl }}/docs/objects.html
+[pointers]: {{ site.baseurl }}/docs/pointers.html
 [static files]: {{ site.baseurl }}/docs/static_files.html
 [variables]: variables.html
-[objects]: {{ site.baseurl }}/docs/objectgs.html
-
-[docassemble]: https://docassemble.org
