@@ -1,38 +1,41 @@
 ---
 objects:
-  - child: ChildList
+  - xchild: ChildList
 ---
+generic object: ChildList
 section: children
 question: |
   Does this case involve children?
-yesno: child.there_are_any
+yesno: x.there_are_any
 ---
+generic object: ChildList
 section: children
 question: |
   Who is the
   ${ ordinal(i) } child?
 fields:
-  - First Name: child[i].name.first
-    default: ${ child[i].first_name_hint() }
-  - Middle Name: child[i].name.middle
+  - First Name: x[i].name.first
+    default: ${ x[i].first_name_hint() }
+  - Middle Name: x[i].name.middle
     required: False
-  - Last Name: child[i].name.last
-    default: ${ child[i].last_name_hint() }
-  - Suffix: child[i].name.suffix
+  - Last Name: x[i].name.last
+    default: ${ x[i].last_name_hint() }
+  - Suffix: x[i].name.suffix
     required: False
     code: |
       name_suffix()
-  - Gender: child[i].gender
+  - Gender: x[i].gender
     choices:
      - Male: male
      - Female: female
      - Other: other
-  - Birth date: child[i].birthdate
+  - Birth date: x[i].birthdate
     datatype: date
 ---
+generic object: ChildList
 section: children
 question: |
   Would you like to add another child?
 subquestion: So far you have entered ${ child }.
-yesno: child.there_is_another
+yesno: x.there_is_another
 ---
