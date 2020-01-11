@@ -15,12 +15,12 @@ objects:
 ---
 section: employment
 question: |
-  Does ${obligor} have any income from employment, even self-employment?
+  Does ${case.obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
 section: other_income
 question: |
-  Does ${obligor} have any other sources of income?
+  Does ${case.obligor} have any other sources of income?
 yesno: incomes.there_are_any
 ---
 section: employment

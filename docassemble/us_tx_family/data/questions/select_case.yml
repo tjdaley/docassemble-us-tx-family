@@ -12,19 +12,19 @@ decoration: balance-scale
 fields:
   - Case: case_key
     code: |
-      my_cases(user_info().email)
+      my_cases(
 ---
 mandatory: True
 code: |
   case_key
   if case_key != '*ADD*':
-    case = get_case(user_info().email, case_key)
+    case = get_case(case_key)
   if case == '*NONE*':
     case = Case()
 ---
 mandatory: True
 code: |
   case.case_id
-  save_case(user_info().email, case)
+  save_case(case)
   is_saved = "TRUE"
 ---
