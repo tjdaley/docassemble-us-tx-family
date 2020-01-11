@@ -66,7 +66,7 @@ This module uses some custom [configuration] file variables to control how it op
 
 {% for section in site.collections %}
 {% for sx in section %}
-<em>sx</em>
+<em>{{sx}}</em>
 {% for s in sx %}
 {{ s }}
 [% endfor %]
