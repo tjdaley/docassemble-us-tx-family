@@ -91,5 +91,5 @@ def __user_id() -> str:
         (str): User-ID for indexing and persisting user data.
     """
     user_info = get_user_info()
-    user_id = user_info['user_id']
+    user_id = user_info['id']
     return str(user_id)
