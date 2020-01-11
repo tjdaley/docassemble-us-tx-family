@@ -8,6 +8,8 @@ import re
 import requests
 import json
 
+from .local_config import local_config
+
 DEV_MODE = False
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
@@ -254,7 +256,8 @@ def refresh_key()-> str:
     happen on a moment's notice.
     """
     today = date.today()
-    return '{}-{}-{}-{}'.format(today.year, today.month, today.day, VERSION)
+    version = local_config('court staff version', VERSION)
+    return '{}-{}-{}-{}'.format(today.year, today.month, today.day, version)
 
 
 def main():
