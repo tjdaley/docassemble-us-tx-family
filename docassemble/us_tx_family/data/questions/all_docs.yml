@@ -38,6 +38,12 @@ code: |
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
+
+  # Now Populate the basic case information
+  case.petitioner
+  case.respondent
+  if case.child.there_are_any:
+    case.child
 ---
 event: on_error
 decoration: bomb
