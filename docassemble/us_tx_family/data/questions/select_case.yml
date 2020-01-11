@@ -12,7 +12,7 @@ decoration: balance-scale
 fields:
   - Case: case_key
     code: |
-      my_cases(
+      my_cases()
 ---
 mandatory: True
 code: |
