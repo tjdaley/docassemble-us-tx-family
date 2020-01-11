@@ -91,6 +91,7 @@ This module uses some custom [configuration] file variables to control how it op
 [classes]: {{ site.baseurl }}/classes.html
 [configuration]: {{ site.baseurl }}/configuration.html
 [docassemble]: https://docassemble.org
+[forms]: #
 [functions]: {{ site.baseurl }}/functions.html
 [objects]: {{ site.baseurl }}/objects.html
 [pointers]: {{ site.baseurl }}/pointers.html
