@@ -11,6 +11,8 @@ The **docassemble-us-tx-family** module defines or uses the following variables:
 
 **case** - The current legal case. Instance of *Case*
 
+**case.asset** - A list of assets
+
 **case.case_id** - The cause number
 
 **case.country** - "US"
@@ -29,6 +31,8 @@ The **docassemble-us-tx-family** module defines or uses the following variables:
 
 **case.footer** - An abbreviated version of the case title for document footers. For example, a case entitled "In the Matter of the Marriage of Jane Doe and John Doe" might use "IMMO DOE AND DOE" as the case footer. This is freeform text that is substituted in to the document footers.
 
+**case.liability** - A list of liabilities
+
 **case.petitioner** - A list of petitioners. In your forms, you'll probably expect one petitioner and therefore you'll probably want to use ```${case.petitioner[0].name}.``` (Note the array index.)
 
 **case.respondent** - A list of respondents. In your forms, you'll probably expect one respondent and therefore you'll probably want to use ```${case.respondent[0].name}.``` (Note the array index.)
@@ -39,9 +43,9 @@ The **docassemble-us-tx-family** module defines or uses the following variables:
 
 ### child or children
 
-**child** - A list of children pertaining to this case. Instance of *ChildList*, which is a list of instances of *Individual*.
+**case.child** - A list of children pertaining to this case. Instance of *ChildList*, which is a list of instances of *Individual*.
 
-**child[i]** - This is how an individual child is referenced.
+**case.child[i]** - This is how an individual child is referenced.
 
 Each child has these properties:
 

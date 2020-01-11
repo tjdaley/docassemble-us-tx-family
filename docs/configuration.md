@@ -20,7 +20,7 @@ us-tx-family:
 
 ## Definitions
 
-| setting | Description | Values | Default |
+| Setting | Description | Values | Default |
 |---------|-------------|--------|---------|
 | court list version | A simple version identifier for UsTxCourts to determine whether to download and parse the Texas Government Code. UsTxCourts will automatically refresh the list of courts every month. If you need a quicker refresh, set this configuration variable to something other than the default. | string | "B" |
 | court staff version | A simple version identifier for UsTxCourtDirectory to determine whether to download and parse the list of court staff. UsTxCourtDirectory will automatically refresh the list of courts every day. If you need a quicker refresh, set this configuration variable to something other than the default. | string | "A" |
