@@ -40,8 +40,8 @@ code: |
   doc.case = case
 
   # Now Populate the basic case information
-  case.petitioner
-  case.respondent
+  case.petitioner.gather(minimum=1)
+  case.respondent.gather(minimum=1)
 ---
 event: on_error
 decoration: bomb
