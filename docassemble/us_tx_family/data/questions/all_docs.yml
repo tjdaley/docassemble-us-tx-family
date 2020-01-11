@@ -7,7 +7,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
-  revision_date: 2020-01-04
+  revision_date: 2020-01-11
 ---
 modules:
   - .functions
@@ -32,6 +32,9 @@ code: |
     pass
   case.initializeAttribute('petitioner', PartyList)
   case.initializeAttribute('respondent', PartyList)
+  case.initializeAttribute('child', ChildList)
+  case.initializeAttribute('asset', DAList)
+  case.initializeAttribute('liability', DAList)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
