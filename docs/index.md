@@ -64,11 +64,11 @@ This module uses some custom [configuration] file variables to control how it op
 {% endfor %}
 </ul>
 
-<ul class="interiortoc">
 {% for section in site.collections %}
-<li>{{ section }}</li>
+{% for s in section %}
+{{ s }}
 {% endfor %}
-</ul>
+{% endfor %}
 
 
 [classes]: {{ site.baseurl }}/classes.html
