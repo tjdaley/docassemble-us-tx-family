@@ -1,7 +1,9 @@
 ---
-layout: default
+layout: doc
 title: Configuration File Settings
 short_title: Configuration
+revised: 2020-01-11
+maintaner: Thomas J. Daley, J.D.
 order: 24
 ---
 

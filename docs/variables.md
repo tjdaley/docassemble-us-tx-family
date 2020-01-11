@@ -3,6 +3,8 @@ layout: default
 title: Variables
 short_title: Variables
 order: 21
+revised: 2020-01-11
+maintaner: Thomas J. Daley, J.D.
 ---
 
 The **docassemble-us-tx-family** module defines or uses the following variables:

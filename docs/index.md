@@ -3,10 +3,9 @@ layout: default
 title: Overview of docassemble-us-tx-family
 short_title: Documentation
 order: 20
+revised: 2020-01-11
+maintaner: Thomas J. Daley, J.D.
 ---
-
-# {{site.title}}
-{{site.description}}
 
 **docassemble-us-tx-family** is a [docassemble] module targeting
 Family Law applications in Texas.
@@ -60,32 +59,10 @@ This module uses some custom [configuration] file variables to control how it op
 # <a name="toc"></a>Sections of the documentation
 
 <ul class="interiortoc">
-{% for section in site.data.docs %}
-<li>{{ section.title }}</li>
-<ul>
-{% include docs_section.html items=section.docs %}
-</ul>
+{% for section in site.collections.docs %}
+<li>{{ section.title }} (rev. {{ section.revised }})</li>
 {% endfor %}
 </ul>
-
-<ul class="interiortoc">
-{% for section in site.docs %}
-<li>{{ section.title }}</li>
-<ul>
-{% include docs_section.html items=section.docs %}
-</ul>
-{% endfor %}
-</ul>
-
-<table>
-    {% for nav in site.navigation %}
-    {% if nav.url contains "://" %}
-        <tr><th><a href="{{ nav.url }}">{{ nav.title }}</a></th></tr>
-    {% else %}
-        <tr><th><a href="{{ nav.url | relative_url }}">{{ nav.title }}</a></th></tr>
-    {% endif %}
-    {% endfor %}
-</table>
 
 
 [classes]: {{ site.baseurl }}/classes.html
