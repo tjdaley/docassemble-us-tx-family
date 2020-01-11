@@ -1,2 +1,5 @@
+---
 theme: jekyll-theme-modernist
 markdown: GFM
+layout: default
+---
