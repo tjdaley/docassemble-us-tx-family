@@ -42,8 +42,6 @@ code: |
   # Now Populate the basic case information
   case.petitioner
   case.respondent
-  if case.child.there_are_any:
-    case.child
 ---
 event: on_error
 decoration: bomb
