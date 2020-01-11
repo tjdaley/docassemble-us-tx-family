@@ -50,6 +50,10 @@ Other question files, which have more formal-looking names, are intended to be f
 
 You can save yourself some grief by following these [pointers] in developing your interview.
 
+# <a name="pointers"></a>COnfiguration
+
+This module uses some custom [configuration] file variables to control how it operates and what external resources it tries to reference.
+
 # <a name="toc"></a>Sections of the documentation
 
 <ul class="interiortoc">
@@ -62,6 +66,7 @@ You can save yourself some grief by following these [pointers] in developing you
 </ul>
 
 [classes]: {{ site.baseurl }}/docs/classes.html
+[configuration]: {{ site.baseurl }}/docs/configuration.html
 [docassemble]: https://docassemble.org
 [functions]: {{ site.baseurl }}/docs/functions.html
 [objects]: {{ site.baseurl }}/docs/objects.html
