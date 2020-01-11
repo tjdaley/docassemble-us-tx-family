@@ -14,17 +14,20 @@ objects:
   - obligor: Individual
 ---
 section: employment
+decoration: hand-holding-usd
 question: |
   Does ${case.obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
 section: other_income
+decoration: hand-holding-usd
 question: |
   Does ${case.obligor} have any other sources of income?
 yesno: incomes.there_are_any
 ---
-section: employment
 generic object: JobList
+section: employment
+decoration: hand-holding-usd
 question: |
   Describe the ${ ordinal(i) } job.
 fields:
@@ -60,6 +63,7 @@ fields:
       - Annually: 1
 ---
 section: employment
+decoration: hand-holding-usd
 question: |
   Would you like to add another job?
 subquestion: So far you have entered ${ jobs }.
@@ -106,12 +110,14 @@ fields:
       - Annually: 1
 ---
 section: other_income
+decoration: hand-holding-usd
 question: |
   Would you like to add another source of income?
 subquestion: So far you have entered ${ incomes }.
 yesno: incomes.there_is_another
 ---
 mandatory: False
+decoration: hand-holding-usd
 question: You've completed the interview!!
 subquestion: |
   JOBS: ${jobs}

@@ -9,6 +9,7 @@ metadata:
   revision_date: 2019-12-24
 ---
 generic object: Individual
+decoration: user-cog
 field: x.marital_status
 question: |
   What is ${ x.possessive('marital status')}?

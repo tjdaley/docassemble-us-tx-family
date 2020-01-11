@@ -1,4 +1,5 @@
 section: case
+decoration: hand-holding-usd
 question: |
   Which party is the *obligor*?
 field: obligor_role

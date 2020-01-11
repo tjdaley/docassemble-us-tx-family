@@ -6,9 +6,9 @@ modules:
 include:
   - docassemble.us_tx_family:all_docs.yml
 ---
-question: Select a case or add a new one.
 section: case
 decoration: balance-scale
+question: Select a case or add a new one.
 fields:
   - Case: case_key
     code: |
