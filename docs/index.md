@@ -50,7 +50,7 @@ Other question files, which have more formal-looking names, are intended to be f
 
 You can save yourself some grief by following these [pointers] in developing your interview.
 
-# <a name="pointers"></a>COnfiguration
+# <a name="pointers"></a>Configuration
 
 This module uses some custom [configuration] file variables to control how it operates and what external resources it tries to reference.
 
@@ -65,11 +65,21 @@ This module uses some custom [configuration] file variables to control how it op
 {% endfor %}
 </ul>
 
-[classes]: {{ site.baseurl }}/docs/classes.html
-[configuration]: {{ site.baseurl }}/docs/configuration.html
+<ul class="interiortoc">
+{% for section in site.docs %}
+<li>{{ section.title }}</li>
+<ul>
+{% include docs_section.html items=section.docs %}
+</ul>
+{% endfor %}
+</ul>
+
+
+[classes]: {{ site.baseurl }}/classes.html
+[configuration]: {{ site.baseurl }}/configuration.html
 [docassemble]: https://docassemble.org
-[functions]: {{ site.baseurl }}/docs/functions.html
-[objects]: {{ site.baseurl }}/docs/objects.html
-[pointers]: {{ site.baseurl }}/docs/pointers.html
-[static files]: {{ site.baseurl }}/docs/static_files.html
+[functions]: {{ site.baseurl }}/functions.html
+[objects]: {{ site.baseurl }}/objects.html
+[pointers]: {{ site.baseurl }}/pointers.html
+[static files]: {{ site.baseurl }}/static_files.html
 [variables]: variables.html
