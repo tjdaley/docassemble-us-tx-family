@@ -17,6 +17,7 @@ objects:
   - case: Case
 ---
 include:
+  - basic-questions.yml
   - docassemble.us_tx_family:terms.yml
 ---
 mandatory: True
