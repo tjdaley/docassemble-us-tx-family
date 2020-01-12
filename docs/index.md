@@ -64,6 +64,13 @@ This module uses some custom [configuration] file variables to control how it op
 {% endfor %}
 </ul>
 
+<ul class="interiortoc">
+{% for item in site.navigation %}
+    <li><a href="{{item.url}}">{{item.title}}</a></li>
+{% endfor %}
+</ul>
+
+
 {% for section in site.collections %}
 {% for sx in section %}
 <em>{{sx}}</em>

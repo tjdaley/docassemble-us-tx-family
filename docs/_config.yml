@@ -2,4 +2,14 @@
 theme: jekyll-theme-modernist
 markdown: GFM
 layout: default
+show_downloads: True
+navigation:
+  - title: Home
+    url: /
+  - title: Configuration
+    url: /configuration.html
+  - title: Pointers
+    url: /pointers.html
+  - title: Variables
+    url: /variables.html
 ---
