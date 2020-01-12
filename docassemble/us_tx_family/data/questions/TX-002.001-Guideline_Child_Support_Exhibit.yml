@@ -55,7 +55,7 @@ code: |
   doc.sensitive_data = True
   case.child.there_are_any = True
   case.child.gather(minimum=1)
-  save_case(user_info, case)
+  save_case(case)
 ---
 section: conclusion
 question: |
@@ -80,7 +80,7 @@ subquestion: |
 
   Court staff:
     ${court_staff(case.court.court_id)}
-    
+
   % if save_case(case):
     Your case has been saved.
   % endif
