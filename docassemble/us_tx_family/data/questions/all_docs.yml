@@ -44,7 +44,7 @@ code: |
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
 ---
-event: on_error
+event: xon_error
 decoration: bomb
 question: |
   We have encountered an error.
