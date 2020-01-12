@@ -69,7 +69,7 @@ This module uses some custom [configuration] file variables to control how it op
     <li><a href="{{item.url}}">{{item.title}}</a></li>
 {% endfor %}
 </ul>
-{{ site.navigation }}
+Navigation collection: {{ site.navigation }}
 
 
 {% for section in site.collections %}
