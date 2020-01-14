@@ -14,6 +14,7 @@ from docassemble.base.functions import get_user_info
 from docassemble.base.util import DARedis
 
 TRACE = True
+ME_KEY = '{}:me'
 
 def counties():
     # Run us_tx_counties.py to get a new list . . . if Texas ever adds/removes counties.
@@ -47,7 +48,7 @@ def clerk_staff(county: str):
 
 def me():
     the_redis = DARedis()
-    key = '{}:me'.format(__user_id())
+    key = ME_KEY.format(__user_id())
     me = the_redis.get_data(key)
     return me
 
@@ -86,6 +87,14 @@ def save_case(case):
         logmessage("save_case(): Started")
     case_db = UsCaseList(__user_id())
     return case_db.save(case)
+
+def save_me(about_me):
+    if TRACE:
+        logmessage("save_me(): Started")
+    the_redis = DARedis()
+    key = ME_KEY.format(__user_id())
+    the_redis.set_data(key, about_me)
+    return True
 
 def __user_id() -> str:
     """
