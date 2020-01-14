@@ -5,7 +5,7 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from decimal import Decimal
 
-from docassemble.base.util import Address DAList, DAObject, Individual,  PeriodicValue, Person, word
+from docassemble.base.util import Address, DAList, DAObject, Individual,  PeriodicValue, Person, word
 
 __all__ = ['Attorney', 'Job', 'JobList', 'Income', 'IncomeList', 'MyPeriodicValue']
 
