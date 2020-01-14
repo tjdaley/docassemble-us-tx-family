@@ -1,0 +1,60 @@
+---
+metadata:
+  description: |
+    Questions to create an Attorney
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: attorney.bot
+  revision_date: 2020-01-14
+---
+generic object: LawFirm
+decoration: user-cog
+fields:
+  - Firm name: x.name
+  - Street: x.address.address
+    required: True
+    address autocomplete: True
+  - Suite: x.address.unit
+    required: False
+  - City: x.address.city
+    required: True
+  - State: x.address.state
+    required: True
+    default: "TX"
+  - ZIP: x.address.zip
+    required: True
+---
+generic object: Attorney
+decoration: user-cog
+fields:
+  - Courtesty title: x.name.title
+    required: True
+    choices:
+      - Mr.
+      - Ms.
+      - Hon.
+      - Dr.
+  - First name: x.name.first
+    required: True
+  - Middle name: x.name.middle
+    required: False
+  - Last name: x.name.last
+    required: True
+  - Suffix: x.name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Salutation: x.name.salutation
+    help: The person's name as it appears in the salutation of a letter, e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
+    default: {{x.name.title}} {{x.name.last}}
+  - Bar number: x.bar_number
+    required: True
+  - Email: x.email
+    datatype: email
+    required: True
+  - Telephone: x.phone_number
+    required: True
+  - Fax: x.fax_number
+    required: False
+  ---
+    

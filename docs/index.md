@@ -10,6 +10,10 @@ maintaner: Thomas J. Daley, J.D.
 **docassemble-us-tx-family** is a [docassemble] module targeting
 Family Law applications in Texas.
 
+# <a name="interviews"></a>Interviews
+
+This module defines a set of [interviews], which are organized roughly according to how a case progresses.
+
 # <a name="classes"></a>Classes
 
 **docassemble-us-tx-family** defines the following [classes] which extend
@@ -58,17 +62,6 @@ This module uses some custom [configuration] file variables to control how it op
 
 # <a name="toc"></a>Sections of the documentation
 
-<ul class="interiortoc">
-{% for section in site.collections.docs %}
-<li>{{ section.title }} (rev. {{ section.revised }})</li>
-{% endfor %}
-</ul>
-
-<ul class="interiortoc">
-{% for item in site.navigation %}
-    <li><a href="{{item.url}}">{{item.title}}</a></li>
-{% endfor %}
-</ul>
 Navigation collection: {{ site.navigation }}
 
 
@@ -77,7 +70,7 @@ Navigation collection: {{ site.navigation }}
 **{{sx}}**
 {% for s in sx %}
 1. {{ s }}
-[% endfor %]
+{% endfor %}
 {% endfor %}
 {% endfor %}
 
@@ -86,6 +79,7 @@ Navigation collection: {{ site.navigation }}
 [configuration]: {{ site.baseurl }}/configuration.html
 [docassemble]: https://docassemble.org
 [forms]: #
+[interviews]: {{ site.baseurl }}/interviews.html
 [functions]: {{ site.baseurl }}/functions.html
 [objects]: {{ site.baseurl }}/objects.html
 [pointers]: {{ site.baseurl }}/pointers.html

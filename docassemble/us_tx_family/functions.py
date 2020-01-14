@@ -11,6 +11,7 @@ from .us_case_list import UsCaseList
 
 from docassemble.base.logger import logmessage
 from docassemble.base.functions import get_user_info
+from docassemble.base.util import DARedis
 
 TRACE = True
 
@@ -43,6 +44,12 @@ def clerk_staff(county: str):
     directory = UsTxCourtDirectory()
     staff_list = directory.get_clerk(county)
     return staff_list
+
+def me():
+    the_redis = DARedis()
+    key = '{}:me'.format(__user_id())
+    me = the_redis.get_data(key)
+    return me
 
 def my_cases():
     if TRACE:

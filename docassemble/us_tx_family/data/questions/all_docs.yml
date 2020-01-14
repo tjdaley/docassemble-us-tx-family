@@ -11,6 +11,7 @@ metadata:
 ---
 modules:
   - .functions
+  - .objects
 ---
 objects:
   - doc: LegalFiling
@@ -18,6 +19,7 @@ objects:
 ---
 include:
   - basic-questions.yml
+  - docassemble.us_tx_family:attorney.yml
   - docassemble.us_tx_family:terms.yml
 ---
 mandatory: True
@@ -40,6 +42,13 @@ code: |
   case.secondParty = case.respondent
   doc.case = case
 
+  # Gather attorney in charge
+  case.initializeAttribute('me', Attorney)
+  if me():
+    case.me = me()
+  else:
+    case.me.gather()
+
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
@@ -54,6 +63,27 @@ subquestion: |
 buttons:
   - Exit: exit
     url: https://www.powerdaley.com
+---
+section: case
+decoration: balance-scale
+question: |
+  Which side of the case does {{case.me}} represent?
+field: case.client_role
+choices:
+  - Petitioner
+  - Respondent
+---
+section: case
+decoration: balance-scale
+question: |
+  Which {{case.client_role}} does {{case.me}} represent?
+fields:
+  - case.client
+    code: |
+      if case.client_role == 'Petitioner':
+        case.petitioner.items
+      else:
+        case.respondent.items
 ---
 section: case
 decoration: balance-scale
