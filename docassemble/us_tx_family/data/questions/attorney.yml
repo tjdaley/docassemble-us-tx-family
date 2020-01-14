@@ -9,6 +9,7 @@ metadata:
 ---
 generic object: LawFirm
 decoration: user-cog
+question: Tell me about the Law Firm.
 fields:
   - Firm name: x.name
   - Street: x.address.address
@@ -26,6 +27,7 @@ fields:
 ---
 generic object: Attorney
 decoration: user-cog
+question: Attorney details
 fields:
   - Courtesty title: x.name.title
     required: True
