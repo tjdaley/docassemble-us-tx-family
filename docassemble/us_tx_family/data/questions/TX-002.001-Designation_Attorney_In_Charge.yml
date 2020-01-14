@@ -1,0 +1,77 @@
+---
+metadata:
+  title: |
+    Designation of Attorney in Charge / Entry of Appearance
+  short title: |
+    Designation of Attorney in Charge
+  description: |
+    An interview to produce a Rule 8 Designation of Attorney in Charge
+  tab title: |
+    Designation
+  tags:
+    - general
+  logo: ATTORNEY.BOT
+  error action: on_error
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-01-14
+---
+features:
+  centered: False
+  progress bar: True
+---
+modules:
+  - .objects
+  - .functions
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:select_case.yml
+  - docassemble.us_tx_family:client_questions.yml
+---
+mandatory: True
+code: |
+  doc.title = "DESIGNATION OF ATTORNEY IN CHARGE"
+  doc.sensitive_data = False
+---
+section: conclusion
+question: |
+  Congratulations!
+subquestion: |
+  You are all done with the interview.
+
+  ${doc.caption()}
+  
+  &nbsp; | &nbsp;
+  ---------|---------
+  **Petitioner** | ${case.petitioner}
+  **Respondent** | ${case.respondent}
+  **Children** | ${case.child}
+  **Cause number** | ${case.case_id}
+  **County** | ${case.county} County
+  **Client** | ${case.client}
+  **Me** | ${case.me}
+  **Firm** | ${case.me.firm}
+
+  Mail your pleading to:
+    ${clerk_staff(case.county)}
+
+  Court staff:
+    ${court_staff(case.court.court_id)}
+
+  % if save_case(case):
+    Your case has been saved.
+  % endif
+  % if save_me():
+    Information about {{case.me}} has been saved.
+  % endif
+mandatory: True
+attachment:
+  name: Designation of Attorney in Charge
+  filename: designation_attorney_in_charge
+  docx template file: TX-002.001-Designation_Attorney_In_Charge.docx
+  valid formats:
+    - pdf
+    - docx
