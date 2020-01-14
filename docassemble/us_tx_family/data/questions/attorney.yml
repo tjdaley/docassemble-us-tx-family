@@ -47,8 +47,9 @@ fields:
     code: |
       name_suffix()
   - Salutation: x.name.salutation
-    help: The person's name as it appears in the salutation of a letter, e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
-    default: {{x.name.title}} {{x.name.last}}
+    help: |
+      The person's name as it appears in the salutation of a letter, 
+      e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
   - Bar number: x.bar_number
     required: True
   - Email: x.email
