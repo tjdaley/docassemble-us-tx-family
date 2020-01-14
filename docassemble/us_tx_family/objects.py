@@ -7,7 +7,7 @@ from decimal import Decimal
 
 from docassemble.base.util import Address, DAList, DAObject, Individual,  PeriodicValue, Person, word
 
-__all__ = ['Attorney', 'Job', 'JobList', 'Income', 'IncomeList', 'MyPeriodicValue']
+__all__ = ['Attorney', 'Job', 'JobList', 'LawFirm', 'Income', 'IncomeList', 'MyPeriodicValue']
 
 
 class Attorney(Individual):
@@ -18,12 +18,14 @@ class Attorney(Individual):
             self.initializeAttribute('firm', LawFirm)
         if 'client' not in kwargs:
             self.initializeAttribute('client', Individual)
+        super(JobList, self).init(*pargs, **kwargs)
 
 
 class LawFirm(Person):
     def init(self, *pargs, **kwargs):
         if 'address' not in kwargs:
             self.initializeAttribute('address', Address)
+        super(JobList, self).init(*pargs, **kwargs)
 
 
 class MyPeriodicValue(PeriodicValue):
