@@ -7,7 +7,7 @@ from decimal import Decimal
 
 from docassemble.base.util import Address, DAList, DAObject, Individual,  PeriodicValue, Person, word
 
-__all__ = ['Attorney', 'AttorneyList' 'Job', 'JobList', 'LawFirm', 'Income', 'IncomeList', 'MyPeriodicValue']
+__all__ = ['Attorney', 'AttorneyList', 'Job', 'JobList', 'LawFirm', 'Income', 'IncomeList', 'MyPeriodicValue']
 
 
 class LawFirm(Person):
