@@ -42,6 +42,12 @@ class AttorneyList(DAList):
         self.complete_attribute = 'complete'
         super(AttorneyList, self).init(*pargs, **kwargs)
 
+    def contains(self, attorney):
+        for atty in self.items:
+            if atty.bar_number == attorney.bar_number:
+                return True
+        return False
+
 
 class MyPeriodicValue(PeriodicValue):
     def init(self, *pargs, **kwargs):
