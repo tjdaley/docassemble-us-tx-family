@@ -50,7 +50,8 @@ code: |
   else:
     case.me.gather()
 
-  case.attorney.append(case.me)
+  if not case.attorney.contains(case.me):
+    case.attorney.append(case.me)
 
   # Gather remaining attorneys
   case.attorney.gather()
