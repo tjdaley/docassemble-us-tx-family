@@ -29,7 +29,11 @@ class Attorney(Individual):
 
     @property
     def complete(self):
-        return self.firm is not None
+        return (
+            self.name.first is not None and
+            self.name.last is not None and
+            self.email is not None
+        )
 
 
 class AttorneyList(DAList):
