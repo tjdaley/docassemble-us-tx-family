@@ -36,7 +36,7 @@ class AttorneyList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Attorney
         self.complete_attribute = 'complete'
-        super(JobList, self).init(*pargs, **kwargs)
+        super(AttorneyList, self).init(*pargs, **kwargs)
 
 
 class MyPeriodicValue(PeriodicValue):
