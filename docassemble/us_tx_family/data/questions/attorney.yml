@@ -9,7 +9,7 @@ metadata:
 ---
 generic object: LawFirm
 decoration: user-cog
-question: Tell me about the Law Firm.
+question: Law Firm details
 fields:
   - Firm name: x.name.text
   - Street: x.address.address
@@ -59,4 +59,48 @@ fields:
     required: True
   - Fax: x.fax_number
     required: False
+---
+generic object: AttorneyList
+section: case
+decoration: user-cog
+question: |
+  Who is the ${ ordinal(i) } attorney?
+fields:
+  - Courtesty title: x.title
+    required: True
+    choices:
+      - Mr.
+      - Ms.
+      - Hon.
+      - Dr.
+  - First name: x.name.first
+    required: True
+  - Middle name: x.name.middle
+    required: False
+  - Last name: x.name.last
+    required: True
+  - Suffix: x.name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Salutation: x.salutation
+    help: |
+       The person's name as it appears in the salutation of a letter, 
+       e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
+  - Bar number: x.bar_number
+    required: True
+  - Email: x.email
+    datatype: email
+    required: True
+  - Telephone: x.phone_number
+    required: True
+  - Fax: x.fax_number
+    required: False
+---
+section: case
+decoration: user-cog
+question: |
+  Would you like to add another attorney?
+subquestion: So far you have entered ${ case.attorney }.
+yesno: case.attorney.there_is_another
 ---
