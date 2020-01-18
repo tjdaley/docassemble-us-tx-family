@@ -38,6 +38,7 @@ code: |
   case.initializeAttribute('child', ChildList)
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
+  case.initializeAttribute('attorney', AttorneyList)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
@@ -49,9 +50,20 @@ code: |
   else:
     case.me.gather()
 
+  case.attorney.append(case.me)
+
+  # Gather remaining attorneys
+  case.attorney.gather()
+
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
+
+  # Initialize attorney slot for each party
+  for p in case.petitioner:
+     p.initializeAttribute('attorney', Attorney)
+  for p in case.respondent:
+     p.initializeAttribute('attorney', Attorney)
 ---
 event: xon_error
 decoration: bomb
@@ -63,27 +75,6 @@ subquestion: |
 buttons:
   - Exit: exit
     url: https://www.powerdaley.com
----
-section: case
-decoration: balance-scale
-question: |
-  Which side of the case does {{case.me}} represent?
-field: case.client_role
-choices:
-  - Petitioner
-  - Respondent
----
-section: case
-decoration: balance-scale
-question: |
-  Which {{case.client_role}} does {{case.me}} represent?
-fields:
-  - case.client
-    code: |
-      if case.client_role == 'Petitioner':
-        case.petitioner.items
-      else:
-        case.respondent.items
 ---
 section: case
 decoration: balance-scale
