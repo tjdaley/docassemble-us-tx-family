@@ -44,8 +44,8 @@ code: |
   case.secondParty = case.respondent
   doc.case = case
 ---
-  mandatory: True
-  code: |
+mandatory: True
+code: |
   # Gather attorney in charge
   if me():
     case.me = me()
@@ -55,8 +55,8 @@ code: |
   if not case.attorney.contains(case.me):
     case.attorney.append(case.me)
 ---
-  mandatory: True
-  code: |
+mandatory: True
+code: |
   # Gather remaining attorneys
   case.attorney.gather()
 
