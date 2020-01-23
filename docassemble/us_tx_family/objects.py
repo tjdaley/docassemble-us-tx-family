@@ -6,6 +6,7 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 from decimal import Decimal
 
 from docassemble.base.util import Address, DAList, DAObject, Individual,  PeriodicValue, Person, word
+from docassemble.base.logger import logmessage
 
 __all__ = ['Attorney', 'AttorneyList', 'Job', 'JobList', 'LawFirm', 'Income', 'IncomeList', 'MyPeriodicValue']
 
@@ -44,6 +45,7 @@ class AttorneyList(DAList):
 
     def contains(self, attorney):
         for atty in self.items:
+            logmessage("{} vs {}".format(atty.bar_number, attorney.bar_number))
             if atty.bar_number == attorney.bar_number:
                 return True
         return False
