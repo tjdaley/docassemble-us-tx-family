@@ -68,11 +68,11 @@ code: |
   for p in case.petitioner:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      p.attorney
+      p.attorney.gather()
   for p in case.respondent:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      p.attorney
+      p.attorney.gather()
 ---
 generic object: Individual
 section: case
