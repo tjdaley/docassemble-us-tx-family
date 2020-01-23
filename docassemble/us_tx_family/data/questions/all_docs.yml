@@ -66,24 +66,22 @@ code: |
 
   # Initialize attorney slot for each party
   for p in case.petitioner:
-     p.initializeAttribute('attorney', Attorney)
+    if not hasattr(p, 'attorney'):
+      p.initializeAttribute('attorney', Attorney)
+      p.attorney
   for p in case.respondent:
-     p.initializeAttribute('attorney', Attorney)
+    if not hasattr(p, 'attorney'):
+      p.initializeAttribute('attorney', Attorney)
+      p.attorney
 ---
 mandatory: True
-code: |
-  # Connect attorneys and parties
-  for p in case.petitioner:
-    p.attorney.gather()
-  for p in case.respondent:
-    p.attorney.gather()
----
 section: case
 decoraction: balance-scale
 question: |
-  Who represents ${x}
+  Who represents ${individual}?
 fields:
-  - Attorney: x.attorney
+  - Attorney: individual.attorney
+    datatype: object
     code: |
       case.attorney.elements
 ---
