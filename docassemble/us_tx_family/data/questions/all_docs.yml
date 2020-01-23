@@ -39,12 +39,14 @@ code: |
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
   case.initializeAttribute('attorney', AttorneyList)
+  case.initializeAttribute('me', Attorney)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
-
+---
+  mandatory: True
+  code: |
   # Gather attorney in charge
-  case.initializeAttribute('me', Attorney)
   if me():
     case.me = me()
   else:
@@ -52,7 +54,9 @@ code: |
 
   if not case.attorney.contains(case.me):
     case.attorney.append(case.me)
-
+---
+  mandatory: True
+  code: |
   # Gather remaining attorneys
   case.attorney.gather()
 
