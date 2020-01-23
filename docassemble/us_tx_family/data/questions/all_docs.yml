@@ -78,9 +78,9 @@ mandatory: True
 section: case
 decoraction: balance-scale
 question: |
-  Who represents ${individual}?
+  Who represents ${x}?
 fields:
-  - Attorney: individual.attorney
+  - Attorney: x.attorney
     datatype: object
     choices:  case.attorney
 ---
