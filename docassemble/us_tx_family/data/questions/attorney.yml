@@ -66,35 +66,35 @@ decoration: user-cog
 question: |
   Who is the ${ ordinal(i) } attorney?
 fields:
-  - Courtesty title: x.title
+  - Courtesty title: x[i].title
     required: True
     choices:
       - Mr.
       - Ms.
       - Hon.
       - Dr.
-  - First name: x.name.first
+  - First name: x[i].name.first
     required: True
-  - Middle name: x.name.middle
+  - Middle name: x[i].name.middle
     required: False
-  - Last name: x.name.last
+  - Last name: x[i].name.last
     required: True
-  - Suffix: x.name.suffix
+  - Suffix: x[i].name.suffix
     required: False
     code: |
       name_suffix()
-  - Salutation: x.salutation
+  - Salutation: x[i].salutation
     help: |
        The person's name as it appears in the salutation of a letter, 
        e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
-  - Bar number: x.bar_number
+  - Bar number: x[i].bar_number
     required: True
-  - Email: x.email
+  - Email: x[i].email
     datatype: email
     required: True
-  - Telephone: x.phone_number
+  - Telephone: x[i].phone_number
     required: True
-  - Fax: x.fax_number
+  - Fax: x[i].fax_number
     required: False
 ---
 section: case
