@@ -25,41 +25,6 @@ fields:
   - ZIP: x.address.zip
     required: True
 ---
-generic object: Attorney
-decoration: user-cog
-question: Attorney details
-fields:
-  - Courtesty title: x.title
-    required: True
-    choices:
-      - Mr.
-      - Ms.
-      - Hon.
-      - Dr.
-  - First name: x.name.first
-    required: True
-  - Middle name: x.name.middle
-    required: False
-  - Last name: x.name.last
-    required: True
-  - Suffix: x.name.suffix
-    required: False
-    code: |
-      name_suffix()
-  - Salutation: x.salutation
-    help: |
-       The person's name as it appears in the salutation of a letter, 
-       e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
-  - Bar number: x.bar_number
-    required: True
-  - Email: x.email
-    datatype: email
-    required: True
-  - Telephone: x.phone_number
-    required: True
-  - Fax: x.fax_number
-    required: False
----
 generic list object: Attorney
 section: case
 decoration: user-cog
@@ -95,6 +60,41 @@ fields:
   - Telephone: x[i].phone_number
     required: True
   - Fax: x[i].fax_number
+    required: False
+---
+generic object: Attorney
+decoration: user-cog
+question: Attorney details
+fields:
+  - Courtesty title: x.title
+    required: True
+    choices:
+      - Mr.
+      - Ms.
+      - Hon.
+      - Dr.
+  - First name: x.name.first
+    required: True
+  - Middle name: x.name.middle
+    required: False
+  - Last name: x.name.last
+    required: True
+  - Suffix: x.name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Salutation: x.salutation
+    help: |
+       The person's name as it appears in the salutation of a letter, 
+       e.g. "Dear [Mr. Daley]", where the text in brackets is the salutation.
+  - Bar number: x.bar_number
+    required: True
+  - Email: x.email
+    datatype: email
+    required: True
+  - Telephone: x.phone_number
+    required: True
+  - Fax: x.fax_number
     required: False
 ---
 section: case
