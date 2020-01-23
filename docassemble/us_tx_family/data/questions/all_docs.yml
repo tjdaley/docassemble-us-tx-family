@@ -70,6 +70,22 @@ code: |
   for p in case.respondent:
      p.initializeAttribute('attorney', Attorney)
 ---
+mandatory: True
+code: |
+  # Connect attorneys and parties
+  for p in case.petitioner:
+    p.attorney.gather()
+  for p in case.respondent:
+    p.attorney.gather()
+---
+section: case
+decoractoin: balance-scale
+question: |
+  Who represents ${x}
+fields: |
+  - Attorney: x.attorney
+    code: case.attorney.elements
+---
 event: xon_error
 decoration: bomb
 question: |
