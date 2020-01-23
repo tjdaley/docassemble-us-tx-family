@@ -25,7 +25,7 @@ fields:
   - ZIP: x.address.zip
     required: True
 ---
-generic list object: Attorney
+generic object: AttorneyList
 section: case
 decoration: user-cog
 question: |
