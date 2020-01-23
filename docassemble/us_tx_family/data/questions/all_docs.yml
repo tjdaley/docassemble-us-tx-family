@@ -79,12 +79,13 @@ code: |
     p.attorney.gather()
 ---
 section: case
-decoractoin: balance-scale
+decoraction: balance-scale
 question: |
   Who represents ${x}
 fields: |
   - Attorney: x.attorney
-    code: case.attorney.elements
+    code: |
+      case.attorney.elements
 ---
 event: xon_error
 decoration: bomb
