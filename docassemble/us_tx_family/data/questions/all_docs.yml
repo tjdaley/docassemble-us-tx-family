@@ -82,8 +82,7 @@ question: |
 fields:
   - Attorney: individual.attorney
     datatype: object
-    code: |
-      case.attorney.elements
+    choices:  case.attorney
 ---
 event: xon_error
 decoration: bomb
