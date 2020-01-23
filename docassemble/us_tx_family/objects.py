@@ -44,7 +44,7 @@ class AttorneyList(DAList):
         super(AttorneyList, self).init(*pargs, **kwargs)
 
     def contains(self, attorney):
-        for atty in self.items:
+        for atty in self.elements:
             logmessage("{} vs {}".format(atty.bar_number, attorney.bar_number))
             if atty.bar_number == attorney.bar_number:
                 return True
