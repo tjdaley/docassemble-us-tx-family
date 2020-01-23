@@ -45,7 +45,6 @@ class AttorneyList(DAList):
 
     def contains(self, attorney):
         for atty in self.elements:
-            logmessage("{} vs {}".format(atty.bar_number, attorney.bar_number))
             if atty.bar_number == attorney.bar_number:
                 return True
         return False
