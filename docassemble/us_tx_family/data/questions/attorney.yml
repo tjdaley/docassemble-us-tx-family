@@ -60,7 +60,7 @@ fields:
   - Fax: x.fax_number
     required: False
 ---
-generic object: AttorneyList
+generic list object: Attorney
 section: case
 decoration: user-cog
 question: |
