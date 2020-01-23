@@ -82,7 +82,7 @@ section: case
 decoraction: balance-scale
 question: |
   Who represents ${x}
-fields: |
+fields:
   - Attorney: x.attorney
     code: |
       case.attorney.elements
