@@ -33,8 +33,8 @@ code: |
     del case.defendant
   except:
     pass
-  case.initializeAttribute('petitioner', PartyList)
-  case.initializeAttribute('respondent', PartyList)
+  case.initializeAttribute('petitioner', RepresentedPartyList)
+  case.initializeAttribute('respondent', RepresentedPartyList)
   case.initializeAttribute('child', ChildList)
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
@@ -63,16 +63,6 @@ code: |
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
----
-mandatory: True
-code: |
-  # Initialize attorney slot for each party
-  for p in case.petitioner.elements:
-    if not hasattr(p, 'attorney'):
-      p.initializeAttribute('attorney', Attorney)
-  for p in case.respondent:
-    if not hasattr(p, 'attorney'):
-      p.initializeAttribute('attorney', Attorney)
 ---
 mandatory: True
 code: |
