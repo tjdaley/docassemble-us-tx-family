@@ -67,7 +67,7 @@ code: |
 mandatory: True
 code: |
   # Initialize attorney slot for each party
-  for p in case.petitioner:
+  for p in case.petitioner.elements:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
   for p in case.respondent:
