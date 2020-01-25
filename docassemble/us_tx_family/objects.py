@@ -41,6 +41,11 @@ class RepresentedPartyListx(DAList):
         self.object_type = Attorney
         return super().init(*pargs, **kwargs)
 
+    def contains(self, attorney):
+        for atty in self.elements:
+            if atty.bar_number == attorney.bar_number:
+                return True
+        return False
 
 
 class AttorneyList(DAList):
