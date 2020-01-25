@@ -38,7 +38,7 @@ code: |
   case.initializeAttribute('child', ChildList)
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
-  case.initializeAttribute('attorney', RepresentedPartyList)  # AttorneyList)
+  case.initializeAttribute('attorney', AttorneyList)
   case.initializeAttribute('me', Attorney)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
@@ -53,8 +53,8 @@ code: |
   else:
     case.me
 
-  #if not case.attorney.contains(case.me):
-  #  case.attorney.append(case.me)
+  if not case.attorney.contains(case.me):
+    case.attorney.append(case.me)
 ---
 mandatory: True
 code: |
@@ -84,8 +84,7 @@ question: |
 fields:
   - Attorney: x.attorney
     datatype: object
-    choices:  |
-      case.attorney
+    choices:  case.attorney
 ---
 event: xon_error
 decoration: bomb
