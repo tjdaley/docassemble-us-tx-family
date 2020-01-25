@@ -78,7 +78,8 @@ code: |
 ---
 generic object: Individual
 section: case
-decoraction: balance-scale
+decoration: balance-scale
+sets: x.attorney.bar_number
 question: |
   Who represents ${x}?
 fields:
