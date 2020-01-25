@@ -56,7 +56,7 @@ code: |
   if not case.attorney.contains(case.me):
     case.attorney.clear()
     case.attorney.appendObject(Attorney)
-    case.attorney[0] = case.me
+    # case.attorney[0] = case.me
 ---
 mandatory: True
 code: |
