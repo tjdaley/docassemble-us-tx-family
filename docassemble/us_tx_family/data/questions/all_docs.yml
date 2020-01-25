@@ -38,7 +38,7 @@ code: |
   case.initializeAttribute('child', ChildList)
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
-  case.initializeAttribute('attorney', RepresentedPartyListx)
+  case.initializeAttribute('attorney', AttorneyList)
   case.initializeAttribute('me', Attorney)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent

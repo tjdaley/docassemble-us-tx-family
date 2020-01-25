@@ -51,7 +51,7 @@ class RepresentedPartyListx(DAList):
 class AttorneyList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Attorney
-        #self.complete_attribute = 'complete'
+        self.complete_attribute = 'complete'
         return super().init(*pargs, **kwargs)
 
     def contains(self, attorney):
