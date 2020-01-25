@@ -83,7 +83,7 @@ question: |
 fields:
   - Attorney: x.attorneyx
     datatype: object
-    choices:  case.attorneyz
+    choices:  case.attorney
 ---
 event: xon_error
 decoration: bomb
