@@ -81,9 +81,10 @@ sets: x.attorney.bar_number
 question: |
   Who represents ${x}?
 fields:
-  - Attorney: x.attorneyx
+  - Attorney: x.attorney
     datatype: object
-    choices:  case.attorney
+    choices:  |
+      [atty for atty in case.attorney]
 ---
 event: xon_error
 decoration: bomb
