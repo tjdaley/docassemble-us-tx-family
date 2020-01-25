@@ -14,7 +14,6 @@ __all__ = ['Attorney', 'AttorneyList',
            'LawFirm',
            'RepresentedParty',
            'RepresentedPartyList',
-           'RepresentedPartyListx',
            'MyPeriodicValue']
 
 
@@ -35,17 +34,6 @@ class Attorney(Individual):
             self.name.last is not None and
             self.email is not None
         )
-
-class RepresentedPartyListx(DAList):
-    def init(self, *pargs, **kwargs):
-        self.object_type = Attorney
-        return super().init(*pargs, **kwargs)
-
-    def contains(self, attorney):
-        for atty in self.elements:
-            if atty.bar_number == attorney.bar_number:
-                return True
-        return False
 
 
 class AttorneyList(DAList):
