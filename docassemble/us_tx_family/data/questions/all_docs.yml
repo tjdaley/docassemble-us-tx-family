@@ -43,6 +43,7 @@ code: |
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   doc.case = case
+  attorneys = case.attorney
 ---
 mandatory: True
 code: |
@@ -84,7 +85,7 @@ fields:
   - Attorney: x.attorney
     datatype: object
     choices:  |
-      [atty for atty in case.attorney]
+      [atty for atty in attorneys]
 ---
 event: xon_error
 decoration: bomb
