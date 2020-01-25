@@ -54,7 +54,8 @@ code: |
     case.me
 
   if not case.attorney.contains(case.me):
-    case.attorney.append(case.me)
+    pass
+    # case.attorney.append(case.me)
 ---
 mandatory: True
 code: |
