@@ -51,7 +51,7 @@ code: |
   if me():
     case.me = me()
   else:
-    case.me
+    save_me(case.me)
 
   if not case.attorney.contains(case.me):
     case.attorney.clear()
