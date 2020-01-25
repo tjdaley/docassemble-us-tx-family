@@ -63,23 +63,31 @@ code: |
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
-
+---
+mandatory: True
+code: |
   # Initialize attorney slot for each party
   for p in case.petitioner:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      if p.attorney != '':
-        pass
   for p in case.respondent:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      if p.attorney != '':
-        pass
+---
+mandatory: True
+code: |
+  # Associate an attorney for each party
+  for p in case.petitioner:
+    if p.attorney.bar_number != '':
+      pass
+  for p in case.respondent:
+    if p.attorney.bar_number != '':
+      pass
 ---
 generic object: Individual
 section: case
 decoration: balance-scale
-sets: x.attorney
+sets: x.attorney.bar_number
 question: |
   Who represents ${x}?
 fields:
