@@ -68,18 +68,18 @@ code: |
   for p in case.petitioner:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      if p.attorney.bar_number != '':
+      if p.attorney != '':
         pass
   for p in case.respondent:
     if not hasattr(p, 'attorney'):
       p.initializeAttribute('attorney', Attorney)
-      if p.attorney.bar_number != '':
+      if p.attorney != '':
         pass
 ---
 generic object: Individual
 section: case
 decoration: balance-scale
-sets: x.attorney.bar_number
+sets: x.attorney
 question: |
   Who represents ${x}?
 fields:
