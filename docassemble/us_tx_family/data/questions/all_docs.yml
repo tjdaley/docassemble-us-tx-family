@@ -85,7 +85,7 @@ fields:
   - Attorney: x.attorney
     datatype: object
     choices:  |
-      [atty for atty in attorneys]
+      case.petitioner
 ---
 event: xon_error
 decoration: bomb
