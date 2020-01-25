@@ -73,6 +73,8 @@ code: |
       p.initializeAttribute('attorney', Attorney)
 
   # Now fill the attorney slots
+  case.petitioner.gathered = False
+  case.respondent.gathered = False
   case.petitioner.gather()
   case.respondent.gather()
 ---
