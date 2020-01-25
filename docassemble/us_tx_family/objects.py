@@ -25,7 +25,7 @@ class Attorney(Individual):
             self.initializeAttribute('firm', LawFirm)
         if 'client' not in kwargs:
             self.initializeAttribute('client', Individual)
-        super(Attorney, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
     @property
     def complete(self):
@@ -58,7 +58,7 @@ class Income(DAObject):
     def init(self, *pargs, **kwargs):
         if 'income' not in kwargs:
             self.initializeAttribute('income', MyPeriodicValue)
-        super(Income, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
     def summary(self):
         return self.description or "**NONE**"
@@ -75,7 +75,7 @@ class IncomeList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Income
         self.complete_attribute = 'complete'
-        super(IncomeList, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
         """
@@ -111,7 +111,7 @@ class Job(DAObject):
             self.initializeAttribute('income', MyPeriodicValue)
         if 'union_dues' not in kwargs:
             self.initializeAttribute('union_dues', MyPeriodicValue)
-        super(Job, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
     def summary(self):
         return self.employer or "**NONE**"
@@ -128,7 +128,7 @@ class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
         self.complete_attribute = 'complete'
-        super(JobList, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
         """
@@ -157,14 +157,14 @@ class LawFirm(Person):
     def init(self, *pargs, **kwargs):
         if 'address' not in kwargs:
             self.initializeAttribute('address', Address)
-        super(LawFirm, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
 
 class RepresentedParty(Individual):
     def init(self, *pargs, **kwargs):
         if 'attorney' not in kwargs:
             self.initializeAttribute('attorney', Attorney)
-        super(RepresentedParty, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
 
 
 class RepresentedPartyList(DAList):
@@ -176,4 +176,4 @@ class RepresentedPartyList(DAList):
 class MyPeriodicValue(PeriodicValue):
     def init(self, *pargs, **kwargs):
         self.exists = True
-        super(MyPeriodicValue, self).init(*pargs, **kwargs)
+        super().init(*pargs, **kwargs)
