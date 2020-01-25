@@ -48,10 +48,11 @@ code: |
 mandatory: True
 code: |
   # Gather attorney in charge
-  if me():
+  if case.me.bar_number == '' and me():
     case.me = me()
   else:
-    save_me(case.me)
+    case.me
+  save_me(case.me)
 
   if not case.attorney.contains(case.me):
     case.attorney.clear()
