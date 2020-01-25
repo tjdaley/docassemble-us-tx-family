@@ -163,7 +163,7 @@ class LawFirm(Person):
 class RepresentedParty(Individual):
     def init(self, *pargs, **kwargs):
         if 'attorney' not in kwargs:
-            self.initializeAttribute('attorey', Attorney)
+            self.initializeAttribute('attorney', Attorney)
         super(RepresentedParty, self).init(*pargs, **kwargs)
 
 
