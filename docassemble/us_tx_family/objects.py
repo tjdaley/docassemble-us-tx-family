@@ -38,7 +38,7 @@ class Attorney(Individual):
 
 class RepresentedPartyListx(DAList):
     def init(self, *pargs, **kwargs):
-        self.object_type = RepresentedParty
+        self.object_type = Attorney
         return super().init(*pargs, **kwargs)
 
 
