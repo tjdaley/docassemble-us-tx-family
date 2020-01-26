@@ -11,7 +11,7 @@ generic object: LawFirm
 decoration: user-cog
 question: Law Firm details
 fields:
-  - Firm name: x.name
+  - Firm name: x.name.text
   - Street: x.address.address
     required: True
     address autocomplete: True
