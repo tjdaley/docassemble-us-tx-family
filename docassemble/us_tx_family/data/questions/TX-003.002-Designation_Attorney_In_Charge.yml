@@ -29,7 +29,6 @@ include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
   - docassemble.us_tx_family:select_case.yml
-  - docassemble.us_tx_family:client_questions.yml
 ---
 mandatory: True
 code: |
@@ -63,9 +62,6 @@ subquestion: |
 
   % if save_case(case):
     Your case has been saved.
-  % endif
-  % if save_me():
-    Information about {{case.me}} has been saved.
   % endif
 mandatory: True
 attachment:

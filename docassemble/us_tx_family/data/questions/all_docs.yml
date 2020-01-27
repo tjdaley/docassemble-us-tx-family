@@ -70,7 +70,7 @@ code: |
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
-  case.intervenor.gather(minimum=0)
+  case.intervenor.gather()
 ---
 mandatory: True
 code: |
@@ -92,12 +92,17 @@ code: |
   for p in case.petitioner:
     if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
+      case.client_role = "Petitioner"
   for p in case.respondent:
     if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
+      case.client_role = "Respondent"
   for p in case.intervenor:
     if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
+      case.client_role = "Intervenor"
+  case.client.gathered = True
+  case.client.is_there_another = False
 ---
 generic object: RepresentedParty
 section: case
