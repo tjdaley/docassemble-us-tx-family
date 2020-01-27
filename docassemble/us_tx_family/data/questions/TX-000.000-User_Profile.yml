@@ -29,6 +29,7 @@ objects:
   - the_attorney: Attorney
   - the_attorney.firm: LawFirm
 ---
+decoration: user-cog
 question: |
   Review your profile
 review:
@@ -50,12 +51,18 @@ code: |
 ---
 mandatory: True
 code: |
+  # Gather attorney information
   the_attorney.bar_number
+  # Gather firm information
   the_attorney.firm.name.text
+  # Let user double-check the information
   profiles_reviewed
+  # Save the profile
   save_me(the_attorney)
+  # Show a summary screen
   final_screen
 ---
+decoration: user-cog
 event: final_screen
 question: Profile complete
 subquestion: |
