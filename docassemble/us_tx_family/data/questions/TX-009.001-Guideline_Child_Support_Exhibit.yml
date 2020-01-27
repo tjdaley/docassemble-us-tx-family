@@ -87,7 +87,7 @@ mandatory: True
 attachment:
   name: Child Support Exhibit
   filename: child_support_exhibit
-  docx template file: TX-002.001-Guideline_Child_Support_Exhibit.docx
+  docx template file: TX-009.001-Guideline_Child_Support_Exhibit.docx
   valid formats:
     - pdf
     - docx
