@@ -155,8 +155,7 @@ class JobList(DAList):
 
 class LawFirm(Person):
     def init(self, *pargs, **kwargs):
-        if 'address' not in kwargs:
-            self.initializeAttribute('address', Address)
+        kwargs['name'] = ''
         return super().init(*pargs, **kwargs)
 
 
