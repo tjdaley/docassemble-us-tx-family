@@ -7,11 +7,11 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
-  revision_date: 2020-01-11
+  revision_date: 2020-01-26
 ---
 modules:
-  - .functions
-  - .objects
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
 ---
 objects:
   - doc: LegalFiling
@@ -23,7 +23,15 @@ include:
   - docassemble.us_tx_family:terms.yml
 ---
 mandatory: True
+code : |
+  # First, make sure we have a user profile
+  # before doing anything else.
+  if me() is None:
+    must_set_up_profile
+---
+mandatory: True
 code: |
+  # Now set up a basic family law case.
   case.state = "TEXAS"
   case.country = "US"
   case.court.name = "District Court"
@@ -42,28 +50,21 @@ code: |
   case.initializeAttribute('me', Attorney)
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
+  case.me = me()
   doc.case = case
-  attorneys = case.attorney
----
-mandatory: True
-code: |
-  # Gather attorney in charge
-  if case.me.bar_number == '' and me():
-    case.me = me()
-  else:
-    case.me
-  save_me(case.me)
 
-  if not case.attorney.contains(case.me):
-    case.attorney.clear()
-    case.attorney.appendObject(Attorney)
-    case.attorney[0] = case.me
+  # Add our user's attorney profile to the list of attorneys
+  # working on this case.
+  case.attorney.clear()
+  case.attorney.append(me(), set_instance_name=True)
 ---
 mandatory: True
 code: |
   # Gather remaining attorneys
   case.attorney.gather()
-
+---
+mandatory: True
+code: |
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
@@ -78,7 +79,7 @@ code: |
     if p.attorney.bar_number != '':
       pass
 ---
-generic object: Individual
+generic object: RepresentedParty
 section: case
 decoration: balance-scale
 sets: x.attorney.bar_number
@@ -88,17 +89,6 @@ fields:
   - Attorney: x.attorney
     datatype: object
     choices:  case.attorney
----
-event: xon_error
-decoration: bomb
-question: |
-  We have encountered an error.
-subquestion: |
-  My apologies. We've encountered an error. It has been reported
-  to the help desk. Please try again later. /tjd/
-buttons:
-  - Exit: exit
-    url: https://www.powerdaley.com
 ---
 section: case
 decoration: balance-scale
@@ -130,4 +120,24 @@ fields:
   - Cause number: case.case_id
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
+---
+event: must_set_up_profile
+decoration: user-cog
+question: |
+  Your Profile is Missing
+subquestion: |
+  You must [set up a profile] before continuing.
+
+  [set up a profile]: ${ interview_url(i='docassemble.us_tx_family:data/questions/TX-002.000-User_Profile.yml')}
+---
+event: xon_error
+decoration: bomb
+question: |
+  We have encountered an error.
+subquestion: |
+  My apologies. We've encountered an error. It has been reported
+  to the help desk. Please try again later. /tjd/
+buttons:
+  - Exit: exit
+    url: https://www.powerdaley.com
 ---
