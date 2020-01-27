@@ -67,7 +67,7 @@ mandatory: True
 attachment:
   name: Designation of Attorney in Charge
   filename: designation_attorney_in_charge
-  docx template file: TX-003.002-Designation_Attorney_In_Charge.docx
+  docx template file: docassemble.us_tx_family:data/templates/TX-003.002-Designation_Attorney_In_Charge.docx
   valid formats:
     - pdf
     - docx
