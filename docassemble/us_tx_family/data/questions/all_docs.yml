@@ -43,6 +43,8 @@ code: |
     pass
   case.initializeAttribute('petitioner', RepresentedPartyList)
   case.initializeAttribute('respondent', RepresentedPartyList)
+  case.initializeAttribute('intervenor', RepresentedPartyList)
+  case.initializeAttribute('client', RepresentedPartyList)
   case.initializeAttribute('child', ChildList)
   case.initializeAttribute('asset', DAList)
   case.initializeAttribute('liability', DAList)
@@ -68,6 +70,7 @@ code: |
   # Now Populate the basic case information
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
+  case.intervenor.gather(minimum=0)
 ---
 mandatory: True
 code: |
@@ -78,6 +81,23 @@ code: |
   for p in case.respondent:
     if p.attorney.bar_number != '':
       pass
+  for p in case.intervenor:
+    if p.attorney.bar_number != '':
+      pass
+---
+mandatory: True
+code: |
+  # Make a list of all the parties we represent
+  case.client.clear()
+  for p in case.petitioner:
+    if p.attorne.bar_number == case.me.bar_number:
+      case.client.append(p, set_instance_name=True)
+  for p in case.respondent:
+    if p.attorne.bar_number == case.me.bar_number:
+      case.client.append(p, set_instance_name=True)
+  for p in case.intervenor:
+    if p.attorne.bar_number == case.me.bar_number:
+      case.client.append(p, set_instance_name=True)
 ---
 generic object: RepresentedParty
 section: case
