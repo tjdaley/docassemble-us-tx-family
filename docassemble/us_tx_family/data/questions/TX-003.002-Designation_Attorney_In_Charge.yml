@@ -15,15 +15,15 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2020-01-14
+  revision_date: 2020-01-27
 ---
 features:
   centered: False
   progress bar: True
 ---
 modules:
-  - .objects
-  - .functions
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
 ---
 include:
   - basic-questions.yml
