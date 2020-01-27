@@ -9,7 +9,9 @@ maintaner: Thomas J. Daley, J.D.
 ## Topical Outline
 
 1. Included Templates
+1. Attorney Setup
 1. Beginning of the Case
+   1. Case Setup
    1. Entry of Appearance
 1. Pleadings
 1. Motions and Orders
