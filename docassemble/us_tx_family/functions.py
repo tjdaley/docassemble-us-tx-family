@@ -14,7 +14,7 @@ from docassemble.base.functions import get_user_info
 from docassemble.base.util import DARedis
 
 TRACE = True
-ME_KEY = '{}:mez'
+ME_KEY = '{}:me'
 
 def counties():
     # Run us_tx_counties.py to get a new list . . . if Texas ever adds/removes counties.
