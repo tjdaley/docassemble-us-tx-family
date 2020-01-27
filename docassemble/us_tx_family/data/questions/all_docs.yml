@@ -90,13 +90,13 @@ code: |
   # Make a list of all the parties we represent
   case.client.clear()
   for p in case.petitioner:
-    if p.attorne.bar_number == case.me.bar_number:
+    if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
   for p in case.respondent:
-    if p.attorne.bar_number == case.me.bar_number:
+    if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
   for p in case.intervenor:
-    if p.attorne.bar_number == case.me.bar_number:
+    if p.attorney.bar_number == case.me.bar_number:
       case.client.append(p, set_instance_name=True)
 ---
 generic object: RepresentedParty
