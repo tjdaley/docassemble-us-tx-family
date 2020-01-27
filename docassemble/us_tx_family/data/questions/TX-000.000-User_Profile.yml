@@ -1,0 +1,78 @@
+---
+metadata:
+  title: |
+    User Profile - create/update
+  short title: |
+    User Profile
+  description: |
+    An interview for the user's name and firm information
+  tab title: |
+    Profile
+  tags:
+    - general
+  logo: ATTORNEY.BOT
+
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: attorney.bot
+  revision_date: 2020-01-26
+---
+modules:
+  - docassemble.base.legal
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+---
+include:
+  - docassemble.us_tx_family:attorney.yml
+---
+objects:
+  - the_attorney: Attorney
+  - the_attorney.firm: LawFirm
+---
+question: |
+  Review your profile
+review:
+  - Review Profile: the_attorney.bar_number
+    button: |
+      ${ the_attorney.name }
+  - Review Firm: the_attorney.firm.address.address
+    button: |
+      ${ the_attorney.firm.name }
+field: profiles_reviewed
+---
+mandatory: True
+code: |
+  # If a user profile has already been created and stored,
+  # retrieve it and use it.
+  retrieved_attorney = me()
+  if retrieved_attorney:
+    the_attorney = retrieved_attorney
+---
+mandatory: True
+code: |
+  the_attorney.bar_number
+  the_attorney.firm.name.text
+  profiles_reviewed
+  save_me(the_attorney)
+  final_screen
+---
+event: final_screen
+question: Profile complete
+subquestion: |
+
+  ## Attorney
+  
+   &nbsp; | &nbsp; 
+  --------|--------
+  Name: | ${the_attorney.name} (${the_attorney.salutation})
+  State Bar Num: | ${the_attorney.bar_number}
+  Email: | ${the_attorney.email}
+  Telephone: | ${the_attorney.phone_number}
+  Fax: | ${the_attorney.fax_number}
+  
+  ## The Firm
+  
+  &nbsp; | &nbsp;
+  --------|--------
+  Name: | ${the_attorney.firm.name}
+  Address: | ${the_attorney.firm.address}
