@@ -155,7 +155,6 @@ class JobList(DAList):
 
 class LawFirm(Person):
     def init(self, *pargs, **kwargs):
-        kwargs['name'] = ''
         return super().init(*pargs, **kwargs)
 
 
