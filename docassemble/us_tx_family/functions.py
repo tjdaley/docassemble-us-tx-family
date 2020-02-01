@@ -63,9 +63,8 @@ def my_cases(allow_add:bool = True):
         cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
     return cases
 
-def new_case():
-    case = Case()
-    # Now set up a basic family law case.
+def initialize_case(case):
+    # Set up a basic family law case.
     case.state = "TEXAS"
     case.country = "US"
     case.court.name = "District Court"
