@@ -1,0 +1,93 @@
+---
+metadata:
+  title: |
+    Edit Case
+  short title: |
+    Edit Case
+  description: |
+    An interview to Edit and Existing Case
+  tab title: |
+    Edit Case
+  tags:
+    - general
+  logo: ATTORNEY.BOT
+  error action: on_error
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-01
+---
+features:
+  centered: False
+---
+modules:
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+---
+include:
+  - basic-questions.yml
+---
+mandatory: True
+code: |
+  # Prompt user to select a case
+  case_key
+  if case_key != '*ADD*':
+    case = get_case(case_key)
+  else:
+    err_cannot_add
+  # Show Sections to Modify
+---
+event: err_cannot_add
+question: Cannot add a new case
+subquestion: |
+  Please select from among your existing cases.
+---
+section: Select Case
+decoration: balance-scale
+question: Select a case
+fields:
+  - Case: case_key
+    code: |
+      my_cases(allow_add=False)
+---
+section: conclusion
+question: |
+  Congratulations!
+subquestion: |
+  You are all done with the interview.
+
+  &nbsp; | &nbsp;
+  ---------|---------
+  **Petitioner** | ${case.petitioner}
+  **Respondent** | ${case.respondent}
+  **Cause number** | ${case.case_id}
+  **County** | ${case.county} County
+  **Me** | ${case.me}
+  **Firm** | ${case.me.firm}
+ 
+  % for atty in case.attorney:
+  ${atty}'s bar number is ${atty.bar_number}
+  
+  % endfor
+
+  ### District clerk
+  % for staffer in clerk_staff(case.county):
+    ${staffer.name}<br/>
+    ${staffer.title}<br/>
+    ${staffer.address}<br/>
+    ${staffer.email}<br/>
+    ${staffer.phone}
+    
+  % endfor
+
+  ### Court staff
+  % for staffer in court_staff(case.court.court_id):
+    ${staffer.name}<br/>
+    ${staffer.title}<br/>
+    ${staffer.address}<br/>
+    ${staffer.email}<br/>
+    ${staffer.phone}
+    
+  % endfor
+
+mandatory: True
