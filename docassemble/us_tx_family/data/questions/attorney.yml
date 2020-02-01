@@ -29,7 +29,7 @@ generic object: AttorneyList
 section: case
 decoration: user-cog
 question: |
-  Who is the ${ ordinal(i) } attorney??
+  Who is the ${ ordinal(i) } attorney?
 fields:
   - Courtesty title: x[i].title
     required: True
