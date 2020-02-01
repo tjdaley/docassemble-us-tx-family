@@ -77,7 +77,7 @@ mandatory: True
 code: |
   # Associate an attorney for each party
   for p in case.petitioner:
-    if p.attorney.bar_number != '':
+    if p.attorney.bar_number is not None:
       pass
   for p in case.respondent:
     if p.attorney.bar_number != '':
