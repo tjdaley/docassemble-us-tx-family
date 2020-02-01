@@ -110,7 +110,7 @@ code: |
 generic object: RepresentedParty
 section: case
 decoration: balance-scale
-sets: x.attorney.bar_number
+sets: x.attorney.email
 question: |
   Who represents ${x}?
 fields:
