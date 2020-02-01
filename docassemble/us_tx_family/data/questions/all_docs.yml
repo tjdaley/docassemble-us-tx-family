@@ -53,6 +53,7 @@ code: |
   case.firstParty = case.petitioner
   case.secondParty = case.respondent
   case.me = me()
+  doc.initializeAttribute('case', Case)
   doc.case = case
 
   # Add our user's attorney profile to the list of attorneys
