@@ -27,7 +27,7 @@ class Attorney(Individual):
             self.initializeAttribute('client', Individual)
         if 'bar_number' not in kwargs:
             self.initializeAttribute('bar_number', str)
-            self.bar_number = None
+            self.bar_number = ''
         return super().init(*pargs, **kwargs)
 
     @property
