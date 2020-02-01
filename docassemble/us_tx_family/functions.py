@@ -52,12 +52,13 @@ def me():
     me = the_redis.get_data(key)
     return me
 
-def my_cases():
+def my_cases(allow_add:bool = True):
     if TRACE:
         logmessage("my_cases(): Started")
     case_db = UsCaseList(__user_id())
     cases = case_db.get_cases()
-    cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
+    if allow_add:
+        cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
     return cases
 
 def get_case(case_key: str):
