@@ -12,8 +12,8 @@ from .us_case_list import UsCaseList
 from docassemble.base.functions import get_user_info
 from docassemble.base.legal import Case
 from docassemble.base.logger import logmessage
-from docassemble.base.util import DAList, DARedis
-from .objects import Attorney, AttorneyList, ChildList, RepresentedPartyList
+from docassemble.base.util import ChildList, DAList, DARedis
+from .objects import Attorney, AttorneyList, RepresentedPartyList
 
 TRACE = True
 ME_KEY = '{}:me'
