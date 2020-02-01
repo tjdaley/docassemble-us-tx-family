@@ -79,7 +79,7 @@ code: |
   # Associate an attorney for each party
   for p in case.petitioner:
     logmessage("@@@ Petitioner: {} / {}".format(p, p.attorney.bar_number))
-    if p.attorney.bar_number is not None:
+    if p.attorney.bar_number != '':
       pass
   for p in case.respondent:
     if p.attorney.bar_number != '':
