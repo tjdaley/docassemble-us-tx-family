@@ -78,7 +78,6 @@ mandatory: True
 code: |
   # Associate an attorney for each party
   for p in case.petitioner:
-    # logmessage("@@@ Petitioner: {} / str? {} / None? {}".format(p, isinstance(p.attorney.bar_number, str), (p.attorney.bar_number is None)))
     if p.attorney.bar_number == '':
       p.attorney.email
   for p in case.respondent:
