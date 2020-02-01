@@ -9,9 +9,11 @@ from .us_tx_courts import UsTxCourts
 from .us_tx_court_directory import UsTxCourtDirectory
 from .us_case_list import UsCaseList
 
-from docassemble.base.logger import logmessage
 from docassemble.base.functions import get_user_info
-from docassemble.base.util import DARedis
+from docassemble.base.legal import Case
+from docassemble.base.logger import logmessage
+from docassemble.base.util import DAList, DARedis
+from .objects import Attorney, AttorneyList, ChildList, RepresentedPartyList
 
 TRACE = True
 ME_KEY = '{}:me'
@@ -60,6 +62,39 @@ def my_cases(allow_add:bool = True):
     if allow_add:
         cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
     return cases
+
+def new_case():
+    case = Case()
+    # Now set up a basic family law case.
+    case.state = "TEXAS"
+    case.country = "US"
+    case.court.name = "District Court"
+    case.court.jurisdiction = list('Texas')
+    try:
+        del case.plaintiff
+        del case.defendant
+    except:
+        pass
+    case.initializeAttribute('petitioner', RepresentedPartyList)
+    case.initializeAttribute('respondent', RepresentedPartyList)
+    case.initializeAttribute('intervenor', RepresentedPartyList)
+    case.initializeAttribute('client', RepresentedPartyList)
+    case.initializeAttribute('child', ChildList)
+    case.initializeAttribute('asset', DAList)
+    case.initializeAttribute('liability', DAList)
+    case.initializeAttribute('attorney', AttorneyList)
+    case.initializeAttribute('me', Attorney)
+    case.firstParty = case.petitioner
+    case.secondParty = case.respondent
+    case.me = me()
+
+    # Add our user's attorney profile to the list of attorneys
+    # working on this case.
+    case.attorney.clear()
+    case.attorney.append(me(), set_instance_name=True)
+
+    return case
+
 
 def get_case(case_key: str):
     if TRACE:
