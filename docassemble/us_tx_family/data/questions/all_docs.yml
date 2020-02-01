@@ -12,6 +12,7 @@ metadata:
 modules:
   - docassemble.us_tx_family.functions
   - docassemble.us_tx_family.objects
+  - docassemble.base.logger
 ---
 objects:
   - doc: LegalFiling
@@ -77,7 +78,7 @@ mandatory: True
 code: |
   # Associate an attorney for each party
   for p in case.petitioner:
-    print("Petitioner: {}".format(case.petitioner))
+    logmessage("@@@ Petitioner: {}".format(case.petitioner))
     if p.attorney.bar_number is not None:
       pass
   for p in case.respondent:
