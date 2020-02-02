@@ -7,12 +7,18 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
+
+  logo: ATTORNEY.BOT
+  error action: on_error
   revision_date: 2020-02-01
 ---
 modules:
   - docassemble.us_tx_family.functions
   - docassemble.us_tx_family.objects
   - docassemble.base.logger
+---
+objects:
+  - doc: LegalFiling
 ---
 include:
   - basic-questions.yml
