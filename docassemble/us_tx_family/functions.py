@@ -131,6 +131,15 @@ def save_me(about_me):
     the_redis.set_data(key, about_me)
     return True
 
+def us_states():
+    if TRACE:
+        logmessage("retrieving us states")
+    return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", 
+          "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", 
+          "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", 
+          "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
+          "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+
 def __user_id() -> str:
     """
     Return a string that we use for indexing users based on
