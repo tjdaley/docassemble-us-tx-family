@@ -34,33 +34,27 @@ code: |
   doc.sensitive_data = False
 ---
 section: conclusion
+decoration: thumbs-up
 question: |
-  Congratulations!
+  Document Complete
 subquestion: |
-  You are all done with the interview.
+  Your document is ready.
 
-  ${doc.caption()}
-  
-  &nbsp; | &nbsp;
-  ---------|---------
-  **Petitioner** | ${case.petitioner}
-  **Respondent** | ${case.respondent}
-  **Children** | ${case.child}
-  **Cause number** | ${case.case_id}
-  **County** | ${case.county} County
-  **Client** | ${case.client}
-  **Me** | ${case.me}
-  **Firm** | ${case.me.firm}
+  **Mail your pleading to:**
+  % for staff in clerk_staff(case.county):
+  staff.name<br/>
+  staff.title<br/>
+  staff.address
 
-  Mail your pleading to:
-    ${clerk_staff(case.county)}
+  % endfor
 
-  Court staff:
-    ${court_staff(case.court.court_id)}
+  **Court staff:**
+  % for staff in court_staff(case.court.court_id):
+  staff.name<br/>
+  staff.title<br/>
+  staff.address
 
-  % if save_case(case):
-    Your case has been saved.
-  % endif
+  % endfor
 mandatory: True
 attachment:
   name: Designation of Attorney in Charge
