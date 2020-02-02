@@ -5,13 +5,15 @@ metadata:
   short title: |
     Add New Case
   description: |
-    This question file contains questions that are common in
-    Texas Family Law-related interviews.
-
+    Interview to create a new case.
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
   revision_date: 2020-02-01
+---
+features:
+  centered: False
+  progress bar: True
 ---
 modules:
   - docassemble.us_tx_family.functions
@@ -19,7 +21,6 @@ modules:
   - docassemble.base.logger
 ---
 objects:
-  - doc: LegalFiling
   - case: Case
 ---
 include:
@@ -30,35 +31,7 @@ include:
 ---
 mandatory: True
 code: |
-  # Now set up a basic family law case.
-  case.state = "TEXAS"
-  case.country = "US"
-  case.court.name = "District Court"
-  case.court.jurisdiction = list('Texas')
-  try:
-    del case.plaintiff
-    del case.defendant
-  except:
-    pass
-  case.initializeAttribute('petitioner', RepresentedPartyList)
-  case.initializeAttribute('respondent', RepresentedPartyList)
-  case.initializeAttribute('intervenor', RepresentedPartyList)
-  case.initializeAttribute('client', RepresentedPartyList)
-  case.initializeAttribute('child', ChildList)
-  case.initializeAttribute('asset', DAList)
-  case.initializeAttribute('liability', DAList)
-  case.initializeAttribute('attorney', AttorneyList)
-  case.initializeAttribute('me', Attorney)
-  case.firstParty = case.petitioner
-  case.secondParty = case.respondent
-  case.me = me()
-  doc.initializeAttribute('case', Case)
-  doc.case = case
-
-  # Add our user's attorney profile to the list of attorneys
-  # working on this case.
-  case.attorney.clear()
-  case.attorney.append(me(), set_instance_name=True)
+  initialize_case(case)
 ---
 mandatory: True
 code: |
@@ -105,12 +78,6 @@ code: |
   case.client.is_there_another = False
   save_case(case)
 ---
-mandatory: True
-code: |
-  case.county
-  case.court.court_id
-  save_case(case)
----
 generic object: RepresentedParty
 section: case
 decoration: balance-scale
@@ -137,6 +104,7 @@ section: case
 decoration: balance-scale
 question: |
   Tell me a little more about your case.
+sets: court.court_id
 fields:
   - Court number: case.court.court_id
     code: |
@@ -145,40 +113,198 @@ fields:
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
 ---
-event: must_set_up_profile
-decoration: user-cog
+mandatory: True
 question: |
-  Your Profile is Missing
+  Review the People in Your Case
 subquestion: |
-  You must [set up a profile] before continuing.
-
-  [set up a profile]: ${ interview_url(i='docassemble.us_tx_family:data/questions/TX-002.000-User_Profile.yml')}
+  ** ${title_case(case.attorney.as_noun())} **
+  
+  ${case.attorney}
+  
+  [Edit](${url_action('review_attorneys')})
+  
+  ** ${title_case(case.petitioner.as_noun())} **
+  
+  ${case.petitioner}
+  
+  [Edit](${url_action('review_petitioners')})
+  
+  ** ${title_case(case.respondent.as_noun())} **
+  
+  ${case.respondent}
+  
+  [Edit](${url_action('review_respondents')})
+  
+  ** ${title_case(case.intervenor.as_noun())} **
+  
+  ${case.intervenor}
+  
+  [Edit](${url_action('review_intervenors')})
+field: case_people_reviewed
 ---
-event: on_error
-decoration: bomb
-question: |
-  We have encountered an error.
-subquestion: |
-  My apologies. We've encountered an error. It has been reported
-  to the help desk. Please try again later. /tjd/
-buttons:
-  - Exit: exit
-    url: https://www.powerdaley.com
----
-event: review_answers
-question: |
-  Review your case
+event: review_attorneys
+question: Review Attorney List
 review:
-  - Edit County: case.county
-    County: ${case.county}
-  - Edit Court: case.court.court_id
-    Court: ${case.court.court_id}
-  - Edit Petitioners: case.petitioner.regather()
-    Petitioners: ${case.petitioner}
-  - Edit Respondents: case.respondent.regather()
-    Respondents: ${case.respondent}
-  - Edit Intervenors: case.intervenor.regather()
-    Interventors: ${case.intervenor}
-  - Edit Attorneys: case.attorney.regather()
-    Attorneys: ${case.attorney}
-    
+  - Edit: case.attorney.revisit
+    button: |
+      ${case.attorney.as_noun()}:
+      
+      % for atty in case.attorney:
+      * ${atty}
+      % endfor
+---
+event: review_petitioners
+question: Review Petitioner List
+review:
+  - Edit: case.petitioner.revisit
+    button: |
+      ${case.petitioner.as_noun()}:
+      
+      % for p in case.petitioner:
+      * ${p}
+      % endfor
+---
+event: review_respondents
+question: Review Respondent List
+review:
+  - Edit: case.respondent.revisit
+    button: |
+      ${case.respondent.as_noun()}:
+      
+      % for p in case.respondent:
+      * ${p}
+      % endfor
+---
+event: review_intervenors
+question: Review Intervenor List
+review:
+  - Edit: case.intervenor.revisit
+    button: |
+      ${case.intervenor.as_noun()}:
+      
+      % for p in case.intervenor:
+      * ${p}
+      % endfor
+---
+field: case.attorney.revisit
+question: Edit Attorney List
+subquestion: |
+  ${case.attorney.table}
+  
+  ${case.attorney.add_action()}
+---
+table: case.attorney.table
+rows: case.attorney
+columns:
+  - Name: row_item.name.full()
+edit:
+  - bar_number
+---
+field: case.petitioner.revisit
+question: Edit Petitioner List
+subquestion: |
+  ${case.petitioner.table}
+  
+  ${case.petitioner.add_action()}
+---
+table: case.petitioner.table
+rows: case.petitioner
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+field: case.respondent.revisit
+question: Edit Respondent List
+subquestion: |
+  ${case.respondent.table}
+  
+  ${case.respondent.add_action()}
+---
+table: case.respondent.table
+rows: case.respondent
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+field: case.intervenor.revisit
+question: Edit Intervenor List
+subquestion: |
+  ${case.intervenor.table}
+  
+  ${case.intervenor.add_action()}
+---
+table: case.intervenor.table
+rows: case.intervenor
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+mandatory: True
+question: |
+  Review the Details of Your Case
+subquestion: |
+  
+  &nbsp; | &nbsp; | &nbsp;
+  -----|-----|-----
+  **County** | ${case.county} | [Edit](${url_action('review_county')})
+  **Court** | ${case.court.court_id} | [Edit](${url_action('review_court')})
+  **Cause #** | ${case.case_id} | [Edit](${url_action('review_court')})
+  **Footer** | ${case.footer} | [Edit](${url_action('review_court')})
+field: case_details_reviewed
+---
+event: review_county
+question: Review County of Venue
+review:
+  - Edit: case.county
+    button: |
+      ${case.county}
+---
+event: review_court
+question: Review Court and Cause
+review:
+  - Edit: case.court.court_id
+    button: |
+
+      &nbsp; | &nbsp;
+      -----|-----
+      District Court # | **${case.court.court_id}**<br/>
+      Cause # | **${case.case_id}**
+      Footer | **${case.footer}**
+---
+mandatory: True
+code: |
+  save_case(case)
+---
+mandatory: True
+question: Case Saved.
+subquestion: |
+  Your case has been saved.
+  
+  Cause # ${case.case_id} in Judicial District #${case.court.court_id} of ${case.county} County, ${case.state}
+  
+  **${title_case(case.petitioner.as_noun())}**
+  % for p in case.petitioner:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+
+  **${title_case(case.respondent.as_noun())}**
+  % for p in case.respondent:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+  
+  % if case.intervenor.number() > 0:
+  **${title_case(case.intervenor.as_noun())}**
+  % for p in case.intervenor:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+  % endif
+  
