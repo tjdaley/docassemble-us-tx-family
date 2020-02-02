@@ -44,6 +44,7 @@ code: |
   case.petitioner.gather(minimum=1)
   case.respondent.gather(minimum=1)
   case.intervenor.gather()
+  case.children.gather()
 ---
 mandatory: True
 code: |
@@ -89,6 +90,29 @@ fields:
     datatype: object
     choices:  case.attorney
 ---
+generic object: ChildList
+question: Information about the ${ordinal(i)} child.
+fields:
+  - First name: x[i].name.first
+  - Middle name: x[i].name.middle
+    required: False
+  - Last name: x[i].name.last
+  - Suffix: x[i].name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Sex: x[i].sex
+    choices:
+    - F: Female
+    - M: Male
+  - Birth date: x[i].birthdate
+    datatype: date
+  - Home state: x[i].home_state
+    default: TX
+    code: |
+      us_states()
+    
+---
 section: case
 decoration: balance-scale
 question: |
@@ -113,7 +137,16 @@ fields:
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
 ---
+section: case
+decoration: balance-scale
+question: |
+  Divorce or Anulment?
+subquestion: |
+  Is this form being used in a marriage dissolution case (divorce or anulment)?
+yesno: case.is_divorce
+---
 mandatory: True
+decoration: check-double
 question: |
   Review the People in Your Case
 subquestion: |
@@ -140,9 +173,16 @@ subquestion: |
   ${case.intervenor}
   
   [Edit](${url_action('review_intervenors')})
+  
+  ** ${title_case(case.child.as_noun())} **
+  
+  ${case.child}
+  
+  [Edit](${url_action('review_children')})
 field: case_people_reviewed
 ---
 event: review_attorneys
+decoration: check-double
 question: Review Attorney List
 review:
   - Edit: case.attorney.revisit
@@ -154,6 +194,7 @@ review:
       % endfor
 ---
 event: review_petitioners
+decoration: check-double
 question: Review Petitioner List
 review:
   - Edit: case.petitioner.revisit
@@ -165,6 +206,7 @@ review:
       % endfor
 ---
 event: review_respondents
+decoration: check-double
 question: Review Respondent List
 review:
   - Edit: case.respondent.revisit
@@ -176,6 +218,7 @@ review:
       % endfor
 ---
 event: review_intervenors
+decoration: check-double
 question: Review Intervenor List
 review:
   - Edit: case.intervenor.revisit
@@ -186,7 +229,20 @@ review:
       * ${p}
       % endfor
 ---
+event: review_children
+decoration: check-double
+question: Review Children
+review:
+  - Edit: case.child.revisit
+    button: |
+      ${case.child.as_noun()}:
+      
+      % for p in case.child:
+      * ${p}
+      % endfor
+---
 field: case.attorney.revisit
+decoration: check-double
 question: Edit Attorney List
 subquestion: |
   ${case.attorney.table}
@@ -194,6 +250,7 @@ subquestion: |
   ${case.attorney.add_action()}
 ---
 table: case.attorney.table
+decoration: check-double
 rows: case.attorney
 columns:
   - Name: row_item.name.full()
@@ -201,6 +258,7 @@ edit:
   - bar_number
 ---
 field: case.petitioner.revisit
+decoration: check-double
 question: Edit Petitioner List
 subquestion: |
   ${case.petitioner.table}
@@ -208,6 +266,7 @@ subquestion: |
   ${case.petitioner.add_action()}
 ---
 table: case.petitioner.table
+decoration: check-double
 rows: case.petitioner
 columns:
   - Name: row_item.name.full()
@@ -215,6 +274,7 @@ edit:
   - name.first
 ---
 field: case.respondent.revisit
+decoration: check-double
 question: Edit Respondent List
 subquestion: |
   ${case.respondent.table}
@@ -222,6 +282,7 @@ subquestion: |
   ${case.respondent.add_action()}
 ---
 table: case.respondent.table
+decoration: check-double
 rows: case.respondent
 columns:
   - Name: row_item.name.full()
@@ -229,6 +290,7 @@ edit:
   - name.first
 ---
 field: case.intervenor.revisit
+decoration: check-double
 question: Edit Intervenor List
 subquestion: |
   ${case.intervenor.table}
@@ -236,13 +298,31 @@ subquestion: |
   ${case.intervenor.add_action()}
 ---
 table: case.intervenor.table
+decoration: check-double
 rows: case.intervenor
 columns:
   - Name: row_item.name.full()
 edit:
   - name.first
 ---
+field: case.child.revisit
+decoration: check-double
+question: Edit Child List
+subquestion: |
+  ${case.child.table}
+  
+  ${case.child.add_action()}
+---
+table: case.child.table
+decoration: check-double
+rows: case.child
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
 mandatory: True
+decoration: check-double
 question: |
   Review the Details of Your Case
 subquestion: |
@@ -253,9 +333,11 @@ subquestion: |
   **Court** | ${case.court.court_id} | [Edit](${url_action('review_court')})
   **Cause #** | ${case.case_id} | [Edit](${url_action('review_court')})
   **Footer** | ${case.footer} | [Edit](${url_action('review_court')})
+  **Divorce?** | ${case.is_divorce} | [Edit](${url_action('review_divorce_flag')})
 field: case_details_reviewed
 ---
 event: review_county
+decoration: check-double
 question: Review County of Venue
 review:
   - Edit: case.county
@@ -263,6 +345,7 @@ review:
       ${case.county}
 ---
 event: review_court
+decoration: check-double
 question: Review Court and Cause
 review:
   - Edit: case.court.court_id
@@ -274,11 +357,20 @@ review:
       Cause # | **${case.case_id}**
       Footer | **${case.footer}**
 ---
+event: review_divorce_flag
+decoration: check-double
+question: Is this a divorce case?
+review:
+  - Edit: case.is_divorce
+    button: |
+      ${case.is_divorce}
+---
 mandatory: True
 code: |
   save_case(case)
 ---
 mandatory: True
+decoration: thumbs-up
 question: Case Saved.
 subquestion: |
   Your case has been saved.
