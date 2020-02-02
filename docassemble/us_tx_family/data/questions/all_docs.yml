@@ -9,7 +9,7 @@ metadata:
       organization: attorney.bot
 
   logo: ATTORNEY.BOT
-  error action: on_error
+  error action: xon_error
   revision_date: 2020-02-01
 ---
 modules:
@@ -30,15 +30,6 @@ code : |
   # before doing anything else.
   if me() is None:
     must_set_up_profile
----
----
-section: case
-decoration: balance-scale
-question: |
-  Divorce or Anulment?
-subquestion: |
-  Is this form being used in a marriage dissolution case (divorce or anulment)?
-yesno: case.is_divorce
 ---
 event: must_set_up_profile
 decoration: user-cog
