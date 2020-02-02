@@ -21,6 +21,7 @@ code: |
     case = get_case(case_key)
   if case == '*NONE*':
     case = Case()
+  doc.case = case
 ---
 mandatory: True
 code: |
