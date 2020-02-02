@@ -17,7 +17,6 @@ metadata:
 ---
 features:
   centered: False
-  progress bar: True
 ---
 modules:
   - docassemble.us_tx_family.functions
@@ -38,22 +37,17 @@ decoration: thumbs-up
 question: |
   Document Complete
 subquestion: |
-  Your document is ready.
-
-  **Mail your pleading to:**
+  **District clerk's office:**<br/>
   % for staff in clerk_staff(case.county):
-  staff.name<br/>
-  staff.title<br/>
-  staff.address
-
+  ${staff.name}, ${staff.title}<br/>
+  ${staff.address}<br/>
+  ${staff.phone}
+  
   % endfor
 
-  **Court staff:**
+  **Court staff:**<br/>
   % for staff in court_staff(case.court.court_id):
-  staff.name<br/>
-  staff.title<br/>
-  staff.address
-
+  * ${staff.name}, ${staff.title}: ${staff.phone}<br/>
   % endfor
 mandatory: True
 attachment:
