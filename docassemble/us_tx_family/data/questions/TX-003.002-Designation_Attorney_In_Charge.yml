@@ -10,12 +10,10 @@ metadata:
     Designation
   tags:
     - general
-  logo: ATTORNEY.BOT
-  error action: on_error
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2020-01-27
+  revision_date: 2020-02-02
 ---
 features:
   centered: False
