@@ -63,10 +63,11 @@ fields:
   - Telephone: x.phone
 ---
 generic object: RepresentedParty
-question: What is ${x.possessive('Driver's License number')}?
+question: What is ${x.possessive("Driver's License number")}?
 fields:
   - License number: x.drivers_license
   - State: x.dl_state
+    default: TX
     code: |
       us_states()
 ---
