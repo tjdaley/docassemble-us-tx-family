@@ -51,3 +51,28 @@ buttons:
   - Exit: exit
     url: https://www.powerdaley.com
 ---
+generic object: RepresentedParty
+question: What is ${x.name.possessive()} email address?
+fields:
+  - Email: x.email
+    datatype: email
+---
+generic object: RepresentedParty
+question: What is ${x.name.possessive()} telephone number?
+fields:
+  - Telephone: x.phone
+---
+generic object: RepresentedParty
+question: What is ${x.name.possessive()} Driver's License number?
+fields:
+  - License number: x.drivers_license
+  - State: x.dl_state
+    code: |
+      us_states()
+---
+generic object: RepresentedParty
+question: What is ${x.name.possessive()} date of birth?
+fields:
+  - Birth date: x.birthdate
+    datatype: date
+---
