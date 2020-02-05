@@ -1,5 +1,23 @@
 ---
 generic object: RepresentedParty
+question: |
+  What is ${ x.object_possessive('name') }?
+fields:
+  - First Name: x.name.first
+    default: ${ x.first_name_hint() }
+  - Middle Name: x.name.middle
+    required: False
+  - Last Name: x.name.last
+    default: ${ x.last_name_hint() }
+  - Suffix: x.name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Attorney: x.attorney
+    datatype: object
+    choices: case.attorney
+---
+generic object: RepresentedParty
 section: case
 decoration: balance-scale
 sets: x.attorney.email
