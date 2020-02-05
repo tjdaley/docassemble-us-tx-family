@@ -36,19 +36,6 @@ section: conclusion
 decoration: thumbs-up
 question: |
   Document Complete
-subquestion: |
-  **District clerk's office:**<br/>
-  % for staff in clerk_staff(case.county):
-  ${staff.name}, ${staff.title}<br/>
-  ${staff.address}<br/>
-  ${staff.phone}
-  
-  % endfor
-
-  **Court staff:**<br/>
-  % for staff in court_staff(case.court.court_id):
-  * ${staff.name}, ${staff.title}: ${staff.phone}<br/>
-  % endfor
 mandatory: True
 attachment:
   name: Designation of Attorney in Charge
@@ -57,3 +44,4 @@ attachment:
   valid formats:
     - pdf
     - docx
+---
