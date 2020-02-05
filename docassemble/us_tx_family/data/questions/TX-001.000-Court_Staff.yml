@@ -1,0 +1,99 @@
+---
+metadata:
+  title: |
+    Court Staff Directory
+  short title: |
+    Court Staff
+  description: |
+    Provides contact information about a court's staff
+  tab title: |
+    Staff
+  tags:
+    - general
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-05
+---
+features:
+  centered: False
+---
+modules:
+  - docassemble.us_tx_family.functions
+---
+mandatory: True
+code: |
+  state = "TX"
+---
+decoration: balance-scale
+question: Which County in ${state}?
+fields:
+  - County: county
+    code: |
+      counties()
+---
+question: Which Court in ${county} County?
+decoration: balance-scale
+fields:
+  - Court number: court_id
+    code: |
+      courts(county)
+---
+mandatory: True
+decoration: thumbs-up
+question: |
+  Your court staff directory is ready
+attachment:
+  - name: Court Staff Directory
+    filename: court_staff
+    description: |
+
+      ### District Court #${court_id}
+      ### ${county} County, ${state}
+
+      **Court staff:**<br/>
+      % for staff in court_staff(court_id):
+      ${staff.name}, ${staff.title}<br/>
+      ${staff.address}<br/>
+      Tel: ${staff.phone}<br/>
+      Email: ${staff.email}<br/>
+
+      % endfor
+      
+      **District clerk's office:**<br/>
+      % for staff in clerk_staff(county):
+      ${staff.name}, ${staff.title}<br/>
+      ${staff.address}<br/>
+      Tel: ${staff.phone}<br/>
+      Email: ${staff.email}<br/>
+      
+      % endfor
+
+    content: |
+      [SINGLESPACING]
+      [BOLDCENTER]Court Staff Directory[NEWPAR]
+      District Court #${court_id}[NEWPAR]
+      ${county} County, ${state}[NEWPAR]
+      
+      [FLUSHLEFT]
+      **Court staff**[NEWLINE]
+      % for staff in court_staff(court_id):
+      ${staff.name}, ${staff.title}[NBSP][NEWLINE]
+      ${staff.address.address}[NBSP][NEWLINE]
+      ${staff.address.city}, ${staff.address.state} ${staff.address.zip}[NBSP][NEWLINE]
+      Tel: ${staff.phone}[NBSP][NEWLINE]
+      Email: ${staff.email}[NBSP][NEWLINE]
+      [NBSP][NEWLINE]
+      % endfor
+
+      [FLUSHLEFT]
+      **District clerk's office**[NEWLINE]
+      % for staff in clerk_staff(county):
+      ${staff.name}, ${staff.title}[NBSP][NEWLINE]
+      ${staff.address.address}[NBSP][NEWLINE]
+      ${staff.address.city}, ${staff.address.state} ${staff.address.zip}[NBSP][NEWLINE]
+      Tel: ${staff.phone}[NBSP][NEWLINE]
+      Email: ${staff.email}[NBSP][NEWLINE]
+      [NBSP][NEWLINE]
+      % endfor
+---
