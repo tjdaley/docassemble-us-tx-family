@@ -37,7 +37,7 @@ decoration: balance-scale
 fields:
   - Court number: court_id
     code: |
-      courts(county)
+      courts(county, not_filed=False)
 ---
 mandatory: True
 decoration: thumbs-up

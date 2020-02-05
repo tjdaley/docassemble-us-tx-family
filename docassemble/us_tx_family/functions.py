@@ -26,12 +26,13 @@ def counties():
     return county_db.get_counties()
 
 
-def courts(county: str):
+def courts(county: str, not_filed=True):
     if TRACE:
         logmessage("courts(): Started")
     court_db = UsTxCourts()
     court_list = court_db.get_courts(county)
-    court_list.insert(0, (None, "(NOT FILED)"))
+    if not_filed:
+        court_list.insert(0, (None, "(NOT FILED)"))
     return court_list
 
 def court_staff(court: str):
