@@ -15,7 +15,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2020-02-01
+  revision_date: 2020-02-05
 ---
 features:
   centered: False
@@ -26,6 +26,11 @@ modules:
 ---
 include:
   - basic-questions.yml
+  - docassemble.us_tx_family:attorney.yml
+  - docassemble.us_tx_family:terms.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:case_settings.yml
+  - docassemble.us_tx_family:court_settings.yml
 ---
 mandatory: True
 code: |
@@ -50,44 +55,274 @@ fields:
     code: |
       my_cases(allow_add=False)
 ---
-section: conclusion
-question: |
-  Congratulations!
-subquestion: |
-  You are all done with the interview.
-
-  &nbsp; | &nbsp;
-  ---------|---------
-  **Petitioner** | ${case.petitioner}
-  **Respondent** | ${case.respondent}
-  **Cause number** | ${case.case_id}
-  **County** | ${case.county} County
-  **Me** | ${case.me}
-  **Firm** | ${case.me.firm}
- 
-  % for atty in case.attorney:
-  ${atty}'s bar number is ${atty.bar_number}
-  
-  % endfor
-
-  ### District clerk
-  % for staffer in clerk_staff(case.county):
-    ${staffer.name}<br/>
-    ${staffer.title}<br/>
-    ${staffer.address}<br/>
-    ${staffer.email}<br/>
-    ${staffer.phone}
-    
-  % endfor
-
-  ### Court staff
-  % for staffer in court_staff(case.court.court_id):
-    ${staffer.name}<br/>
-    ${staffer.title}<br/>
-    ${staffer.address}<br/>
-    ${staffer.email}<br/>
-    ${staffer.phone}
-    
-  % endfor
-
+---
 mandatory: True
+decoration: check-double
+question: |
+  Review the People in Your Case
+subquestion: |
+  ** ${title_case(case.attorney.as_noun())} **
+  
+  ${case.attorney}
+  
+  [Edit](${url_action('review_attorneys')})
+  
+  ** ${title_case(case.petitioner.as_noun())} **
+  
+  ${case.petitioner}
+  
+  [Edit](${url_action('review_petitioners')})
+  
+  ** ${title_case(case.respondent.as_noun())} **
+  
+  ${case.respondent}
+  
+  [Edit](${url_action('review_respondents')})
+  
+  ** ${title_case(case.intervenor.as_noun())} **
+  
+  ${case.intervenor}
+  
+  [Edit](${url_action('review_intervenors')})
+  
+  ** ${title_case(case.child.as_noun())} **
+  
+  Name | Sex | Birth Date | Age (years) | Home State
+  -----|:---:|-----------:|:-----------:|:---------:
+  % for p in case.child:
+  ${p.name} | ${p.sex} | ${p.birthdate.strftime('%d/%m/%Y')} | ${p.age_in_years()} | ${p.home_state}
+  % endfor
+
+  [Edit](${url_action('review_children')})
+field: case_people_reviewed
+---
+event: review_attorneys
+decoration: check-double
+question: Review Attorney List
+review:
+  - Edit: case.attorney.revisit
+    button: |
+      ${case.attorney.as_noun()}:
+      
+      % for atty in case.attorney:
+      * ${atty}
+      % endfor
+---
+event: review_petitioners
+decoration: check-double
+question: Review Petitioner List
+review:
+  - Edit: case.petitioner.revisit
+    button: |
+      ${case.petitioner.as_noun()}:
+      
+      % for p in case.petitioner:
+      * ${p}
+      % endfor
+---
+event: review_respondents
+decoration: check-double
+question: Review Respondent List
+review:
+  - Edit: case.respondent.revisit
+    button: |
+      ${case.respondent.as_noun()}:
+      
+      % for p in case.respondent:
+      * ${p}
+      % endfor
+---
+event: review_intervenors
+decoration: check-double
+question: Review Intervenor List
+review:
+  - Edit: case.intervenor.revisit
+    button: |
+      ${case.intervenor.as_noun()}:
+      
+      % for p in case.intervenor:
+      * ${p}
+      % endfor
+---
+event: review_children
+decoration: check-double
+question: Review Children
+review:
+  - Edit: case.child.revisit
+    button: |
+      ${case.child.as_noun()}:
+      
+      % for p in case.child:
+      * ${p}
+      % endfor
+---
+field: case.attorney.revisit
+decoration: check-double
+question: Edit Attorney List
+subquestion: |
+  ${case.attorney.table}
+  
+  ${case.attorney.add_action()}
+---
+table: case.attorney.table
+decoration: check-double
+rows: case.attorney
+columns:
+  - Name: row_item.name.full()
+edit:
+  - bar_number
+---
+field: case.petitioner.revisit
+decoration: check-double
+question: Edit Petitioner List
+subquestion: |
+  ${case.petitioner.table}
+  
+  ${case.petitioner.add_action()}
+---
+table: case.petitioner.table
+decoration: check-double
+rows: case.petitioner
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+field: case.respondent.revisit
+decoration: check-double
+question: Edit Respondent List
+subquestion: |
+  ${case.respondent.table}
+  
+  ${case.respondent.add_action()}
+---
+table: case.respondent.table
+decoration: check-double
+rows: case.respondent
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+field: case.intervenor.revisit
+decoration: check-double
+question: Edit Intervenor List
+subquestion: |
+  ${case.intervenor.table}
+  
+  ${case.intervenor.add_action()}
+---
+table: case.intervenor.table
+decoration: check-double
+rows: case.intervenor
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+field: case.child.revisit
+decoration: check-double
+question: Edit Child List
+subquestion: |
+  ${case.child.table}
+  
+  ${case.child.add_action()}
+---
+table: case.child.table
+decoration: check-double
+rows: case.child
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---
+mandatory: True
+decoration: check-double
+question: |
+  Review the Details of Your Case
+subquestion: |
+  
+  &nbsp; | &nbsp; | &nbsp;
+  -----|-----|-----
+  **County** | ${case.county} | [Edit](${url_action('review_county')})
+  **Court** | ${case.court.court_id} | [Edit](${url_action('review_court')})
+  **Cause #** | ${case.case_id} | [Edit](${url_action('review_court')})
+  **Footer** | ${case.footer} | [Edit](${url_action('review_court')})
+  **Divorce?** | ${case.is_divorce} | [Edit](${url_action('review_divorce_flag')})
+  **OAG Case #** | ${case.oag_case_id} | [Edit](${url_action('review_court')})
+
+field: case_details_reviewed
+---
+event: review_county
+decoration: check-double
+question: Review County of Venue
+review:
+  - Edit: case.county
+    button: |
+      ${case.county}
+---
+event: review_court
+decoration: check-double
+question: Review Court and Cause
+review:
+  - Edit: case.court.court_id
+    button: |
+
+      &nbsp; | &nbsp;
+      -----|-----
+      District Court # | **${case.court.court_id}**<br/>
+      Cause # | **${case.case_id}**
+      Footer | **${case.footer}**
+---
+event: review_divorce_flag
+decoration: check-double
+question: Is this a divorce case?
+review:
+  - Edit: case.is_divorce
+    button: |
+      ${case.is_divorce}
+---
+mandatory: True
+code: |
+  save_case(case)
+---
+mandatory: True
+decoration: thumbs-up
+question: Case Saved.
+subquestion: |
+  Your case has been saved.
+  
+  Cause # ${case.case_id} in Judicial District #${case.court.court_id} of ${case.county} County, ${case.state}
+  
+  **${title_case(case.petitioner.as_noun())}**
+  % for p in case.petitioner:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+
+  **${title_case(case.respondent.as_noun())}**
+  % for p in case.respondent:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+  
+  % if case.intervenor.number() > 0:
+  **${title_case(case.intervenor.as_noun())}**
+  % for p in case.intervenor:
+  ${p.name}<br/>
+  Represented by:<br/>
+  ${p.attorney}<br/>
+  % endfor
+  % endif
+
+  % if case.child.number() > 0:
+  **${title_case(case.child.as_noun())}**
+
+  Name | Sex | Birth Date | Age (years) | Home State
+  -----|:---:|-----------:|:-----------:|:---------:
+  % for p in case.child:
+  ${p.name} | ${p.sex} | ${p.birthdate.strftime('%d/%m/%Y')} | ${p.age_in_years()} | ${p.home_state}
+  % endfor
+  % endif
