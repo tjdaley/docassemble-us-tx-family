@@ -22,6 +22,8 @@ objects:
 ---
 include:
   - basic-questions.yml
+  - docassemble.us_tx_family:RepresentedParty.yml
+  - docassemble.us_tx_family:ChildList.yml
   - docassemble.us_tx_family:terms.yml
 ---
 mandatory: True
@@ -50,30 +52,4 @@ subquestion: |
 buttons:
   - Exit: exit
     url: https://www.powerdaley.com
----
-generic object: RepresentedParty
-question: What is ${x.possessive('email address')}?
-fields:
-  - Email: x.email
-    datatype: email
----
-generic object: RepresentedParty
-question: What is ${x.possessive('telephone number')}?
-fields:
-  - Telephone: x.phone
----
-generic object: RepresentedParty
-question: What is ${x.possessive("Driver's License number")}?
-fields:
-  - License number: x.drivers_license
-  - State: x.dl_state
-    default: TX
-    code: |
-      us_states()
----
-generic object: RepresentedParty
-question: What is ${x.possessive('date of birth')}?
-fields:
-  - Birth date: x.birthdate
-    datatype: date
 ---

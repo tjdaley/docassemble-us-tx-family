@@ -28,6 +28,8 @@ include:
   - docassemble.us_tx_family:attorney.yml
   - docassemble.us_tx_family:terms.yml
   - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:case_settings.yml
+  - docassemble.us_tx_family:court_settings.yml
 ---
 mandatory: True
 code: |
@@ -78,75 +80,6 @@ code: |
   case.client.gathered = True
   case.client.is_there_another = False
   save_case(case)
----
-generic object: RepresentedParty
-section: case
-decoration: balance-scale
-sets: x.attorney.email
-question: |
-  Who represents ${x}?
-fields:
-  - Attorney: x.attorney
-    datatype: object
-    choices:  case.attorney
----
-generic object: ChildList
-question: Information about the ${ordinal(i)} child.
-fields:
-  - First name: x[i].name.first
-  - Middle name: x[i].name.middle
-    required: False
-  - Last name: x[i].name.last
-  - Suffix: x[i].name.suffix
-    required: False
-    code: |
-      name_suffix()
-  - Sex: x[i].sex
-    choices:
-    - F: Female
-    - M: Male
-  - Birth date: x[i].birthdate
-    datatype: date
-  - Home state: x[i].home_state
-    default: TX
-    code: |
-      us_states()
-    
----
-section: case
-decoration: balance-scale
-question: |
-  What county has your case been filed in?
-mandatory: False
-fields:
-  - County: case.county
-    code: |
-      counties()
-    help: This is the county within ${case.state} where your case was filed.
----
-section: case
-decoration: balance-scale
-question: |
-  Tell me a little more about your case.
-sets: court.court_id
-fields:
-  - Court number: case.court.court_id
-    code: |
-      courts(case.county)
-  - Cause number: case.case_id
-  - Footer text: case.footer
-    help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
-  - OAG Case number: case.oag_case_id
-    required: False
-    help: This is the case number assigned by the Office of the Attorney General.
----
-section: case
-decoration: balance-scale
-question: |
-  Divorce or Anulment?
-subquestion: |
-  Is this form being used in a marriage dissolution case (divorce or anulment)?
-yesno: case.is_divorce
 ---
 mandatory: True
 decoration: check-double

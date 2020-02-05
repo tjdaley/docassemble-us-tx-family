@@ -1,0 +1,31 @@
+---
+modules:
+  - docassemble.us_tx_family.functions
+---
+section: case
+decoration: balance-scale
+question: |
+  What county has your case been filed in?
+fields:
+  - County: case.county
+    code: |
+      counties()
+    help: This is the county within ${case.state} where your case was filed.
+---
+section: case
+decoration: balance-scale
+question: |
+  What U.S. state has your case been filed in?
+fields:
+  - State: case.state
+    code: |
+      us_states()
+---
+section: case
+decoration: balance-scale
+question: |
+  Divorce or Anulment?
+subquestion: |
+  Is this form being used in a marriage dissolution case (divorce or anulment)?
+yesno: case.is_divorce
+---

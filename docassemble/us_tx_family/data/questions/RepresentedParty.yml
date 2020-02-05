@@ -1,0 +1,38 @@
+---
+generic object: RepresentedParty
+section: case
+decoration: balance-scale
+sets: x.attorney.email
+question: |
+  Who represents ${x}?
+fields:
+  - Attorney: x.attorney
+    datatype: object
+    choices:  case.attorney
+---
+generic object: RepresentedParty
+question: What is ${x.possessive('email address')}?
+fields:
+  - Email: x.email
+    datatype: email
+---
+generic object: RepresentedParty
+question: What is ${x.possessive('telephone number')}?
+fields:
+  - Telephone: x.phone
+---
+generic object: RepresentedParty
+question: What is ${x.possessive("Driver's License number")}?
+fields:
+  - License number: x.drivers_license
+  - State: x.dl_state
+    default: TX
+    code: |
+      us_states()
+---
+generic object: RepresentedParty
+question: What is ${x.possessive('date of birth')}?
+fields:
+  - Birth date: x.birthdate
+    datatype: date
+---

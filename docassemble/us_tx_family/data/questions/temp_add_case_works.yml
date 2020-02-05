@@ -1,0 +1,95 @@
+---
+metadata:
+  title: |
+    Add New Case
+  short title: |
+    Add New Case
+  description: |
+    Interview to create a new case.
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: attorney.bot
+  revision_date: 2020-02-01
+---
+modules:
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+  - docassemble.base.logger
+---
+objects:
+  - attorney: AttorneyList
+  - petitioner: RepresentedPartyList
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:attorney.yml
+  - docassemble.us_tx_family:terms.yml
+  - docassemble.us_tx_family:all_docs.yml
+---
+mandatory: True
+question: |
+  Review Your Case
+subquestion: |
+  ** ${title_case(attorney.as_noun())} **
+  
+  ${attorney}
+  
+  [Edit](${url_action('review_attorneys')})
+  
+  ** ${title_case(petitioner.as_noun())} **
+  
+  ${petitioner}
+  
+  [Edit](${url_action('review_petitioners')})
+field: case_reviewed
+---
+event: review_attorneys
+question: Review Attorney List
+review:
+  - Edit: attorney.revisit
+    button: |
+      ${attorney.as_noun()}:
+      
+      % for atty in attorney:
+      * ${atty}
+      % endfor
+---
+event: review_petitioners
+question: Review Petitioner List
+review:
+  - Edit: petitioner.revisit
+    button: |
+      ${petitioner.as_noun()}:
+      
+      % for p in petitioner:
+      * ${p}
+      % endfor
+---
+field: attorney.revisit
+question: Edit Attorney List
+subquestion: |
+  ${attorney.table}
+  
+  ${attorney.add_action()}
+---
+table: attorney.table
+rows: attorney
+columns:
+  - Name: row_item.name.full()
+edit:
+  - bar_number
+---
+field: petitioner.revisit
+question: Edit Petitioner List
+subquestion: |
+  ${petitioner.table}
+  
+  ${petitioner.add_action()}
+---
+table: petitioner.table
+rows: petitioner
+columns:
+  - Name: row_item.name.full()
+edit:
+  - name.first
+---

@@ -1,0 +1,23 @@
+---
+generic object: ChildList
+question: Information about the ${ordinal(i)} child.
+fields:
+  - First name: x[i].name.first
+  - Middle name: x[i].name.middle
+    required: False
+  - Last name: x[i].name.last
+  - Suffix: x[i].name.suffix
+    required: False
+    code: |
+      name_suffix()
+  - Sex: x[i].sex
+    choices:
+    - F: Female
+    - M: Male
+  - Birth date: x[i].birthdate
+    datatype: date
+  - Home state: x[i].home_state
+    default: TX
+    code: |
+      us_states()
+---
