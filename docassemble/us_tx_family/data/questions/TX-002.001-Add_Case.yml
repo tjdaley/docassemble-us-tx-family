@@ -127,7 +127,7 @@ question: Review Attorney List
 review:
   - Edit: case.attorney.revisit
     button: |
-      ${case.attorney.as_noun()}:
+      ${title_case(case.attorney.as_noun())}:
       
       % for atty in case.attorney:
       * ${atty}
@@ -139,7 +139,7 @@ question: Review Petitioner List
 review:
   - Edit: case.petitioner.revisit
     button: |
-      ${case.petitioner.as_noun()}:
+      ${title_case(case.petitioner.as_noun())}:
       
       % for p in case.petitioner:
       * ${p}
@@ -151,7 +151,7 @@ question: Review Respondent List
 review:
   - Edit: case.respondent.revisit
     button: |
-      ${case.respondent.as_noun()}:
+      ${title_case(case.respondent.as_noun())}:
       
       % for p in case.respondent:
       * ${p}
@@ -163,7 +163,7 @@ question: Review Intervenor List
 review:
   - Edit: case.intervenor.revisit
     button: |
-      ${case.intervenor.as_noun()}:
+      ${title_case(case.intervenor.as_noun())}:
       
       % for p in case.intervenor:
       * ${p}
@@ -175,7 +175,7 @@ question: Review Children
 review:
   - Edit: case.child.revisit
     button: |
-      ${case.child.as_noun()}:
+      ${title_case(case.child.as_noun())}:
       
       % for p in case.child:
       * ${p}
