@@ -35,13 +35,15 @@ code: |
   doc.title = "RESPONDENT'S ORIGINAL ANSWER"
   doc.sensitive_data = True
 ---
-section: conclusion
-decoration: thumbs-up
+mandatory: True
 undefine:
   - case.object_aj
   - case.affirmative_def_possession
   - case.affirmative_def_support
   - case.cs_enf_counterclaim
+---
+section: conclusion
+decoration: thumbs-up
 question: |
   Document Complete
 subquestion: |
