@@ -164,7 +164,7 @@ def selection_text(case) -> str:
     else:
         case_id  = "(NOT FILED)"
 
-    return "{} - {} - {}".format(client, case_id, description)
+    return "{} - {} - ({})".format(client, description, case.county)
 
 
 def main():
