@@ -134,6 +134,9 @@ def case_key(case):
 def selection_text(case) -> str:
     """
     Create text that is used to populate a dropdown for case selection.
+    There is a lot of type, etc., checking here because the representation of
+    a 'case' has changed significantly over time and this needs to work for
+    all legacy formats so we can delete them during testing.
 
     Args:
         case (Case): The case to process
@@ -147,7 +150,7 @@ def selection_text(case) -> str:
             else:
                 client = case.client[0].name
         else:
-            client = "*" + case.client
+            client = "*{}-{}".format(case.client.number(), str(case.client))
     else:
         client = "(NO CLIENT)"
 
