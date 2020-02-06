@@ -45,6 +45,7 @@ class UsCaseList(object):
 
     def get_cases(self):
         case_list = [(key, selection_text(case)) for key, case in self.cases.items() if hasattr(case, 'case_id')]
+        case_list.sort(key = lambda x: x[1])
         return case_list
 
     def get_case(self, key: str):
