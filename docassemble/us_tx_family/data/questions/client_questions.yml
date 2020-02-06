@@ -18,3 +18,21 @@ choices:
   - Single: Single
 comment: |
   In Texas, you are either married or your are not. There is no legal separation.
+---
+generic object: Individual
+decoration: user-cog
+question: |
+  What is ${ x.possessive('Social Security number')}?
+field: x.ssn
+---
+generic object: Individual
+decoration: user-cog
+question: |
+  What is ${ x.possession("driver's license number")}?
+fields:
+  - Driver's license number: x.dl_number
+  - Issuing state: x.dl_state
+    code: |
+      us_states
+    default: TX
+---

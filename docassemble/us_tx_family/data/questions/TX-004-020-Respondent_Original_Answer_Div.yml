@@ -1,0 +1,52 @@
+---
+metadata:
+  title: |
+    Original Answer - Divorce
+  short title: |
+    Original Answer - Divorce
+  description: |
+    An interview to produce an Original Answer in a Divorce Matter
+  tab title: |
+    Answer
+  tags:
+    - Answer
+    - Responses
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-06
+---
+features:
+  centered: False
+---
+modules:
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:select_case.yml
+---
+mandatory: True
+code: |
+  doc.title = "RESPONDENT'S ORIGINAL ANSWER"
+  doc.sensitive_data = True
+---
+section: conclusion
+decoration: thumbs-up
+question: |
+  Document Complete
+subquestion: |
+  % if save_case(case):
+    Your case has been saved.
+  % endif
+mandatory: True
+attachment:
+  name: Original Answer
+  filename: Original Answer
+  docx template file: docassemble.us_tx_family:data/templates/TX-004.020-Respondent_Original_Answer_Div.docx
+  valid formats:
+    - pdf
+    - docx
+---

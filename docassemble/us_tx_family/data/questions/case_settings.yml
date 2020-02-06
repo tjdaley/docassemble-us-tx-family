@@ -37,3 +37,16 @@ fields:
   - Short description: case.description
     help: This text is displayed in the case list to remind you what the case is about.
 ---
+section: case
+decoration: balance-scale
+question: |
+  What was the title of Petitioner's original pleading?
+fields:
+  - Original pleading title: case.original_pleading_name
+---
+section: case
+decoration: balance-scale
+question: |
+  Does respondent object to an associate judge?
+yesno: case.object_aj
+---
