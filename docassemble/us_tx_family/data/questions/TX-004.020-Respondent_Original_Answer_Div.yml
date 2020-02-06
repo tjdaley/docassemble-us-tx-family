@@ -37,6 +37,11 @@ code: |
 ---
 section: conclusion
 decoration: thumbs-up
+undefine:
+  - case.object_aj
+  - case.affirmative_def_possession
+  - case.affirmative_def_support
+  - case.cs_enf_counterclaim
 question: |
   Document Complete
 subquestion: |
