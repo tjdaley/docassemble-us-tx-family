@@ -1,15 +1,15 @@
 ---
 metadata:
   title: |
-    Add New Case
+    Manage Cases
   short title: |
-    Add New Case
+    Manage Cases
   description: |
-    Interview to create a new case.
+    Interview to create, update, delete cases.
   authors:
     - name: Thomas J. Daley, J.D.
       organization: attorney.bot
-  revision_date: 2020-02-01
+  revision_date: 2020-02-06
 ---
 features:
   centered: False
@@ -33,53 +33,126 @@ include:
 ---
 mandatory: True
 code: |
-  initialize_case(case)
+  # Prompt user to select a case
+  case_key
+  if case_key != '*ADD*':
+    case = get_case(case_key)
+    operation = 'EDIT'
+  else:
+    operation = 'ADD'
+  # Show Sections to Modify
+---
+section: Select Case
+decoration: balance-scale
+question: Select a case
+subquestion: |
+  Select a case to modify or select (ADD NEW CASE) to add a new case.
+field: case_key
+choices:
+    code: |
+      my_cases(allow_add=True)
+---
+mandatory: True
+code: |
+  if operation == 'EDIT':
+    if edit_or_delete == 'DELETE':
+      if delete_confirmed:
+        del_case(case_key)
+        case_deleted
+---
+decoration: exclamation-triangle
+question: MODIFY or DELETE?
+subquestion: |
+
+  &nbsp; | &nbsp;
+  -------|-------
+  Cause # | **${case.case_id}**
+  District Court # | **${case.court.court_id}**
+  County: | **${case.county}**
+  State: | **${case.state}**
+  % if hasattr(case, 'client'):
+  Client: | **${case.client}**
+  % endif
+  % if hasattr(case, 'description'):
+  Description: | **${case.description}**
+  % else:
+  Description: | **${case.footer}**
+  % endif
+  
+field: edit_or_delete
+buttons:
+  - MODIFY
+  - DELETE
+css: |
+  <style>
+    .dadecoration {color: orange}
+  </style>
+---
+decoration: skull-crossbones
+question: Confirm Deletion
+subquestion: |
+  
+  &nbsp; | &nbsp;
+  -------|-------
+  Cause # | **${case.case_id}**
+  District Court # | **${case.court.court_id}**
+  County: | **${case.county}**
+  State: | **${case.state}**
+  % if hasattr(case, 'client'):
+  Client: | **${case.client}**
+  % endif
+  % if hasattr(case, 'description'):
+  Description: | **${case.description}**
+  % else:
+  Description: | **${case.footer}**
+  % endif
+  
+yesno: delete_confirmed
+css: |
+  <style>
+    .dadecoration {color: red}
+  </style>
+---
+mandatory: True
+code: |
+  if operation == 'ADD':
+    initialize_case(case)
 ---
 mandatory: True
 code: |
   # Gather remaining attorneys
-  case.attorney.gather()
+  if operation == 'ADD':
+    case.attorney.gather()
 ---
 mandatory: True
 code: |
   # Now Populate the basic case information
-  case.petitioner.gather(minimum=1)
-  case.respondent.gather(minimum=1)
-  case.intervenor.gather()
-  case.child.gather()
+  if operation == 'ADD':
+    case.petitioner.gather(minimum=1)
+    case.respondent.gather(minimum=1)
+    case.intervenor.gather()
+    case.child.gather()
 ---
 mandatory: True
 code: |
-  # Associate an attorney for each party
-  for p in case.petitioner:
-    if p.attorney.bar_number == '':
-      p.attorney.email
-  for p in case.respondent:
-    if p.attorney.bar_number == '':
-      p.attorney.email
-  for p in case.intervenor:
-    if p.attorney.bar_number == '':
-      p.attorney.email
----
-mandatory: True
-code: |
-  # Make a list of all the parties we represent
-  case.client.clear()
-  for p in case.petitioner:
-    if p.attorney.bar_number == case.me.bar_number:
-      case.client.append(p, set_instance_name=True)
-      case.client_role = "Petitioner"
-  for p in case.respondent:
-    if p.attorney.bar_number == case.me.bar_number:
-      case.client.append(p, set_instance_name=True)
-      case.client_role = "Respondent"
-  for p in case.intervenor:
-    if p.attorney.bar_number == case.me.bar_number:
-      case.client.append(p, set_instance_name=True)
-      case.client_role = "Intervenor"
-  case.client.gathered = True
-  case.client.is_there_another = False
-  save_case(case)
+  if operation == 'ADD':
+    # Make a list of all the parties we represent
+    case.client.clear()
+    for p in case.petitioner:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Petitioner"
+    for p in case.respondent:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Respondent"
+    for p in case.intervenor:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Intervenor"
+    case.client.gathered = True
+    case.client.is_there_another = False
+    save_case(case)
 ---
 mandatory: True
 decoration: check-double
@@ -351,3 +424,14 @@ subquestion: |
   ${p.name} | ${p.sex} | ${p.birthdate.strftime('%d/%m/%Y')} | ${p.age_in_years()} | ${p.home_state}
   % endfor
   % endif
+buttons:
+  - Exit: exit
+    url: /list
+---
+event: case_deleted
+question: Case Deleted
+subquestion: |
+  The case has been deleted.
+buttons:
+  - Exit: exit
+    url: /list
