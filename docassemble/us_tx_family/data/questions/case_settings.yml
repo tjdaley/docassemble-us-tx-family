@@ -49,4 +49,28 @@ decoration: balance-scale
 question: |
   Does respondent object to an associate judge?
 yesno: case.object_aj
+help: |
+  If this case was filed and is still active in the IV-D court, select NO unless you
+  want the case immediately removed to district court. Remember that if you get an adverse
+  outcome in IV-D court, you have an absolute right to *de novo* appeal to the district
+  court. You might be successful in district court after failing in IV-D after you hear
+  the other side's arguments and evidence.
+---
+section: case
+decoration: shield-alt
+question: |
+  Is respondent asserting affirmative defenses for enforcement of possession and access?
+yesno: case.affirmative_def_possession
+---
+section: case
+decoration: shield-alt
+question: |
+  Is respondent asserting affirmative defenses for enforcement of child support payments?
+yesno: case.affirmative_def_support
+---
+section: case
+decoration: shield-alt
+question: |
+  Is respondent requesting an offset for support provided to the child during periods of actual possession?
+yesno: case.cs_enf_counterclaim
 ---
