@@ -26,6 +26,7 @@ modules:
 include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:case_settings.yml
   - docassemble.us_tx_family:select_case.yml
 ---
 mandatory: True
