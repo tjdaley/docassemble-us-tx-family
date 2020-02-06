@@ -33,6 +33,6 @@ fields:
   - Driver's license number: x.dl_number
   - Issuing state: x.dl_state
     code: |
-      us_states
+      us_states()
     default: TX
 ---
