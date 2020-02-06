@@ -36,6 +36,12 @@ code: |
   doc.sensitive_data = True
 ---
 mandatory: True
+question: Let's Begin . . .
+subquestion: |
+  First I'll ask you some questions about associate judges, defenses, and counterclaims, then
+  I'll generate an answer for you.
+
+decoration: route
 undefine:
   - case.object_aj
   - case.affirmative_def_possession
