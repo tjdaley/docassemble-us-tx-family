@@ -11,6 +11,8 @@ fields:
   - Cause number: case.case_id
   - Footer text: case.footer
     help: This text summarizes the case style and appears in footers, e.g. "IMMO DALEY AND DALEY"
+  - Short description: case.description
+    help: This text is displayed in the case list to remind you what the case is about.
   - OAG Case number: case.oag_case_id
     required: False
     help: This is the case number assigned by the Office of the Attorney General.

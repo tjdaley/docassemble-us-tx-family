@@ -29,3 +29,11 @@ subquestion: |
   Is this form being used in a marriage dissolution case (divorce or anulment)?
 yesno: case.is_divorce
 ---
+section: case
+decoration: balance-scale
+question: |
+  Provide a short description of this case.
+fields:
+  - Short description: case.description
+    help: This text is displayed in the case list to remind you what the case is about.
+---
