@@ -28,7 +28,7 @@ field: x.ssn
 generic object: Individual
 decoration: user-cog
 question: |
-  What is ${ x.possession("driver's license number")}?
+  What is ${ x.possessive("driver's license number")}?
 fields:
   - Driver's license number: x.dl_number
   - Issuing state: x.dl_state
