@@ -139,7 +139,25 @@ def selection_text(case) -> str:
     Returns:
         (str): The text to display.
     """
-    return "{} - {}".format(case.case_id, case.footer)
+    if hasattr(case, 'client'):
+        if hasattr(case.client[0].name, 'last'):
+            client = "{}, {}".format(case.client[0].name.last, case.client[0].name.first[0])
+        else:
+            client = case.client[0].name
+    else:
+        client = "(NO CLIENT)"
+
+    if hasattr(case, 'description'):
+        description = case.description
+    else:
+        description = case.footer
+
+    if hasattr(case, 'case_id') and case.case_id:
+        case_id = "{}: {}".format(case.county, case.case_id)
+    else:
+        case_id  = "(NOT FILED)"
+
+    return "{} - {} - {}".format(client, case_id, description)
 
 
 def main():
