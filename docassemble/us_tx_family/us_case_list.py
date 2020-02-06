@@ -141,7 +141,7 @@ def selection_text(case) -> str:
         (str): The text to display.
     """
     if hasattr(case, 'client'):
-        if isinstance(case.client, DAList):
+        if isinstance(case.client, DAList) and case.client.number() > 0:
             if hasattr(case.client[0].name, 'last'):
                 client = "{}, {}".format(case.client[0].name.last, case.client[0].name.first[0])
             else:
