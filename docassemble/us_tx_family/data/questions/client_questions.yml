@@ -36,3 +36,24 @@ fields:
       us_states()
     default: TX
 ---
+generic object: Individual
+decoration: user-cog
+question: |
+  Is ${x} currently incarcerated?
+yesno: x.is_incarcerated
+---
+generic object: Individual
+decoraction: user-cog
+question: |
+  What is ${x.possessive('inmate number')}?
+fields:
+  - Inmate number: x.inmate_number
+---
+generic object: Individual
+decoration: user-cog
+question: |
+  Where is ${x} incarcerated?
+fields:
+  - Corrections facility name: x.corrections_unit_name
+  - Corrections facility address: x.corrections_unit_address
+---
