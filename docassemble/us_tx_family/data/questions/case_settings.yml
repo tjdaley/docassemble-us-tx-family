@@ -74,3 +74,21 @@ question: |
   Is respondent requesting an offset for support provided to the child during periods of actual possession?
 yesno: case.cs_enf_counterclaim
 ---
+section: case
+decoration: balance-scale
+question: |
+  What is the date of marriage?
+fields:
+  - Date of marriage: case.marriage_date
+    datatype: date
+---
+section: case
+decoration: balance-scale
+question: |
+  What is the date of separation?
+subquestion: |
+  Enter the date that the parties ceased to live together as spouses. If they are still cohabitating, use the date the petition was filed. The date should be close, but does not have to be exact.
+fields:
+  - Date of separation: case.separation_date
+    datatype: date
+---
