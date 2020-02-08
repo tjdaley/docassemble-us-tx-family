@@ -52,6 +52,9 @@ def clerk_staff(county: str):
 
 def jails():
     jail_db = UsTxJails()
+    for short_name, jail in jail_db.get_jails():
+        message = "@@@@@@@@>>>>{} - {}".format(short_name, str(jail))
+        logmessage(message)
     return jail_db.get_jails()
 
 def jail(short_name: str) -> list:
