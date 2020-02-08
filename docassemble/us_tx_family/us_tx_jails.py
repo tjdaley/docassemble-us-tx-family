@@ -7,6 +7,7 @@ on Feb 7, 2020.
 Copyright (c) 2020 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from docassemble.base.util import Person, Address
+from docassemble.base.logger import logmessage
 
 JAILS = {
 	"Allred": {
@@ -841,7 +842,9 @@ class UsTxJails(object):
 	A database of Texas Department of Corrections Facilities.
 	"""
 	def get_jails(self) -> list:
-		return [self.make_jail(jail) for short_name, jail in JAILS.items()]
+		the_list = [self.make_jail(jail) for short_name, jail in JAILS.items()]
+		logmessage(the_list[:5])
+		return the_list
 
 	def get_jail(self, short_name: str) -> Person:
 		"""
@@ -864,7 +867,6 @@ class UsTxJails(object):
 			zip = jail['zip']
 		)
 
-		result = Person(address = address)
-		result.name.text = jail['unit_name']
+		result = Person(address=address, name=str(jail['unit_name']))
 
 		return result
