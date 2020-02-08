@@ -844,7 +844,7 @@ class UsTxJails(object):
 	def get_jails(self) -> list:
 		the_list = [self.make_jail(jail) for short_name, jail in JAILS.items()]
 		for j in range(5):
-			logmessage(str(the_list[j]))
+			logmessage("@@@@@@@@@@ Is Person? {} - {}".format(isinstance(the_list[j], Person), str(the_list[j])))
 		return the_list
 
 	def get_jail(self, short_name: str) -> Person:
