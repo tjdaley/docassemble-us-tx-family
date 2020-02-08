@@ -841,7 +841,7 @@ class UsTxJails(object):
 	A database of Texas Department of Corrections Facilities.
 	"""
 	def get_jails(self) -> list:
-		return [(short_name, self.get_jail(short_name)) for short_name, info in JAILS.items()]
+		return [self.make_jail(jail) for short_name, jail in JAILS.items()]
 
 	def get_jail(self, short_name: str) -> Person:
 		"""
@@ -851,6 +851,12 @@ class UsTxJails(object):
 		if not jail:
 			return None
 
+		return self.make_jail(jail)
+
+	def make_jail(self, jail: dict) -> Person:
+		"""
+		Make a jail from a dict.
+		"""
 		address = Address(
 			address = jail['address'],
 			city = jail['city'],
