@@ -846,7 +846,7 @@ class UsTxJails(object):
 		Returns:
 			(list): A list of jails operated by the state
 		"""
-		the_list = [self.make_jail(jail) for jail in JAILS]
+		the_list = [self.make_jail(jail) for short_name, jail in JAILS.items()]
 		return the_list
 
 	def get_jail(self, short_name: str) -> Person:
