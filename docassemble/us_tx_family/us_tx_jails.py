@@ -841,7 +841,7 @@ class UsTxJails(object):
 	A database of Texas Department of Corrections Facilities.
 	"""
 	def get_jails(self) -> list:
-		return [(short_name, info['unit_name']) for short_name, info in JAILS.items()]
+		return [(short_name, self.get_jail(short_name)) for short_name, info in JAILS.items()]
 
 	def get_jail(self, short_name: str) -> Person:
 		"""
