@@ -56,7 +56,7 @@ def jails():
     jails = jail_db.get_jails()
     for j in range(5):
         jail = jails[j]
-        json_jail = json.dumps(jail)
+        json_jail = json.dumps(jail.as_serializable())
         message = "@@@@@@@@>>>>{}".format(json_jail)
         logmessage(message)
     return jails
