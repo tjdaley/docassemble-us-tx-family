@@ -54,11 +54,6 @@ def clerk_staff(county: str):
 def jails():
     jail_db = UsTxJails()
     jails = jail_db.get_jails()
-    for j in range(5):
-        jail = jails[j]
-        json_jail = json.dumps(jail.as_serializable())
-        message = "@@@@@@@@>>>>{}".format(json_jail)
-        logmessage(message)
     return jails
 
 def jail(short_name: str) -> list:
