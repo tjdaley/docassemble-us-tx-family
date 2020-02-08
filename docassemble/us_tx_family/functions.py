@@ -3,6 +3,7 @@ functions.py - Functions for docassemble interviews.
 
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
+import json
 import os
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
@@ -52,10 +53,13 @@ def clerk_staff(county: str):
 
 def jails():
     jail_db = UsTxJails()
-    for short_name, jail in jail_db.get_jails():
-        message = "@@@@@@@@>>>>{} - {}".format(short_name, str(jail))
+    jails = jail_db.get_jails()
+    for j in range(5):
+        jail = jails[j]
+        json_jail = json.dumps(jail)
+        message = "@@@@@@@@>>>>{}".format(json_jail)
         logmessage(message)
-    return jail_db.get_jails()
+    return jails
 
 def jail(short_name: str) -> list:
     jail_db = UsTxJails()
