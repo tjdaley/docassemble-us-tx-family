@@ -7,6 +7,7 @@ import os
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
 from .us_tx_court_directory import UsTxCourtDirectory
+from .us_tx_jails import UsTxJails
 from .us_case_list import UsCaseList
 
 from docassemble.base.functions import get_user_info
@@ -48,6 +49,14 @@ def clerk_staff(county: str):
     directory = UsTxCourtDirectory()
     staff_list = directory.get_clerk(county)
     return staff_list
+
+def jails():
+    jail_db = UsTxJails()
+    return jail_db.get_jails()
+
+def jail(short_name: str) -> list:
+    jail_db = UsTxJails()
+    return jail_db.get_jail(short_name)
 
 def me():
     the_redis = DARedis()
