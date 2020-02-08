@@ -1,0 +1,95 @@
+---
+metadata:
+  title: |
+    Divorce Prove Up Affidavit/Declaration
+  short title: |
+    Prove Up
+  description: |
+    An interview to produce a prove-up affidavit or declaration
+  tab title: |
+    Prove Up
+  tags:
+    - Closing Documents
+    - Responses
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-07
+---
+features:
+  centered: False
+  cache documents: False
+---
+modules:
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:case_settings.yml
+  - docassemble.us_tx_family:client_questions.yml
+  - docassemble.us_tx_family:select_case.yml
+---
+objects:
+  case.client[0].corrections_unit: Person
+---
+mandatory: True
+question: Let's Begin . . .
+subquestion: |
+  First I'll ask you a few questions and then generate a prove up affidavit or declaration for you.
+field: intro_done
+decoration: route
+undefine:
+  - doc.xspouse
+  - doc.xis_affidavit
+  - case.xclient[0].is_incarcerated
+  - case.xclient[0].inmate_number
+  - case.xclient[0].corrections_unit
+---
+mandatory: True
+code: |
+  if doc.is_affidavit:
+    doc.title = "AFFIDAVIT IN SUPPORT OF PROVE-UP"
+  else:
+    doc.title = "DECLARATION IN SUPPORT OF PROVE-UP"
+
+  doc.sensitive_data = True
+---
+decoration: file-contract
+question: Will this document be notarized?
+yesno: doc.is_affidavit
+---
+decoration: user-friends
+question: What is ${case.client[0].possessive('spouse')} name?
+fields:
+  Spouse name: doc.spouse_name
+---
+decoration: balance-scale-right
+question: Where ${doc.spouse_name} is incarcerated?
+fields:
+  - Facility name: case.client[0].corrections_unit.name.text
+  - Street: case.client[0].corrections_unit.address.address
+  - City: case.client[0].corrections_unit.address.city
+  - State: case.client[0].corrections_unit.address.state
+    default: TX
+    code: us_states()
+  - ZIP: case.client[0].corrections_unit.address.zip
+---
+section: conclusion
+decoration: thumbs-up
+question: |
+  Document Complete
+subquestion: |
+  % if save_case(case):
+    Your case has been saved.
+  % endif
+mandatory: True
+attachment:
+  name: Prove Up Affidavit
+  filename: Prove Up Affidavit
+  docx template file: docassemble.us_tx_family:data/templates/TX-009.020-Prove_Up_Declaration.docx
+  valid formats:
+    - pdf
+    - docx
+---
