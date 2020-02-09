@@ -43,7 +43,7 @@ question: |
 yesno: x.is_incarcerated
 ---
 generic object: Individual
-decoraction: user-cog
+decoration: user-cog
 question: |
   What is ${x.possessive('inmate number')}?
 fields:
