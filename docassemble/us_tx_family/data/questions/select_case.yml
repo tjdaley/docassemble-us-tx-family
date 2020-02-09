@@ -17,12 +17,12 @@ modules:
 include:
   - docassemble.us_tx_family:all_docs.yml
 ---
-mandatory: True
+sets: allow_case_add
 code: |
   # The default is to OMIT the "(ADD NEW CASE)" option.
   # See description above for instructions to override this behavior.
-  if not defined('xallow_case_add'):
-    define('xallow_case_add', False)
+  if not defined('allow_case_add'):
+    define('allow_case_add', False)
 ---
 section: case
 decoration: balance-scale
