@@ -1,0 +1,5 @@
+---
+mandatory: True
+code: |
+  allow_add_case = False
+---
