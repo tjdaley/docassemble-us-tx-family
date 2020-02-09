@@ -14,7 +14,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2020-02-07
+  revision_date: 2020-02-08
 ---
 features:
   centered: False
@@ -23,29 +23,44 @@ features:
 modules:
   - docassemble.us_tx_family.functions
   - docassemble.us_tx_family.objects
+  - docassemble.base.logger
+  - docassemble.base.util
+---
+objects:
+  - jail_list: DAList.using(object_type=Person)
 ---
 include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
   - docassemble.us_tx_family:case_settings.yml
   - docassemble.us_tx_family:client_questions.yml
+  - docassemble.us_tx_family:allow_add_case_false.yml
   - docassemble.us_tx_family:select_case.yml
----
-objects:
-  case.client[0].corrections_unit: Person
 ---
 mandatory: True
 question: Let's Begin . . .
 subquestion: |
-  First I'll ask you a few questions and then generate a prove up affidavit or declaration for you.
+  I'll ask you a few questions and then generate a prove up affidavit or declaration for you.
 field: intro_done
 decoration: route
 undefine:
-  - doc.xspouse
-  - doc.xis_affidavit
-  - case.xclient[0].is_incarcerated
-  - case.xclient[0].inmate_number
-  - case.xclient[0].corrections_unit
+  - doc.spouse
+  - doc.is_affidavit
+  - case.client[0].is_incarcerated
+  - case.client[0].inmate_number
+  - case.client[0].corrections_unit
+---
+mandatory: True
+code: |
+  # Add a corrections unit in case our client is incarcerated
+  case.client[0].initializeAttribute('corrections_unit', Person)
+  jail_list.init(elements=jails())
+  
+  # Figure out the spouse's name
+  if case.client_role == 'Petitioner':
+    doc.spouse_name = case.respondent[0].name
+  else:
+    doc.spouse_name = case.petitioner[0].name
 ---
 mandatory: True
 code: |
@@ -58,6 +73,10 @@ code: |
 ---
 decoration: file-contract
 question: Will this document be notarized?
+subquestion: |
+  If ${case.client[0]} cannot easily get to a notary or is incarcerated,
+  select NO. You can select NO even if ${case.client[0].name.first} is not
+  incarcerated.
 yesno: doc.is_affidavit
 ---
 decoration: user-friends
@@ -66,8 +85,18 @@ fields:
   Spouse name: doc.spouse_name
 ---
 decoration: balance-scale-right
-question: Where ${doc.spouse_name} is incarcerated?
+question: Where is ${case.client[0]} incarcerated?
+subquestion: |
+  If ${case.client[0].name.first} is incarcerated at a Texas Department of
+  Criminal Justice (TDCJ) unit, select the unit from the dropdown. Otherwise,
+  enter the details for the name and locate of the facility where 
+  ${case.client[0].name.first} is being held.
 fields:
+  - TDCJ Unit: case.client[0].corrections_unit
+    datatype: object
+    disable others: True
+    choices: |
+      jail_list
   - Facility name: case.client[0].corrections_unit.name.text
   - Street: case.client[0].corrections_unit.address.address
   - City: case.client[0].corrections_unit.address.city
