@@ -8,19 +8,12 @@ from lxml import html
 import re
 import requests
 import json
-
+from docassemble.base.util import DARedis
+from .ml_stripper import MLStripper
 from .local_config import local_config
-
-DEV_MODE = False
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
 VERSION = 'B'
-
-if not DEV_MODE:
-    from docassemble.base.util import DARedis
-    from .ml_stripper import MLStripper
-else:
-    from ml_stripper import MLStripper
 
 # The URL where we retrieve the statute that defines all district courts
 URL = 'https://statutes.capitol.texas.gov/Docs/GV/htm/GV.24.htm'
@@ -30,6 +23,7 @@ STORE = 'us_tx_courts.json'
 
 # The highest district court number that we look for.
 MAX_COURT_NUMBER = 1000
+
 
 class UsTxCourts(object):
     """
@@ -42,7 +36,7 @@ class UsTxCourts(object):
         self.courts_by_county = {}
         self.courts = None
         self.load()
-    
+
     def load(self):
         """
         Load courts from a local store.
@@ -77,19 +71,21 @@ class UsTxCourts(object):
         Args:
             county (str): County to search for.
         Returns:
-            (list): List of courts for this county or None if *county* not found.
+            (list): List of courts for this county or None if *county*
+            not found.
         """
         county_idx = str(county).strip().upper()
         if county_idx in self.courts_by_county:
             if not show_jurisdiction:
                 return self.courts_by_county[county_idx]
             return [(court, "{} - {}".format(court, self.courts[court]['focus']))
-                   for court in self.courts_by_county[county_idx]]
+                    for court in self.courts_by_county[county_idx]]
         return None
 
     def retrieve(self) -> dict:
         """
-        Retrieve a list of courts for this state from the statute that authorizes them.
+        Retrieve a list of courts for this state from the statute that
+        authorizes them.
         """
         page = requests.get(URL)
         html = page.text
@@ -142,16 +138,6 @@ class UsTxCourts(object):
         return result
 
     def read(self) -> dict:
-        if DEV_MODE:
-            return self.dev_read()
-        return self.prod_read()
-
-    def save(self, a, b):
-        if DEV_MODE:
-            return self.dev_save(a, b)
-        return self.prod_save(a, b)
-
-    def prod_read(self) -> dict:
         """
         Read the list of counties from file storage.
         """
@@ -159,23 +145,12 @@ class UsTxCourts(object):
         result = the_redis.get_data(STORE)
         return result
 
-    def dev_read(self) -> dict:
-        try:
-            with open (STORE, 'r') as fp:
-                return json.load(fp)
-        except:
-            return None
-
-    def prod_save(self, courts, courts_by_county):
+    def save(self, courts, courts_by_county):
         """
         Persist the list of counties to file storage.
         """
         the_redis = DARedis()
         the_redis.set_data(STORE, cache_record(courts, courts_by_county))
-
-    def dev_save(self, courts, courts_by_county):
-        with open(STORE, 'w') as fp:
-            json.dump(cache_record(courts, courts_by_county), fp, indent=4)
 
     def county_list(self, courts: dict) -> dict:
         """
@@ -261,10 +236,10 @@ def parse_court_text(court_number: int, text: str) -> dict:
 
 
 def max_court_number():
-    return local_config('max court number', MAX_COURT_NUMBER, DEV_MODE)
+    return local_config('max court number', MAX_COURT_NUMBER)
 
 
-def court_counties(text: str)-> list:
+def court_counties(text: str) -> list:
     search = 'Judicial District is composed of '
     start_pos = text.find(search) + len(search)
     end_pos = text.find('.', start_pos+1)
@@ -280,7 +255,7 @@ def court_counties(text: str)-> list:
             .strip() for x in counties]
 
 
-def extract_courts(s: str)-> list:
+def extract_courts(s: str) -> list:
     my_s = re.sub(r'[^0-9\s]', '', s)
     my_s = re.sub(r'\s{2,}', ' ', my_s)
     courts = my_s.strip().split(' ')
@@ -291,14 +266,15 @@ def extract_courts(s: str)-> list:
     return sorted(result)
 
 
-def court_jurisdictions(text: str)-> list:
+def court_jurisdictions(text: str) -> list:
     return []
 
 
-def court_year(text: str)-> str:
+def court_year(text: str) -> str:
     return ''
 
-def refresh_key()-> str:
+
+def refresh_key() -> str:
     """
     Returns the current year and month as yyyy-mm. The use
     of this refresh key will force the court list to be refreshed
@@ -313,14 +289,3 @@ def refresh_key()-> str:
     today = date.today()
     version = local_config('court list version', VERSION)
     return '{}-{}-{}'.format(today.year, today.month, version)
-
-
-def main():
-    o = UsTxCourts()
-    print(o.get_court(470))
-    print(o.get_courts('Collin'))
-    print(refresh_key())
-
-
-if __name__ == '__main__':
-    main()

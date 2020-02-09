@@ -4,9 +4,9 @@ objects.py - Objects used in the us-tx-family pacakge.
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from decimal import Decimal
-
-from docassemble.base.util import Address, DAList, DAObject, Individual,  PeriodicValue, Person, word
 from docassemble.base.logger import logmessage
+from docassemble.base.util import Address, DAList, DAObject, Individual, \
+    PeriodicValue, Person, word
 
 __all__ = ['Attorney', 'AttorneyList',
            'Income', 'IncomeList',
@@ -73,7 +73,8 @@ class IncomeList(DAList):
 
     def total(self, desired_period: int = 12):
         """
-        Returns the total value in the list, gathering the list items if necessary.
+        Returns the total value in the list, gathering the list items if
+        necessary.
 
         Args:
             desired_period (int): 1=Annually, 12=Monthly, etc. Default=12.
@@ -119,7 +120,8 @@ class JobList(DAList):
 
     def total(self, desired_period: int = 12):
         """
-        Returns the total value in the list, gathering the list items if necessary.
+        Returns the total value in the list, gathering the list items if
+        necessary.
 
         Args:
             desired_period (int): 1=Annually, 12=Monthly, etc. Default=12.

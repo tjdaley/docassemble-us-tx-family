@@ -20,8 +20,10 @@ from .objects import Attorney, AttorneyList, RepresentedPartyList
 TRACE = True
 ME_KEY = '{}:me'
 
+
 def counties():
-    # Run us_tx_counties.py to get a new list . . . if Texas ever adds/removes counties.
+    # Run us_tx_counties.py to get a new list if Texas ever
+    # adds/removes counties.
     if TRACE:
         logmessage("counties(): Started")
     county_db = UsTxCounties()
@@ -37,12 +39,14 @@ def courts(county: str, not_filed=True):
         court_list.insert(0, (None, "(NOT FILED)"))
     return court_list
 
+
 def court_staff(court: str):
     if TRACE:
         logmessage("court_staff(): Started")
     directory = UsTxCourtDirectory()
     staff_list = directory.get_court(court)
     return staff_list
+
 
 def clerk_staff(county: str):
     if TRACE:
@@ -51,14 +55,17 @@ def clerk_staff(county: str):
     staff_list = directory.get_clerk(county)
     return staff_list
 
+
 def jails():
     jail_db = UsTxJails()
     jails = jail_db.get_jails()
     return jails
 
+
 def jail(short_name: str) -> list:
     jail_db = UsTxJails()
     return jail_db.get_jail(short_name)
+
 
 def me():
     the_redis = DARedis()
@@ -66,7 +73,8 @@ def me():
     me = the_redis.get_data(key)
     return me
 
-def my_cases(allow_add:bool = True):
+
+def my_cases(allow_add: bool = True):
     if TRACE:
         logmessage("my_cases(): Started")
     case_db = UsCaseList(__user_id())
@@ -74,6 +82,7 @@ def my_cases(allow_add:bool = True):
     if allow_add:
         cases.insert(0, ('*ADD*', "(ADD NEW CASE)"))
     return cases
+
 
 def initialize_case(case):
     # Set up a basic family law case.
@@ -84,7 +93,7 @@ def initialize_case(case):
     try:
         del case.plaintiff
         del case.defendant
-    except:
+    except Exception:
         pass
     case.initializeAttribute('petitioner', RepresentedPartyList)
     case.initializeAttribute('respondent', RepresentedPartyList)
@@ -114,26 +123,31 @@ def get_case(case_key: str):
     case = case_db.get_case(case_key)
     return case or '*NONE*'
 
+
 def del_case(case_key: str):
     if TRACE:
         logmessage("del_case(): Started")
     case_db = UsCaseList(__user_id())
     case_db.del_case(case_key)
 
+
 def del_cases(confirm: bool = False):
     if TRACE:
         logmessage("del_cases(): Started")
-    if not isinstance(confirm, bool) or confirm != True:
-        logmessage("del_cases(): Cannot delete all cases unless 2d arg is True")
+    if not isinstance(confirm, bool) or confirm is not True:
+        # pylint: disable=E501
+        logmessage("del_cases(): set confirm=True to delete all cases.")
         return
     case_db = UsCaseList(__user_id())
     case_db.del_cases()
+
 
 def save_case(case):
     if TRACE:
         logmessage("save_case(): Started")
     case_db = UsCaseList(__user_id())
     return case_db.save(case)
+
 
 def save_me(about_me):
     if TRACE:
@@ -143,33 +157,36 @@ def save_me(about_me):
     the_redis.set_data(key, about_me)
     return True
 
+
 def set_client_role(case):
     # Make a list of all the parties we represent
     case.client.clear()
     for p in case.petitioner:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Petitioner"
+        if p.attorney.bar_number == case.me.bar_number:
+            case.client.append(p, set_instance_name=True)
+            case.client_role = "Petitioner"
     for p in case.respondent:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Respondent"
+        if p.attorney.bar_number == case.me.bar_number:
+            case.client.append(p, set_instance_name=True)
+            case.client_role = "Respondent"
     for p in case.intervenor:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Intervenor"
+        if p.attorney.bar_number == case.me.bar_number:
+            case.client.append(p, set_instance_name=True)
+            case.client_role = "Intervenor"
     case.client.gathered = True
     case.client.is_there_another = False
     return True
 
+
 def us_states():
     if TRACE:
         logmessage("retrieving us states")
-    return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA", 
-          "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", 
-          "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", 
-          "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
-          "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+    return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
+            "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+            "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+            "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+            "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+
 
 def __user_id() -> str:
     """

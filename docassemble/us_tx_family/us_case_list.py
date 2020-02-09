@@ -9,20 +9,13 @@ import pickle
 import sys
 import uuid
 
-DEV_MODE = False
-
-if not DEV_MODE:
-    from docassemble.base.core import DAList
-    from docassemble.base.util import DARedis, Individual, IndividualName, Address
-    from docassemble.base.logger import logmessage
-else:
-    def logmessage(message: str):
-        try:
-            sys.stderr.write(message + '\n')
-        except Exception as e:
-            sys.stderr.write('Unable to log: {}'.format(str(e)))
+from docassemble.base.core import DAList
+from docassemble.base.util import DARedis, Individual, IndividualName,\
+    Address
+from docassemble.base.logger import logmessage
 
 STORE = '{}:us_case_list'
+
 
 class UsCaseList(object):
     """
@@ -36,7 +29,7 @@ class UsCaseList(object):
         self.user_id = user_id
         self.store = STORE.format(self.user_id)
         self.load()
-    
+
     def load(self):
         """
         Load cases from a local store.
@@ -44,14 +37,17 @@ class UsCaseList(object):
         self.cases = self.read() or {}
 
     def get_cases(self):
-        case_list = [(key, selection_text(case)) for key, case in self.cases.items() if hasattr(case, 'case_id')]
-        case_list.sort(key = lambda x: x[1])
+        case_list = [(key, selection_text(case))
+                     for key, case in self.cases.items()
+                     if hasattr(case, 'case_id')]
+        case_list.sort(key=lambda x: x[1])
         return case_list
 
     def get_case(self, key: str):
         case = self.cases.get(key)
         if not hasattr(case, 'case_id'):
-            logmessage("get_case(): " + "Case key {} does not have a case_id".format(key))
+            message = "get_case(): Case key {} does not have a case_id"
+            logmessage(message.format(key))
         else:
             logmessage("get_case(): " + "Retrieved case {}".format(str(case)))
         return case
@@ -61,65 +57,32 @@ class UsCaseList(object):
             del self.cases[key]
             self.save(None)
         else:
-            logmessage("del_case(): " + "Could not find case having key={}".format(key))
+            logmessage(f"del_case(): Could not find case having key={key}")
 
     def del_cases(self):
-        if not DEV_MODE:
-            logmessage("del_cases(): " + "Deleting all cases for user = {}".format(self.user_id))
-            the_redis = DARedis()
-            the_redis.set_data(self.store, None)
-            return
-        logmessage("del_case(): " + "Cannot delete all cases in DEV_MODE")
-
-    def read(self) -> dict:
-        if DEV_MODE:
-            cases = self.dev_read()
-        else:
-            cases = self.prod_read()
-        return cases
+        logmessage(f"del_cases(): " +
+                   "Deleting all cases for user = {self.user_id}")
+        the_redis = DARedis()
+        the_redis.set_data(self.store, None)
+        return
 
     def save(self, case) -> bool:
         """
         Save a case.
         """
-        if case is not None:
-            key = case_key(case)
-            case.key = key
-        else:
-            key = None
-        if DEV_MODE:
-            return self.dev_save(key, case)
-        return self.prod_save(key, case)
+        key = case_key(case)
+        case.key = key
+        self.cases[key] = case
+        the_redis = DARedis()
+        the_redis.set_data(self.store, self.cases)
+        return True
 
-    def prod_read(self) -> dict:
+    def read(self) -> dict:
         """
         Read the list of cases for this user from cross-session storage.
         """
         the_redis = DARedis()
         return the_redis.get_data(self.store)
-
-    def dev_read(self) -> dict:
-        try:
-            with open (self.store, 'r') as fp:
-                return pickle.load(fp)
-        except:
-            return None
-
-    def prod_save(self, key: str, case):
-        """
-        Persist the directory info to cross-session storage.
-        """
-        if case is not None:
-            self.cases[key] = case
-        the_redis = DARedis()
-        the_redis.set_data(self.store, self.cases)
-        return True
-
-    def dev_save(self, key: str, case):
-        if case is not None:
-            self.cases[key] = case
-        with open(self.store, 'w') as fp:
-            pickle.dump(self.cases, fp)
 
 
 def case_key(case):
@@ -130,7 +93,7 @@ def case_key(case):
         return case.key
     key = str(uuid.uuid1())
     return key
-    
+
 
 def selection_text(case) -> str:
     """
@@ -147,7 +110,9 @@ def selection_text(case) -> str:
     if hasattr(case, 'client'):
         if isinstance(case.client, DAList) and case.client.number() > 0:
             if hasattr(case.client[0].name, 'last'):
-                client = "{}, {}".format(case.client[0].name.last, case.client[0].name.first[0])
+                lname = case.client[0].name.last
+                fname = case.client[0].name.first
+                client = f"{lname}, {fname}"
             else:
                 client = case.client[0].name
         else:
@@ -163,14 +128,6 @@ def selection_text(case) -> str:
     if hasattr(case, 'case_id') and case.case_id:
         case_id = "{}: {}".format(case.county, case.case_id)
     else:
-        case_id  = "(NOT FILED)"
+        case_id = "(NOT FILED)"
 
-    return "{} - {} - ({})".format(client, description, case.county)
-
-
-def main():
-    o = UsCaseList()
-
-
-if __name__ == '__main__':
-    main()
+    return f"{client} - {description} - ({case.county})"

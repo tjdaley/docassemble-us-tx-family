@@ -10,21 +10,21 @@ import json
 
 from .local_config import local_config
 
-DEV_MODE = False
-
-# Change *VERSION* to force the cached *STORE* file to be refreshed.
-VERSION = 'A'
-
-if not DEV_MODE:
-    from docassemble.base.core import DAList
-    from docassemble.base.util import DARedis, Individual, IndividualName, Address
+from docassemble.base.core import DAList
+from docassemble.base.util import DARedis, Individual, IndividualName, \
+    Address
 
 URL = 'https://card.txcourts.gov/ExcelExportPublic.aspx?type=P&export=E&CommitteeID=0&Court=&SortBy=tblCounty.Sort_ID,%20Last_Name&Active_Flg=true&Last_Name=&First_Name=&Court_Type_CD=55&Court_Sub_Type_CD=0&County_ID=0&City_CD=0&Address_Type_CD=0&Annual_Report_CD=0&PersonnelType1=&PersonnelType2=&DistrictPrimaryLocOnly=1&AdminJudicialRegion=0&COADistrictId=0'
 STORE = 'us_tx_court_directory.json'
 
+# Change *VERSION* to force the cached *STORE* file to be refreshed.
+VERSION = 'A'
+
+
 class UsTxCourtDirectory(object):
     """
-    Encapsulates the behavior of a datasource for district court personel in Texas.
+    Encapsulates the behavior of a datasource for district court personnel
+    in Texas.
     """
     def __init__(self):
         """
@@ -33,13 +33,14 @@ class UsTxCourtDirectory(object):
         self.courts = {}  # Indexed by judicial district number
         self.clerks = {}  # Indexed by uppercased county name
         self.load()
-    
+
     def load(self):
         """
         Load courts from a local store.
         """
         directory_info = self.read()
-        if directory_info is None or directory_info['refresh_key'] != refresh_key():
+        if directory_info is None \
+                or directory_info['refresh_key'] != refresh_key():
             courts, clerks = self.retrieve()
             self.courts = courts
             self.clerks = clerks
@@ -75,8 +76,6 @@ class UsTxCourtDirectory(object):
         """
         county_idx = county_index(county)
         if county_idx in self.clerks:
-            if DEV_MODE:
-                return self.clerks[county_idx]
             return self.dalist_of_individuals(self.clerks[county_idx])
         return None
 
@@ -122,7 +121,8 @@ class UsTxCourtDirectory(object):
 
     def retrieve(self) -> dict:
         """
-        Retrieve a list of courts for this state from the statute that authorizes them.
+        Retrieve a list of courts for this state from the statute that
+        authorizes them.
         """
         page = requests.get(URL)
         tsv = page.text
@@ -143,7 +143,8 @@ class UsTxCourtDirectory(object):
 
         lines = [l.replace('\r', '') for l in tsv.split('\n') if len(l) > 10]
         header = lines[0]
-        headers = [h.lower().strip() for h in header.split('\t') if h.strip() != '']
+        headers = [h.lower().strip()
+                   for h in header.split('\t') if h.strip() != '']
         len_headers = len(headers)
         for line in lines[1:]:
             cols = [c.strip() for c in line.split('\t')]
@@ -154,7 +155,7 @@ class UsTxCourtDirectory(object):
                 continue
 
             person = {}
-            for idx, header_text in enumerate(headers) :
+            for idx, header_text in enumerate(headers):
                 person[header_text] = cols[idx]
 
             court_idx = court_index(person['court'])
@@ -170,18 +171,8 @@ class UsTxCourtDirectory(object):
                     clerks[county_idx] = []
                 clerks[county_idx].append(person)
         return courts, clerks
-            
+
     def read(self) -> dict:
-        if DEV_MODE:
-            return self.dev_read()
-        return self.prod_read()
-
-    def save(self, a, b):
-        if DEV_MODE:
-            return self.dev_save(a, b)
-        return self.prod_save(a, b)
-
-    def prod_read(self) -> dict:
         """
         Read the list of counties from file storage.
         """
@@ -189,23 +180,12 @@ class UsTxCourtDirectory(object):
         result = the_redis.get_data(STORE)
         return result
 
-    def dev_read(self) -> dict:
-        try:
-            with open (STORE, 'r') as fp:
-                return json.load(fp)
-        except:
-            return None
-
-    def prod_save(self, courts, clerks):
+    def save(self, courts, clerks):
         """
         Persist the directory info to file storage.
         """
         the_redis = DARedis()
         the_redis.set_data(STORE, cache_record(courts, clerks))
-
-    def dev_save(self, courts, clerks):
-        with open(STORE, 'w') as fp:
-            json.dump(cache_record(courts, clerks), fp, indent=4)
 
 
 def county_index(county: str) -> str:
@@ -246,7 +226,7 @@ def cache_record(courts, clerks):
     }
 
 
-def refresh_key()-> str:
+def refresh_key() -> str:
     """
     Returns the current date as yyyy-mm-dd. The use
     of this refresh key will force the directory to be refreshed
@@ -258,20 +238,3 @@ def refresh_key()-> str:
     today = date.today()
     version = local_config('court staff version', VERSION)
     return '{}-{}-{}-{}'.format(today.year, today.month, today.day, version)
-
-
-def main():
-    o = UsTxCourtDirectory()
-    print("*"*40)
-    print(o.get_court(470))
-    print("*"*40)
-    print(o.get_court('416th District court'))
-    print("*"*40)
-    print(o.get_clerk('collin'))
-    print("*"*40)
-    print(refresh_key())
-    print("*"*40)
-
-
-if __name__ == '__main__':
-    main()

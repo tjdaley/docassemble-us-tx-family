@@ -22,6 +22,7 @@ from docassemble.base.util import DARedis
 URL = 'https://card.txcourts.gov/DirectorySearch.aspx'
 STORE = 'us_tx_counties.json'
 
+
 class UsTxCounties(object):
     """
     Encapsulates the behavior of a datasource for counties in Texas.
@@ -31,7 +32,7 @@ class UsTxCounties(object):
         Initialize and instance.
         """
         self.counties = self.load()
-    
+
     def load(self) -> list:
         """
         Load courts from a local store. If the local store does not exist,
@@ -73,8 +74,11 @@ class UsTxCounties(object):
             (list): List of counties
         """
         tree = html.fromstring(page_html)
-        counties = tree.xpath('//select[@id="ctlCounty_ddlCounty"]//option//text()')
-        # First name in the retrieved list is "All Counties". We don't need that.
+        counties = tree.xpath(
+            '//select[@id="ctlCounty_ddlCounty"]//option//text()'
+        )
+        # First name in the retrieved list is "All Counties".
+        # We don't need that.
         return counties[1:]
 
     def read(self) -> dict:
