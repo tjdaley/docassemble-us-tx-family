@@ -3,7 +3,6 @@ modules:
   - docassemble.base.functions
 ---
 mandatory: True
-sets: allow_add_case
 code: |
   define('allow_case_add', False)
 ---
