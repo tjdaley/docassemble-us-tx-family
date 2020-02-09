@@ -1,9 +1,11 @@
 ---
 modules:
   - docassemble.base.functions
+  - docassemble.base.logger
 ---
 mandatory: True
 code: |
+  logmessage("@@@@@@@@@@@@@@ Setting 'allow_case_add'")
   undefine('allow_case_add')
   define('allow_case_add', True)
 ---
