@@ -136,22 +136,7 @@ code: |
 mandatory: True
 code: |
   if operation == 'ADD':
-    # Make a list of all the parties we represent
-    case.client.clear()
-    for p in case.petitioner:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Petitioner"
-    for p in case.respondent:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Respondent"
-    for p in case.intervenor:
-      if p.attorney.bar_number == case.me.bar_number:
-        case.client.append(p, set_instance_name=True)
-        case.client_role = "Intervenor"
-    case.client.gathered = True
-    case.client.is_there_another = False
+    set_client_role(case)
     save_case(case)
 ---
 mandatory: True
@@ -192,6 +177,10 @@ subquestion: |
   % endfor
 
   [Edit](${url_action('review_children')})
+
+  % if set_client_role(case):
+    Client role reset.
+  % endif
 field: case_people_reviewed
 ---
 event: review_attorneys
