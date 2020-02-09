@@ -1,9 +1,23 @@
 ---
 metadata:
   description: |
-    Include this file to prompt the user to select a case.
-    If you want the user to be able to add a case (you should not want that)
-    then you must include all_add_case_true.yml BEFORE you include this file.
+    Include this file to prompt the user to select a case. Before you include
+    this file, you **MUST** include either allow_add_case_true.yml or
+    allow_add_case_false.yml, like this-
+
+    *If you want the user to be able to add a new case.* (You shouldn't want this)
+    ```
+    include:
+      - docassemble.us_tx_family:allow_add_case_true.yml
+      - docassemble.us_tx_family:select_case.yml
+    ```
+
+    *If you do NOT want the user to be able to add a new case.* (You should want this)
+    ```
+    include:
+      - docassemble.us_tx_family:allow_add_case_false.yml
+      - docassemble.us_tx_family:select_case.yml
+    ```
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
@@ -16,13 +30,6 @@ modules:
 ---
 include:
   - docassemble.us_tx_family:all_docs.yml
----
-sets: allow_case_add
-code: |
-  # The default is to OMIT the "(ADD NEW CASE)" option.
-  # See description above for instructions to override this behavior.
-  if not defined('allow_case_add'):
-    define('allow_case_add', False)
 ---
 section: case
 decoration: balance-scale

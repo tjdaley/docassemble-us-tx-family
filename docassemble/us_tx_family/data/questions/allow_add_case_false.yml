@@ -2,7 +2,7 @@
 modules:
   - docassemble.base.functions
 ---
-mandatory: True
 code: |
+  undefine('allow_case_add')
   define('allow_case_add', False)
 ---
