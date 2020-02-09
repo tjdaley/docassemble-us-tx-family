@@ -121,4 +121,7 @@ attachment:
   valid formats:
     - pdf
     - docx
+buttons:
+  - Exit: exit
+    url: /list
 ---

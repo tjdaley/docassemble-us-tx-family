@@ -14,7 +14,7 @@ metadata:
   authors:
     - name: Thomas J. Daley, J.D.
       organization: Power Daley PLLC
-  revision_date: 2020-02-06
+  revision_date: 2020-02-09
 ---
 features:
   centered: False
@@ -33,15 +33,20 @@ include:
 ---
 mandatory: True
 code: |
-  doc.title = "RESPONDENT'S ORIGINAL ANSWER"
+  doc.title = "RESPONDENT'S ORIGINAL ANSWER AND REQUEST FOR DISCLOSURES"
   doc.sensitive_data = True
+---
+mandatory: True
+code: |
+  if case.client_role == 'Petitioner':
+    answer_not_required
 ---
 mandatory: True
 question: Let's Begin . . .
 subquestion: |
-  First I'll ask you some questions about associate judges, defenses, and counterclaims, then
+  I'll ask you some questions about associate judges, defenses, and counterclaims, then
   I'll generate an answer for you.
-
+field: intro_done
 decoration: route
 undefine:
   - case.object_aj
@@ -65,4 +70,15 @@ attachment:
   valid formats:
     - pdf
     - docx
+buttons:
+  - Exit: exit
+    url: /list
 ---
+event: answer_not_required
+question: Answer Not Required
+subquestion: |
+  You are the Petitioner in this matter, so you are not required
+  to file an answer.
+buttons:
+  - Exit: exit
+    url: /list

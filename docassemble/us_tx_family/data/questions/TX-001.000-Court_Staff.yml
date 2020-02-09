@@ -96,4 +96,7 @@ attachment:
       Email: ${staff.email}[NBSP][NEWLINE]
       [NBSP][NEWLINE]
       % endfor
+buttons:
+  - Exit: exit
+    url: /list
 ---
