@@ -23,7 +23,8 @@ generic object: Individual
 decoration: user-cog
 question: |
   What is ${ x.possessive('Social Security number')}?
-field: x.ssn
+fields:
+  - Social Security number: x.ssn
 ---
 generic object: Individual
 decoration: user-cog
