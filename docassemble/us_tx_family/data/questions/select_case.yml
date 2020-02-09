@@ -1,10 +1,28 @@
 ---
+metadata:
+  description: |
+    Include this file to prompt the user to select a case.
+    If you want the user to be able to add a case (you should not want that)
+    then you must include all_add_case_true.yml BEFORE you include this file.
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-08
+---
 modules:
   - docassemble.base.legal
+  - docassemble.base.functions
   - docassemble.us_tx_family.functions
 ---
 include:
   - docassemble.us_tx_family:all_docs.yml
+---
+mandatory: True
+code: |
+  # The default is to OMIT the "(ADD NEW CASE)" option.
+  # See description above for instructions to override this behavior.
+  if not defined('allow_case_add'):
+    define('allow_case_add', False)
 ---
 section: case
 decoration: balance-scale
