@@ -2,5 +2,5 @@
 mandatory: True
 sets: allow_add_case
 code: |
-  allow_add_case = False
+  define('allow_case_add', False)
 ---
