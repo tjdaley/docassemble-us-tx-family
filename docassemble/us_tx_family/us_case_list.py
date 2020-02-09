@@ -113,6 +113,7 @@ class UsCaseList(object):
             self.cases[key] = case
         the_redis = DARedis()
         the_redis.set_data(self.store, self.cases)
+        return True
 
     def dev_save(self, key: str, case):
         if case is not None:
