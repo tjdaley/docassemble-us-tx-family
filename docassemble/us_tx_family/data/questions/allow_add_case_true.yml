@@ -3,7 +3,7 @@ modules:
   - docassemble.base.functions
   - docassemble.base.logger
 ---
-mandatory: True
+initial: True
 sets: allow_case_add
 code: |
   logmessage("@@@@@@@@@@@@@@ Setting 'allow_case_add'")
