@@ -16,6 +16,7 @@ question: |
 fields:
   - Case: case_key
     code: |
+      allow_add_case = False
       my_cases(allow_add=allow_case_add)
 ---
 mandatory: True
