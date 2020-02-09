@@ -6,13 +6,22 @@ modules:
 include:
   - docassemble.us_tx_family:all_docs.yml
 ---
+mandatory: True
+code: |
+  if 'allow_add_case' not in locals():
+    allow_add_case = False
+---
 section: case
 decoration: balance-scale
-question: Select a case or add a new one.
+question: |
+  Select a case
+  % if allow_add_case:
+    or add a new one.
+  % endif
 fields:
   - Case: case_key
     code: |
-      my_cases()
+      my_cases(allow_add=allow_case_add)
 ---
 mandatory: True
 code: |
