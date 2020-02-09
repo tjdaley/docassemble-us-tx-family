@@ -10,7 +10,7 @@ section: case
 decoration: balance-scale
 question: |
   Select a case
-  % if allow_add_case == True:
+  % if allow_case_add:
     or add a new one.
   % endif
 fields:
