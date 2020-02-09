@@ -22,7 +22,7 @@ comment: |
 generic object: Individual
 decoration: user-cog
 question: |
-  What is ${ x.possessive('Social Security number')}?
+  What is ${ x.possessive('Social Security number')}??
 fields:
   - Social Security number: x.ssn
 ---
