@@ -1,6 +1,6 @@
 ---
 modules:
-  - docassemble.base.functions
+  - docassemble.base.util
 ---
 sets: allow_case_add
 code: |

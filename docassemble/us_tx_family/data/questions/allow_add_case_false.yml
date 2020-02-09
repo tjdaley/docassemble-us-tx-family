@@ -1,6 +1,6 @@
 ---
 modules:
-  - docassemble.base.functions
+  - docassemble.base.util
 ---
 code: |
   undefine('allow_case_add')
