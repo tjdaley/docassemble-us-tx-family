@@ -6,12 +6,6 @@ modules:
 include:
   - docassemble.us_tx_family:all_docs.yml
 ---
-mandatory: True
-sets: allow_add_case
-code: |
-  if 'allow_add_case' not in locals():
-    allow_add_case = False
----
 section: case
 decoration: balance-scale
 question: |
