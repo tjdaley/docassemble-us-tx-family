@@ -143,6 +143,25 @@ def save_me(about_me):
     the_redis.set_data(key, about_me)
     return True
 
+def set_client_role(case):
+    # Make a list of all the parties we represent
+    case.client.clear()
+    for p in case.petitioner:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Petitioner"
+    for p in case.respondent:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Respondent"
+    for p in case.intervenor:
+      if p.attorney.bar_number == case.me.bar_number:
+        case.client.append(p, set_instance_name=True)
+        case.client_role = "Intervenor"
+    case.client.gathered = True
+    case.client.is_there_another = False
+    return True
+
 def us_states():
     if TRACE:
         logmessage("retrieving us states")
