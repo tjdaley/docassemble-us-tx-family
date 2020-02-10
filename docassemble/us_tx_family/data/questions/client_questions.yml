@@ -58,3 +58,23 @@ fields:
   - Corrections facility name: x.corrections_unit_name
   - Corrections facility address: x.corrections_unit_address
 ---
+generic object: Individual
+decoration: user-cog
+question: Where ${x.do_question('live')}?
+fields:
+  - Address: x.address.address
+    address autocomplete: True
+  - Unit: x.address.unit
+    required: False
+  - City: x.address.city
+  - State: x.address.state
+    default:
+      code: |
+        case.state
+    code: |
+      us.states.mapping('abbr', 'name')
+  - ZIP: x.address.zip
+    required: False
+  - County: x.address.county
+    required: False
+---
