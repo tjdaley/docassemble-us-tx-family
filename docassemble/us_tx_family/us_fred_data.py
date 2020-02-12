@@ -12,7 +12,7 @@ from decimal import Decimal
 import json
 import requests
 
-from local_config import local_config
+from .local_config import local_config
 
 try:
     from docassemble.base.logger import logmessage
