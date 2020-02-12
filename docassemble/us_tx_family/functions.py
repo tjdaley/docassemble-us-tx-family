@@ -3,8 +3,11 @@ functions.py - Functions for docassemble interviews.
 
 Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
+from datetime import datetime
+from decimal import Decimal
 import json
 import os
+from .us_fred_data import FredUtil
 from .us_tx_counties import UsTxCounties
 from .us_tx_courts import UsTxCourts
 from .us_tx_court_directory import UsTxCourtDirectory
@@ -19,6 +22,15 @@ from .objects import Attorney, AttorneyList, RepresentedPartyList
 
 TRACE = True
 ME_KEY = '{}:me'
+
+
+def avg_us_mortgage_rate(year: int, month: int, term_in_years: int = 30) -> Decimal:
+    """
+    Retrieve avg home mortgage interest rate from Federal Reserve Data.
+    """
+    futil = FredUtil()
+    rate = futil.average_fixed_mortgage(year, month, term_in_years)
+    return rate
 
 
 def counties():
@@ -54,6 +66,69 @@ def clerk_staff(county: str):
     directory = UsTxCourtDirectory()
     staff_list = directory.get_clerk(county)
     return staff_list
+
+
+def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rate: Decimal):
+    """
+    Estimate the remaining balance due on a loan.
+
+    From: https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
+
+    TODO: This formula is off by a few pennies per month, which makes the final payment
+          appear to create a very slightly negative loan balance.
+
+    Args:
+      p (int): Original principal value of the loan
+      year (int): Year first payment was due
+      month (int): Month first payment was due
+      term (int): Term of the loan in years
+      interest_rate (Decimal): Annual interest rate
+
+    Returns:
+      Amount remaining on the loan, assuming timely payments.
+    """
+    payment = loan_payment(p, term, interest_rate)
+    p_d = Decimal(p)
+    term_d = Decimal(term)
+    monthly_rate = Decimal(interest_rate / 12)
+    start_date = datetime(year, month, 1)
+    N = months_since_date(start_date)
+
+    remaining = (1+monthly_rate)**N*p_d - (((1+monthly_rate)**N-1)/monthly_rate)*payment
+    remaining = Decimal(round(remaining, 2))
+    return remaining
+
+
+def loan_payment(p: int, term: int, interest_rate: Decimal):
+    """
+    Compute monthly principal and interest payment on a fixed rate loan.
+
+    From: https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
+
+    Args:
+      p (int): Original principal value of the loan
+      term (int): Term of the loan in years
+      interest_rate (Decimal): Annual interest rate
+
+    Returns:
+      Monthly principal and interest payment
+    """
+    p_d = Decimal(p)
+    term_d = Decimal(term)
+    monthly_rate = Decimal(interest_rate / 12)
+    payment = Decimal(round(((monthly_rate * p_d) / (1-((1+(monthly_rate)) ** (-term_d * 12)))), 2))
+    return payment
+
+
+def months_since_date(start_date) -> int:
+    """
+    Computes the number of months since a given date.
+    My definition of "number of months" relates to the number of times
+    you'd flip the calendar page to go to another month, e.g. the
+    number of months between Jan 31 and Feb 1 is *1*.
+    """
+    today = datetime.now()
+    return (today.year - start_date.year) * 12 + today.month - start_date.month
 
 
 def jails():
