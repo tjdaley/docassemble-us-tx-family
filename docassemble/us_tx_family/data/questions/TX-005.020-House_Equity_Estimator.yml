@@ -22,6 +22,9 @@ modules:
   - docassemble.us_tx_family.functions
   - docassemble.us_tx_family.objects
 ---
+objects:
+  - address: Address
+---
 include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
@@ -33,10 +36,74 @@ code: |
   doc.title = "ESTIMATE OF VALUE OF REAL PROPERTY"
   doc.sensitive_data = False
 ---
+question: |
+  What is the the current fair market value of ${address.address}?
+fields:
+  - Current FMV: ${value}
+---
+question: |
+  Loan information.
+fields:
+  - Amount financed: loan
+  - Year first payment due: year
+  - Month first payment due: month
+  - Term of loan: term
+    options:
+      - 5: Five years
+      - 15: Fifteen years
+      - 30: Thirty years
+---
+question: |
+  What is the interest rate on the loan?
+fields:
+  - Rate: interest_rate
+    default: |
+      code: |
+        avg_us_mortgage_rate(year, month, term)
+---
+question: |
+  What is the remaining balance on the loan?
+fields:
+  - Balance: loan_balance
+    default: |
+      code: |
+        estimate_loan_balance(loan, year, month, term, interest_rate)
+---
+question: |
+  What is the cost of sale factor?
+subquestion: |
+  The cost of sale factor is the number used to reduce the equity of the home
+  in recognition of the fact that selling it will incur some expenses.
+fields:
+  - Cost of sale factor: cost_of_sale_factor
+    default: .07
+---
+code: |
+  cost_of_sale = value * cost_of_sale_factor
+  equity_value = value - loan_balance - cost_of_sale
+---
 section: conclusion
 decoration: thumbs-up
 question: |
   Document Complete
+
+  Address | ${address.on_one_line()}
+
+  Input | Value
+  ------|------:
+  Year purchased | ${year}
+  Month purchased | ${month}
+  Amount financed | ${loan}
+  Interest rate | ${interest_rate}
+
+  &nbsp; | &nbsp;
+  -------|------:
+  Value | ${value}
+  Remaining loan | ${loan_balance}
+  Cost of sale factor: ${cost_of_sale_factor}
+  Cost of sale | ${cost_of_sale}
+  Value of equity | {$equity_value}
+
 mandatory: True
 attachment:
   name: Estimate of Value of Real Property
