@@ -1,0 +1,51 @@
+---
+metadata:
+  title: |
+    Real Property Equity Estimator
+  short title: |
+    Estimate Home Equity
+  description: |
+    An interview to produce and estimate of the value of a home's equity
+  tab title: |
+    Equity
+  tags:
+    - discovery
+  authors:
+    - name: Thomas J. Daley, J.D.
+      organization: Power Daley PLLC
+  revision_date: 2020-02-12
+---
+features:
+  centered: False
+---
+modules:
+  - docassemble.us_tx_family.functions
+  - docassemble.us_tx_family.objects
+---
+include:
+  - basic-questions.yml
+  - docassemble.us_tx_family:all_docs.yml
+  - docassemble.us_tx_family:allow_add_case_false.yml
+  - docassemble.us_tx_family:select_case.yml
+---
+mandatory: True
+code: |
+  doc.title = "ESTIMATE OF VALUE OF REAL PROPERTY"
+  doc.sensitive_data = False
+---
+section: conclusion
+decoration: thumbs-up
+question: |
+  Document Complete
+mandatory: True
+attachment:
+  name: Estimate of Value of Real Property
+  filename: estimate_of_value_of_real_property
+  docx template file: docassemble.us_tx_family:data/templates/TX-005.020-House_Equity_Estimator.docx
+  valid formats:
+    - pdf
+    - docx
+buttons:
+  - Exit: exit
+    url: /list
+---
