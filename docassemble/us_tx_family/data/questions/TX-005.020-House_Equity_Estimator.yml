@@ -28,46 +28,90 @@ objects:
 include:
   - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
-  - docassemble.us_tx_family:allow_add_case_false.yml
-  - docassemble.us_tx_family:select_case.yml
 ---
 mandatory: True
 code: |
   doc.title = "ESTIMATE OF VALUE OF REAL PROPERTY"
   doc.sensitive_data = False
 ---
+generic object: Address
+question: What is the property's address?
+fields:
+  - Address: x.address
+    address autocomplete: True
+  - Unit: x.unit
+    required: False
+  - City: x.city
+  - State: x.state
+  - ZIP: x.zip
+  - County: x.county
+---
 question: |
   What is the the current fair market value of ${address.address}?
 fields:
-  - Current FMV: ${value}
+  - Current FMV: pvalue
+    datatype: currency
 ---
 question: |
   Loan information.
 fields:
   - Amount financed: loan
+    datatype: currency
+    step: 1
   - Year first payment due: year
+    code: last_30_years()
   - Month first payment due: month
+    choices:
+      - January: 1
+      - February: 2
+      - March: 3
+      - April: 4
+      - May: 5
+      - June: 6
+      - July: 7
+      - August: 8
+      - September: 9
+      - October: 10
+      - November: 11
+      - December: 12
   - Term of loan: term
-    options:
-      - 5: Five years
-      - 15: Fifteen years
-      - 30: Thirty years
+    choices:
+      - 5 years: 5
+      - 15 years: 15
+      - 30 years: 30
+    default: 30
+---
+code: |
+  default_interest_rate = avg_us_mortgage_rate(year, month, term)
+  month_name = ['', "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][int(month)]
 ---
 question: |
   What is the interest rate on the loan?
+subquestion: |
+  The default value is the average interest rate for a ${term}-year loan
+  in the U.S. in ${month_name} of ${year}.
 fields:
   - Rate: interest_rate
+    datatype: number
+    step: .0001
     default: |
-      code: |
-        avg_us_mortgage_rate(year, month, term)
+      ${ default_interest_rate }
+---
+code: |
+  default_remaining_loan_balance = estimate_loan_balance(loan, year, month, term, interest_rate)
+  payment = loan_payment(loan, term, interest_rate)
 ---
 question: |
   What is the remaining balance on the loan?
+subquestion: |
+  The default value is the amount of the original loan value of ${currency(loan)}
+  that would be remaining this month if the required monthly principal and
+  interest payment of ${currency(payment)} were made on time each month.
 fields:
   - Balance: loan_balance
+    datatype: currency
     default: |
-      code: |
-        estimate_loan_balance(loan, year, month, term, interest_rate)
+      ${ default_remaining_loan_balance }
 ---
 question: |
   What is the cost of sale factor?
@@ -76,42 +120,41 @@ subquestion: |
   in recognition of the fact that selling it will incur some expenses.
 fields:
   - Cost of sale factor: cost_of_sale_factor
+    datatype: number
+    step: .005
     default: .07
 ---
 code: |
-  cost_of_sale = value * cost_of_sale_factor
-  equity_value = value - loan_balance - cost_of_sale
+  cost_of_sale = round(float(pvalue) * cost_of_sale_factor, 2)
+  equity_value = round(float(pvalue) - float(loan_balance) - cost_of_sale)
 ---
 section: conclusion
 decoration: thumbs-up
 question: |
-  Document Complete
+  ## Home Value Report
 
-  Address | ${address.on_one_line()}
+  # ${address.on_one_line()}
 
   Input | Value
   ------|------:
   Year purchased | ${year}
-  Month purchased | ${month}
-  Amount financed | ${loan}
-  Interest rate | ${interest_rate}
+  Month purchased | ${month_name}
+  Amount financed | ${currency(loan)}
+  Interest rate | ${"{0:.4%}".format(float(interest_rate))}
+  Monthly principal & interest payment: | ${currency(payment)}
 
   &nbsp; | &nbsp;
   -------|------:
-  Value | ${value}
-  Remaining loan | ${loan_balance}
-  Cost of sale factor: ${cost_of_sale_factor}
-  Cost of sale | ${cost_of_sale}
-  Value of equity | {$equity_value}
-
+  Value | ${currency(pvalue)}
+  Remaining loan | ${currency(loan_balance)}
+  Cost of sale factor | ${"{0:.4%}".format(float(cost_of_sale_factor))}
+  Cost of sale | ${currency(cost_of_sale)}
+  Value of equity | ${currency(equity_value)}
+  
+  <small>Produced on ${datetime.now()} by Discovery.Bot</small>
+  
+  <small>Copyright &copy; 2020 by Thomas J. Daley, J.D. All Rights Reserved.</small>
 mandatory: True
-attachment:
-  name: Estimate of Value of Real Property
-  filename: estimate_of_value_of_real_property
-  docx template file: docassemble.us_tx_family:data/templates/TX-005.020-House_Equity_Estimator.docx
-  valid formats:
-    - pdf
-    - docx
 buttons:
   - Exit: exit
     url: /list
