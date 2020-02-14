@@ -145,14 +145,18 @@ class FredUtil(object):
             (Decimal): Average mortgage interest rate for the period, or None
             if not found.
         """
-        if duration not in [5, 15, 30]:
-            raise ValueError("duration must be one of 5, 15, or 30")
+        i_year = int(year)
+        i_month = int(month)
+        i_duration = int(duration)
 
-        if month < 0 or month > 12:
+        if i_duration not in [5, 15, 30]:
+            raise ValueError(f"duration must be one of 5, 15, or 30, not '{duration}''")
+
+        if i_month < 0 or month > 12:
             raise ValueError(
-                "month must be in the range 1-12 (inclusive) or omitted")
+                "month must be in the range 1-12 (inclusive) or omitted, not '{month}'")
 
-        if month == 0:
+        if i_month == 0:
             observation_start = f"{year}-01-01"
             observation_end = f"{year}-12-31"
             frequency = "a"  # Annual
@@ -160,8 +164,8 @@ class FredUtil(object):
             # Figure out last day of the month, accounting for leap-years
             # (during my lifetime)
             last_day = [31, 28, 31, 30, 31, 30,
-                        31, 31, 30, 31, 30, 31][month - 1]
-            if year % 4 == 0 and month == 2:
+                        31, 31, 30, 31, 30, 31][i_month - 1]
+            if i_year % 4 == 0 and i_month == 2:
                 last_day = 29
 
             # FRED requires zero-padded values, e.g. "02" not "2"
