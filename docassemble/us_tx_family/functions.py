@@ -91,7 +91,8 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
     payment = loan_payment(p, term, interest_rate)
     p_d = Decimal(p)
     term_d = Decimal(term)
-    monthly_rate = Decimal(interest_rate / 12)
+    rate_d = Decimal(interest_rate)
+    monthly_rate = Decimal(rate_d / 12)
     start_date = datetime(year, month, 1)
     N = months_since_date(start_date)
 
@@ -125,7 +126,8 @@ def loan_payment(p: int, term: int, interest_rate: Decimal):
     """
     p_d = Decimal(p)
     term_d = Decimal(term)
-    monthly_rate = Decimal(interest_rate / 12)
+    rate_d = Decimal(interest_rate)
+    monthly_rate = Decimal(rate_d / 12)
     payment = Decimal(round(((monthly_rate * p_d) / (1-((1+(monthly_rate)) ** (-term_d * 12)))), 2))
     return payment
 
