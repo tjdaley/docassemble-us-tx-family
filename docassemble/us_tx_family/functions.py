@@ -105,7 +105,8 @@ def last_30_years() -> int:
     values for the last 31 years.
     """
     this_year = datetime.now().year
-    return [year for year in range(this_year-31, this_year+1)]
+    return [str(year) for year in range(this_year-31, this_year+1)]
+
 
 def loan_payment(p: int, term: int, interest_rate: Decimal):
     """
