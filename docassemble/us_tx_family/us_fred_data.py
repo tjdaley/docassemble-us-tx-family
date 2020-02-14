@@ -152,7 +152,7 @@ class FredUtil(object):
         if i_duration not in [5, 15, 30]:
             raise ValueError(f"duration must be one of 5, 15, or 30, not '{duration}''")
 
-        if i_month < 0 or month > 12:
+        if i_month < 0 or i_month > 12:
             raise ValueError(
                 "month must be in the range 1-12 (inclusive) or omitted, not '{month}'")
 
