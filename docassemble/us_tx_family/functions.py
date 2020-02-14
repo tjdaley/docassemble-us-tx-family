@@ -30,6 +30,7 @@ def avg_us_mortgage_rate(year: int, month: int, term_in_years: int = 30) -> Deci
     """
     futil = FredUtil()
     rate = futil.average_fixed_mortgage(year, month, term_in_years)
+    logmessage(f"@@@@@@@@@@@@@@@@@@@@@ Rate '{rate}'")
     return rate
 
 
