@@ -99,6 +99,14 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
     return remaining
 
 
+def last_30_years() -> int:
+    """
+    Return a list of the last 30 years. Will actually return
+    values for the last 31 years.
+    """
+    this_year = datetime.now().year
+    return [year for year in range(this_year-31, this_year+1)]
+
 def loan_payment(p: int, term: int, interest_rate: Decimal):
     """
     Compute monthly principal and interest payment on a fixed rate loan.
