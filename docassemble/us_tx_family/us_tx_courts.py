@@ -8,9 +8,19 @@ from lxml import html
 import re
 import requests
 import json
-from docassemble.base.util import DARedis
-from .ml_stripper import MLStripper
-from .local_config import local_config
+
+# We can get import errors in the test environment when we're doing very
+# simple unit tests in an environment where the entire DocAssemble package
+# has not been installed.
+try:
+    from docassemble.base.util import DARedis
+    from docassemble.base.logger import logmessage
+except ModuleNotFoundError:
+    def logmessage(message: str):
+        print(message)
+
+from ml_stripper import MLStripper
+from local_config import local_config
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
 VERSION = 'B'
@@ -57,7 +67,7 @@ class UsTxCourts(object):
         Args:
             court_number (str): Court number to retrieve, e.g. "1", "416", etc.
         Returns:
-            (str): Fields for this court or None if not found.
+            (dict): Fields for this court or None if not found.
         """
         court = str(court_number).upper()
         if court in self.courts:
@@ -78,7 +88,7 @@ class UsTxCourts(object):
         if county_idx in self.courts_by_county:
             if not show_jurisdiction:
                 return self.courts_by_county[county_idx]
-            return [(court, "{} - {}".format(court, self.courts[court]['focus']))
+            return [(court, "{} - {}".format(ordinal(court), self.courts[court]['focus']).title())
                     for court in self.courts_by_county[county_idx]]
         return None
 
@@ -92,7 +102,7 @@ class UsTxCourts(object):
         courts = self.html2dict(html)
         return courts
 
-    def html2dict(self, page_html: str):
+    def html2dict(self, page_html: str) -> dict:
         """
         Convert the html we retrieve from *URL_DISTRICT* to a dict.
 
@@ -139,18 +149,33 @@ class UsTxCourts(object):
 
     def read(self) -> dict:
         """
-        Read the list of counties from file storage.
+        Read the list of counties from local storage.
         """
-        the_redis = DARedis()
-        result = the_redis.get_data(STORE)
+        result = None
+        try:
+            the_redis = DARedis()
+            result = the_redis.get_data(STORE)
+        except Exception as e:
+            logmessage(f"Unable to read cached list of courts: {str(e)}")
         return result
 
-    def save(self, courts, courts_by_county):
+    def save(self, courts: dict, courts_by_county: dict) -> bool:
         """
-        Persist the list of counties to file storage.
+        Persist the list of courts to local storage.
+
+        Args:
+            courts (dict): Dict of courts indexed by court id
+            courts_by_county (dict): Dict where index is County and value is list of courts
+        Returns:
+            (bool): True if successful, otherwise False
         """
-        the_redis = DARedis()
-        the_redis.set_data(STORE, cache_record(courts, courts_by_county))
+        try:
+            the_redis = DARedis()
+            the_redis.set_data(STORE, cache_record(courts, courts_by_county))
+            return True
+        except Exception as e:
+            logmessage(f"Unable to cache list of courts: {str(e)}")
+        return False
 
     def county_list(self, courts: dict) -> dict:
         """
@@ -183,14 +208,26 @@ def cache_record(courts, courts_by_county):
 def ordinal(num: int) -> str:
     """
     Given an integer, return an ordinal, e.g. 1st, 2nd, 3rd, 4th, 5th, etc.
+
+    Args:
+        num (int): The number to convert to an ordinal
+    Returns:
+        (str): The ordinal of the *num* argument value.
     """
+    try:
+        court_num = int(num)
+    except TypeError:
+        return num
+
+    # If the court number is at least two digits and ends in 11, 12, or 13,
+    # the ordinal uses 'th'
     if int(('0'+str(num))[-2:]) in [11, 12, 13]:
         return str(num) + 'th'
 
+    # All other ordinals are determined by the last digit of the number
+    # which is used as an index into the suffixes[] list.
     suffixes = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
-    s = str(num)[-1]
-    d = int(s)
-    return str(num) + suffixes[d]
+    return str(num) + suffixes[court_num % 10]
 
 
 def find_court(court_number: int, text: str) -> str:
@@ -236,10 +273,23 @@ def parse_court_text(court_number: int, text: str) -> dict:
 
 
 def max_court_number():
+    """
+    Returns the maximum court number we will search for.
+    """
     return local_config('max court number', MAX_COURT_NUMBER)
 
 
 def court_counties(text: str) -> list:
+    """
+    Return a list of county names from the text of the statute.
+    NOTE: This is highly dependent upon the writing style of the
+    Texas Government Code, which, to date, is fairly consistent.
+
+    Args:
+        text (str): Text of statute to parse.
+    Returns:
+        (list): List of counties mentioned in the statute
+    """
     search = 'Judicial District is composed of '
     start_pos = text.find(search) + len(search)
     end_pos = text.find('.', start_pos+1)
@@ -256,6 +306,14 @@ def court_counties(text: str) -> list:
 
 
 def extract_courts(s: str) -> list:
+    """
+    Extract a list of court numbers listed in the statute's text.
+
+    Args:
+        s (str): The text of the statute that lists the court numbers.
+    Returns:
+        (list): A list court numbers, all cleaned up.
+    """
     my_s = re.sub(r'[^0-9\s]', '', s)
     my_s = re.sub(r'\s{2,}', ' ', my_s)
     courts = my_s.strip().split(' ')
@@ -271,6 +329,9 @@ def court_jurisdictions(text: str) -> list:
 
 
 def court_year(text: str) -> str:
+    """
+    TODO: But why?
+    """
     return ''
 
 
@@ -289,3 +350,9 @@ def refresh_key() -> str:
     today = date.today()
     version = local_config('court list version', VERSION)
     return '{}-{}-{}'.format(today.year, today.month, version)
+
+
+if __name__ == '__main__':
+    courtdb = UsTxCourts()
+    courts = courtdb.get_courts('COLLIN')
+    print(courts)
