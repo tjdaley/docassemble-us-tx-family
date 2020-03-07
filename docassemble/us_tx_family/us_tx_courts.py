@@ -19,8 +19,8 @@ except ModuleNotFoundError:
     def logmessage(message: str):
         print(message)
 
-from ml_stripper import MLStripper
-from local_config import local_config
+from .ml_stripper import MLStripper
+from .local_config import local_config
 
 # Change *VERSION* to force the cached *STORE* file to be refreshed.
 VERSION = 'B'
