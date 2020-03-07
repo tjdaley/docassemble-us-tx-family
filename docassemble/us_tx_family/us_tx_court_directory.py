@@ -60,8 +60,6 @@ class UsTxCourtDirectory(object):
         """
         court_idx = court_index(court_number)
         if court_idx in self.courts:
-            if DEV_MODE:
-                return self.courts[court_idx]
             return self.dalist_of_individuals(self.courts[court_idx])
         return None
 
