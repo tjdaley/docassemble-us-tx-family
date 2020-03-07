@@ -16,6 +16,7 @@ fields:
   - Attorney: x.attorney
     datatype: object
     choices: case.attorney
+    required: False
 ---
 generic object: RepresentedParty
 section: case
