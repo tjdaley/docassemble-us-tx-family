@@ -13,6 +13,9 @@ fields:
     required: False
     code: |
       name_suffix()
+  - Email: x.email
+    datatype: email
+    required: False
   - Attorney: x.attorney
     datatype: object
     choices: case.attorney
