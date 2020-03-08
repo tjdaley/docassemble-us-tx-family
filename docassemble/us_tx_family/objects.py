@@ -147,12 +147,12 @@ class RepresentedParty(Individual):
         return super().init(*pargs, **kwargs)
 
     def service_name(self):
-        if getattr(self, 'attorney', None) is not None:
+        if getattr(self.attorney, 'bar_number', None) is not None:
             return self.attorney.name
         return f"{self.name}, pro se"
 
     def service_method(self):
-        if getattr(self, 'attorney', None) is not None:
+        if getattr(self.attorney, 'bar_number', None) is not None:
             return f"Electronic service to {self.attorney.email}"
         if getattr(self, 'email', None) is not None:
             return f"Electronic service to {self.email}"
