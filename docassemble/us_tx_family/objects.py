@@ -148,7 +148,7 @@ class RepresentedParty(Individual):
 
     def service_name(self):
         if getattr(self, 'attorney', None) is not None:
-            return self.attorney.name()
+            return self.attorney.name
         return f"{self.name}, pro se"
 
     def service_method(self):
