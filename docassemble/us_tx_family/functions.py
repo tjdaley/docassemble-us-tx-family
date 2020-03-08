@@ -65,8 +65,9 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
 
     From: https://en.wikipedia.org/wiki/Mortgage_calculator#Monthly_payment_formula
 
-    TODO: This formula is off by a few pennies per month, which makes the final payment
-          appear to create a very slightly negative loan balance.
+    NOTE: This implementation can be off by a few pennies per month,
+          which makes the final payment appear to create a very slightly
+          negative loan balance.
 
     Args:
       p (int): Original principal value of the loan
@@ -87,14 +88,19 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
     N = months_since_date(start_date)
 
     remaining = (1+monthly_rate)**N*p_d - (((1+monthly_rate)**N-1)/monthly_rate)*payment
+    # prevent negative responses
+    remaining = max(remaining, 0.00)
     remaining = Decimal(round(remaining, 2))
     return remaining
 
 
-def last_30_years() -> int:
+def last_30_years() -> list:
     """
     Return a list of the last 30 years. Will actually return
     values for the last 31 years.
+
+    Returns:
+        (list): List strings representing the last 31 years.
     """
     this_year = datetime.now().year
     return [str(year) for year in range(this_year-31, this_year+1)]
@@ -112,7 +118,7 @@ def loan_payment(p: int, term: int, interest_rate: Decimal):
       interest_rate (Decimal): Annual interest rate
 
     Returns:
-      Monthly principal and interest payment
+      (Decimal): Monthly principal and interest payment
     """
     p_d = Decimal(p)
     term_d = Decimal(term)
