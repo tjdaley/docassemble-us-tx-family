@@ -5,7 +5,6 @@ Copyright (c) 2019 by Thomas J. Daley, J.D. All Rights Reserved.
 """
 from datetime import datetime
 from decimal import Decimal
-from flask_mail import email_dispatched
 import json
 import os
 from .us_fred_data import FredUtil
@@ -127,14 +126,6 @@ def loan_payment(p: int, term: int, interest_rate: Decimal):
     monthly_rate = Decimal(rate_d / 12)
     payment = Decimal(round(((monthly_rate * p_d) / (1-((1+(monthly_rate)) ** (-term_d * 12)))), 2))
     return payment
-
-
-def log_email(message, app):
-    logmessage(f"Sending email with subject '{message.subject}'")
-
-
-def log_emails():
-    email_dispatched.connect(log_email)
 
 
 def months_since_date(start_date) -> int:
