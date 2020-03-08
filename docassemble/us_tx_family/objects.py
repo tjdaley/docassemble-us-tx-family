@@ -146,6 +146,18 @@ class RepresentedParty(Individual):
             self.initializeAttribute('attorney', Attorney)
         return super().init(*pargs, **kwargs)
 
+    def service_name(self):
+        if getattr(self, 'attorney', None) is not None:
+            return self.attorney.name()
+        return f"{self.name}, pro se"
+
+    def service_method(self):
+        if getattr(self, 'attorney', None) is not None:
+            return f"Electronic service to {self.attorney.email}"
+        if getattr(self, 'email', None) is not None:
+            return f"Electronic service to {self.email}"
+        return f"USPS Certified mail to {self.address}, Item #_______________"
+
 
 class RepresentedPartyList(DAList):
     def init(self, *pargs, **kwargs):
