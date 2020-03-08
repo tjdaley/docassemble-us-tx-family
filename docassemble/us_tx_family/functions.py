@@ -20,7 +20,6 @@ from docassemble.base.logger import logmessage
 from docassemble.base.util import ChildList, DAList, DARedis
 from .objects import Attorney, AttorneyList, RepresentedPartyList
 
-TRACE = True
 ME_KEY = '{}:me'
 
 
@@ -30,22 +29,17 @@ def avg_us_mortgage_rate(year: int, month: int, term_in_years: int = 30) -> Deci
     """
     futil = FredUtil()
     rate = futil.average_fixed_mortgage(year, month, term_in_years)
-    logmessage(f"@@@@@@@@@@@@@@@@@@@@@ Rate '{rate}'")
     return rate
 
 
 def counties():
     # Run us_tx_counties.py to get a new list if Texas ever
     # adds/removes counties.
-    if TRACE:
-        logmessage("counties(): Started")
     county_db = UsTxCounties()
     return county_db.get_counties()
 
 
 def courts(county: str, not_filed=True):
-    if TRACE:
-        logmessage("courts(): Started")
     court_db = UsTxCourts()
     court_list = court_db.get_courts(county)
     if not_filed:
@@ -54,16 +48,12 @@ def courts(county: str, not_filed=True):
 
 
 def court_staff(court: str):
-    if TRACE:
-        logmessage("court_staff(): Started")
     directory = UsTxCourtDirectory()
     staff_list = directory.get_court(court)
     return staff_list
 
 
 def clerk_staff(county: str):
-    if TRACE:
-        logmessage("clerk_staff(): Started")
     directory = UsTxCourtDirectory()
     staff_list = directory.get_clerk(county)
     return staff_list
@@ -162,8 +152,6 @@ def me():
 
 
 def my_cases(allow_add: bool = True):
-    if TRACE:
-        logmessage("my_cases(): Started")
     case_db = UsCaseList(__user_id())
     cases = case_db.get_cases()
     if allow_add:
@@ -204,23 +192,17 @@ def initialize_case(case):
 
 
 def get_case(case_key: str):
-    if TRACE:
-        logmessage("get_case(): Started")
     case_db = UsCaseList(__user_id())
     case = case_db.get_case(case_key)
     return case or '*NONE*'
 
 
 def del_case(case_key: str):
-    if TRACE:
-        logmessage("del_case(): Started")
     case_db = UsCaseList(__user_id())
     case_db.del_case(case_key)
 
 
 def del_cases(confirm: bool = False):
-    if TRACE:
-        logmessage("del_cases(): Started")
     if not isinstance(confirm, bool) or confirm is not True:
         # pylint: disable=E501
         logmessage("del_cases(): set confirm=True to delete all cases.")
@@ -230,15 +212,11 @@ def del_cases(confirm: bool = False):
 
 
 def save_case(case):
-    if TRACE:
-        logmessage("save_case(): Started")
     case_db = UsCaseList(__user_id())
     return case_db.save(case)
 
 
 def save_me(about_me):
-    if TRACE:
-        logmessage("save_me(): Started")
     the_redis = DARedis()
     key = ME_KEY.format(__user_id())
     the_redis.set_data(key, about_me)
@@ -266,8 +244,6 @@ def set_client_role(case):
 
 
 def us_states():
-    if TRACE:
-        logmessage("retrieving us states")
     return ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
             "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
             "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
