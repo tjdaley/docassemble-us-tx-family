@@ -298,22 +298,14 @@ subquestion: |
   % for p in case.petitioner:
   ${p.name}<br/>
   Represented by:<br/>
-  % if p.attorney:
-    ${p.attorney}<br/>
-  % else:
-    (pro se)<br/>
-  % endif
+  p.service_name() by p.service_address()
   % endfor
 
   **${title_case(case.respondent.as_noun())}**
   % for p in case.respondent:
   ${p.name}<br/>
   Represented by:<br/>
-  % if p.attorney:
-    ${p.attorney}<br/>
-  % else:
-    (pro se)<br/>
-  % endif
+  p.service_name() by p.service_address()
   % endfor
   
   % if case.intervenor.number() > 0:
@@ -321,11 +313,7 @@ subquestion: |
   % for p in case.intervenor:
   ${p.name}<br/>
   Represented by:<br/>
-  % if p.attorney:
-    ${p.attorney}<br/>
-  % else:
-    (pro se)<br/>
-  % endif
+  p.service_name() by p.service_address()
   % endfor
   % endif
 
