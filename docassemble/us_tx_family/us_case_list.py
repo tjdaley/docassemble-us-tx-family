@@ -14,7 +14,7 @@ from docassemble.base.util import DARedis, Individual, IndividualName,\
     Address
 from docassemble.base.logger import logmessage
 
-STORE = '{}:us_case_list'
+CASES_KEY_TEMPLATE = '{}:us_case_list'
 
 
 class UsCaseList(object):
@@ -27,16 +27,27 @@ class UsCaseList(object):
         """
         self.cases = {}
         self.user_id = user_id
-        self.store = STORE.format(self.user_id)
+        self.user_cases_key = CASES_KEY_TEMPLATE.format(self.user_id)
         self.load()
 
     def load(self):
         """
-        Load cases from a local store.
+        Load cases from persistant storage.
         """
-        self.cases = self.read() or {}
+        the_redis = DARedis()
+        cases = the_redis.get_data(self.user_cases_key) or {}
+        self.cases = cases
 
-    def get_cases(self):
+    def get_cases(self) -> list:
+        """
+        Return a list of cases sorted by the text that appears in
+        a dropdown.
+
+        Args:
+            None
+        Returns:
+            (list): Of Cases
+        """
         case_list = [(key, selection_text(case))
                      for key, case in self.cases.items()
                      if hasattr(case, 'case_id')]
@@ -44,6 +55,14 @@ class UsCaseList(object):
         return case_list
 
     def get_case(self, key: str):
+        """
+        Return a single case based on the case key provided.
+
+        Args:
+            key (str): Case.key value
+        Returns:
+            (Case): Case instance referred to by *key*
+        """
         case = self.cases.get(key)
         if not hasattr(case, 'case_id'):
             message = "get_case(): Case key {} does not have a case_id"
@@ -63,26 +82,27 @@ class UsCaseList(object):
         logmessage(f"del_cases(): " +
                    "Deleting all cases for user = {self.user_id}")
         the_redis = DARedis()
-        the_redis.set_data(self.store, None)
+        the_redis.set_data(self.user_cases_key, None)
         return
 
     def save(self, case) -> bool:
         """
-        Save a case.
-        """
-        key = case_key(case)
-        case.key = key
-        self.cases[key] = case
-        the_redis = DARedis()
-        the_redis.set_data(self.store, self.cases)
-        return True
+        Save the revised case list. If a case is provided, then add it to the
+        case list before saving. If no case is provided, then save the case list
+        without doing anything else. (This is probably called by a delete operation.)
 
-    def read(self) -> dict:
+        Args:
+            case (Case): Case to add to list or None
+        Returns:
+            (bool): True is successful save, otherwise raises exception.
         """
-        Read the list of cases for this user from cross-session storage.
-        """
+        if case:
+            key = case_key(case)
+            case.key = key
+            self.cases[key] = case
         the_redis = DARedis()
-        return the_redis.get_data(self.store)
+        the_redis.set_data(self.user_cases_key, self.cases)
+        return True
 
 
 def case_key(case):
