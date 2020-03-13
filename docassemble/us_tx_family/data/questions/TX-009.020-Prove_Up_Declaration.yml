@@ -89,7 +89,7 @@ question: Where is ${case.client[0]} incarcerated?
 subquestion: |
   If ${case.client[0].name.first} is incarcerated at a Texas Department of
   Criminal Justice (TDCJ) unit, select the unit from the dropdown. Otherwise,
-  enter the details for the name and locate of the facility where 
+  enter the details for the name and location of the facility where 
   ${case.client[0].name.first} is being held.
 fields:
   - TDCJ Unit: case.client[0].corrections_unit
