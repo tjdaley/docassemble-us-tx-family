@@ -7,6 +7,7 @@ from decimal import Decimal
 from docassemble.base.logger import logmessage
 from docassemble.base.util import Address, DAList, DAObject, Individual, \
     PeriodicValue, Person, word
+from docassemble.base.legal import PartyList
 
 __all__ = ['Attorney', 'AttorneyList',
            'Income', 'IncomeList',
@@ -159,7 +160,7 @@ class RepresentedParty(Individual):
         return f"USPS Certified mail to {self.address}, Item #_______________"
 
 
-class RepresentedPartyList(DAList):
+class RepresentedPartyList(PartyList):
     def init(self, *pargs, **kwargs):
         self.object_type = RepresentedParty
         return super().init(*pargs, **kwargs)
