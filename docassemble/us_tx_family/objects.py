@@ -116,7 +116,7 @@ class Job(DAObject):
         return self.summary()
 
     def __str__(self):
-        return self.__unicode__();
+        return self.__unicode__()
 
 
 class JobList(DAList):
