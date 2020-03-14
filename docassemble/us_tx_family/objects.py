@@ -108,9 +108,9 @@ class Job(DAObject):
     def summary(self):
         return self.employer or "**NONE**"
 
-    @property
-    def complete(self):
-        return self.employer is not None
+    # @property
+    # def complete(self):
+    #    return self.employer is not None
 
     def period_name(self):
         period_names = {
