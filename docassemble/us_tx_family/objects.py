@@ -112,6 +112,17 @@ class Job(DAObject):
     def complete(self):
         return self.employer is not None
 
+    def period_name(self):
+        period_names = {
+            '1': 'annually',
+            '12': 'monthly',
+            '24': 'semi-monthly',
+            '26': 'bi-weekly',
+            '52': 'weekly',
+        }
+        default_value = f"{str(self.income.period)} times per year"
+        return period_names.get(str(self.income.period), default_value)
+
     def __unicode__(self):
         return self.summary()
 
