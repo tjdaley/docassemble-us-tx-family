@@ -8,21 +8,16 @@ metadata:
 modules:
   - .objects
 ---
-objects:
-  - jobs: JobList
-  - incomes: IncomeList
-  - obligor: Individual
----
 section: employment
 decoration: hand-holding-usd
 question: |
-  Does ${case.obligor} have any income from employment, even self-employment?
+  Does ${doc.obligor} have any income from employment, even self-employment?
 yesno: jobs.there_are_any
 ---
 section: other_income
 decoration: hand-holding-usd
 question: |
-  Does ${case.obligor} have any other sources of income?
+  Does ${doc.obligor} have any other sources of income?
 yesno: incomes.there_are_any
 ---
 generic object: JobList
@@ -120,10 +115,10 @@ mandatory: False
 decoration: hand-holding-usd
 question: You've completed the interview!!
 subquestion: |
-  JOBS: ${jobs}
+  JOBS: ${doc.obligor.job}
 
-  Total Income From Employment per Month: $ ${'{:,.2f}'.format(jobs.total(12))}
+  Total Income From Employment per Month: $ ${'{:,.2f}'.format(doc.obligor.job.total(12))}
 
-  Total Income From Employment per Week: $ ${'{:,.2f}'.format(jobs.total(52))}
+  Total Income From Employment per Week: $ ${'{:,.2f}'.format(doc.obligor.job.total(52))}
 
-  INCOME: ${incomes}
+  INCOME: ${doc.obligor.income_sources}
