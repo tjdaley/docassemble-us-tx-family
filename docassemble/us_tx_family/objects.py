@@ -108,9 +108,9 @@ class Job(DAObject):
     def summary(self):
         return self.employer or "**NONE**"
 
-    @property
-    def job_complete(self):
-        self.employer
+    # @property
+    # def job_complete(self):
+    #    self.employer
 
     def period_name(self):
         period_names = {
@@ -133,7 +133,7 @@ class Job(DAObject):
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
-        self.complete_attribute = 'job_complete'
+        # self.complete_attribute = 'job_complete'
         return super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
