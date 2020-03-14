@@ -133,7 +133,7 @@ class Job(DAObject):
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
-        self.complete_attribute = 'complete'
+        self.complete_attribute = None
         return super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
