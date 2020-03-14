@@ -112,6 +112,9 @@ class Job(DAObject):
     def __unicode__(self):
         return self.summary()
 
+    def __str__(self):
+        return self.__unicode__();
+
 
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
