@@ -103,13 +103,14 @@ class Job(DAObject):
             self.initializeAttribute('income', MyPeriodicValue)
         if 'union_dues' not in kwargs:
             self.initializeAttribute('union_dues', MyPeriodicValue)
+        self.complete = 'employer' in kwargs
         return super().init(*pargs, **kwargs)
 
     def summary(self):
         return self.employer or "**NONE**"
 
     # @property
-    # def job_complete(self):
+    # def complete(self):
     #    self.employer
 
     def period_name(self):
@@ -133,7 +134,7 @@ class Job(DAObject):
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
-        # self.complete_attribute = 'job_complete'
+        self.complete_attribute = 'complete'
         return super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
