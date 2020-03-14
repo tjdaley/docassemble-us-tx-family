@@ -1,4 +1,11 @@
 ---
+section: case
+decoration: user-cog
+question: |
+  Would you like to add another ${x.as_noun()}?
+subquestion: So far you have entered ${ x }.
+yesno: x.there_is_another
+---
 generic object: RepresentedParty
 question: |
   What is ${ x.object_possessive('name') }?
