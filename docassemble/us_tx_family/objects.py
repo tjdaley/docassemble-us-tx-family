@@ -65,6 +65,9 @@ class Income(DAObject):
     def __unicode__(self):
         return self.summary()
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class IncomeList(DAList):
     def init(self, *pargs, **kwargs):
