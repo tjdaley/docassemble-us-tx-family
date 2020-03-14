@@ -95,7 +95,7 @@ class IncomeList(DAList):
 class Job(DAObject):
     """
     A Job is an income stream through employment and is subject to
-    payroll taxes and possibley union dues. It is also subject to
+    payroll taxes and possibly union dues. It is also subject to
     income taxes.
     """
     def init(self, *pargs, **kwargs):
@@ -133,7 +133,7 @@ class Job(DAObject):
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
         self.object_type = Job
-        self.complete_attribute = 'complete'
+        # self.complete_attribute = 'complete'
         return super().init(*pargs, **kwargs)
 
     def total(self, desired_period: int = 12):
