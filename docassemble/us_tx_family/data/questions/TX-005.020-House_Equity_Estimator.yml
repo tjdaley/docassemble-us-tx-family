@@ -26,7 +26,6 @@ objects:
   - address: Address
 ---
 include:
-  - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
 ---
 mandatory: True

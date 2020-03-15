@@ -24,7 +24,6 @@ objects:
   - case: Case
 ---
 include:
-  - basic-questions.yml
   - docassemble.us_tx_family:attorney.yml
   - docassemble.us_tx_family:terms.yml
   - docassemble.us_tx_family:all_docs.yml
