@@ -183,6 +183,18 @@ class RepresentedPartyList(PartyList):
         self.object_type = RepresentedParty
         return super().init(*pargs, **kwargs)
 
+    def service_name(self):
+        if self.attorney.bar_number != '':
+            return self.attorney.name
+        return f"{self.name}, pro se"
+
+    def service_method(self):
+        if self.attorney.bar_number != '':
+            return f"Electronic service to {self.attorney.email}"
+        if getattr(self, 'email', None) is not None:
+            return f"Electronic service to {self.email}"
+        return f"USPS Certified mail to {self.address}, Item #_______________"
+
 
 class MyPeriodicValue(PeriodicValue):
     def init(self, *pargs, **kwargs):
