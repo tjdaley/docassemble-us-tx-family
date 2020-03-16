@@ -181,9 +181,9 @@ class RepresentedParty(Individual):
 class RepresentedPartyList(PartyList):
     def init(self, *pargs, **kwargs):
         # self.object_type = RepresentedParty
-        myself = super().init(*pargs, **kwargs)
-        myself.object_type = RepresentedParty
-        return myself
+        super().init(*pargs, **kwargs)
+        self.object_type = RepresentedParty
+        return self
 
     def service_name(self):
         if self.attorney.bar_number != '':
