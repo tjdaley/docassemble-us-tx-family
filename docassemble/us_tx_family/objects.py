@@ -34,8 +34,9 @@ class Attorney(Individual):
 
 class AttorneyList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Attorney
-        return super().init(*pargs, **kwargs)
+        return self
 
     def contains(self, attorney):
         for atty in self.elements:
@@ -48,7 +49,10 @@ class Income(DAObject):
     """
     An Income is an income stream other than through employment and
     is NOT subject to payroll taxes nor union dues. It is might be
-    subject to income taxes.
+    subject to income taxes. There are specific statutes or case law
+    that establish whether a particular source of non-employment income
+    is to be included in net resources. For that reason, for now
+    an *Income* is not just a *Job* with a taxable flag set or cleared.
     """
     def init(self, *pargs, **kwargs):
         if 'income' not in kwargs:
@@ -71,9 +75,10 @@ class Income(DAObject):
 
 class IncomeList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Income
         self.complete_attribute = 'complete'
-        return super().init(*pargs, **kwargs)
+        return self
 
     def total(self, desired_period: int = 12):
         """
@@ -133,9 +138,10 @@ class Job(DAObject):
 
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Job
         self.complete_attribute = 'complete'
-        return super().init(*pargs, **kwargs)
+        return self
 
     def total(self, desired_period: int = 12):
         """
@@ -180,7 +186,6 @@ class RepresentedParty(Individual):
 
 class RepresentedPartyList(PartyList):
     def init(self, *pargs, **kwargs):
-        # self.object_type = RepresentedParty
         super().init(*pargs, **kwargs)
         self.object_type = RepresentedParty
         return self
