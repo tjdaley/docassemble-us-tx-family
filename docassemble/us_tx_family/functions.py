@@ -69,6 +69,8 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
           which makes the final payment appear to create a very slightly
           negative loan balance.
 
+    TODO: Eliminate "term" argument...it's not needed.
+
     Args:
       p (int): Original principal value of the loan
       year (int): Year first payment was due
@@ -81,7 +83,6 @@ def estimate_loan_balance(p: int, year: int, month: int, term: int, interest_rat
     """
     payment = loan_payment(p, term, interest_rate)
     p_d = Decimal(p)
-    term_d = Decimal(term)
     rate_d = Decimal(interest_rate)
     monthly_rate = Decimal(rate_d / 12)
     start_date = datetime(int(year), int(month), 1)
@@ -210,7 +211,6 @@ def del_case(case_key: str):
 
 def del_cases(confirm: bool = False):
     if not isinstance(confirm, bool) or confirm is not True:
-        # pylint: disable=E501
         logmessage("del_cases(): set confirm=True to delete all cases.")
         return
     case_db = UsCaseList(__user_id())
