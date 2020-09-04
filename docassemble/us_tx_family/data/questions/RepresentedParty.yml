@@ -1,4 +1,14 @@
 ---
+generic object: RepresentedPartyList
+question: |
+  Are there any ${x.as_noun()}?
+yesno: x.there_are_any
+---
+generic object: RepresentedPartyList
+question: |
+  So far you have mentioned ${x}. Is there another ${x.as_noun()}?
+yesno: x.there_is_another
+---
 generic object: RepresentedParty
 question: |
   What is ${ x.object_possessive('name') }?

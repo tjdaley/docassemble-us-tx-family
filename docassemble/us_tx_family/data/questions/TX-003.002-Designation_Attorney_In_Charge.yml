@@ -23,7 +23,6 @@ modules:
   - docassemble.us_tx_family.objects
 ---
 include:
-  - basic-questions.yml
   - docassemble.us_tx_family:all_docs.yml
   - docassemble.us_tx_family:allow_add_case_false.yml
   - docassemble.us_tx_family:select_case.yml

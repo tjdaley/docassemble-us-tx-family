@@ -8,24 +8,21 @@ metadata:
 modules:
   - .objects
 ---
-objects:
-  - jobs: JobList
-  - incomes: IncomeList
-  - obligor: Individual
----
 section: employment
 decoration: hand-holding-usd
+generic object: JobList
 question: |
-  Does ${case.obligor} have any income from employment, even self-employment?
-yesno: jobs.there_are_any
+  Does ${doc.obligor} have any income from employment, even self-employment?
+yesno: x.there_are_any
 ---
 section: other_income
 decoration: hand-holding-usd
+generic object: IncomeList
 question: |
-  Does ${case.obligor} have any other sources of income?
-yesno: incomes.there_are_any
+  Does ${doc.obligor} have any other sources of income?
+yesno: x.there_are_any
 ---
-generic object: JobList
+generic object: Job
 section: employment
 decoration: hand-holding-usd
 question: |
@@ -64,13 +61,14 @@ fields:
 ---
 section: employment
 decoration: hand-holding-usd
+generic object: JobList
 question: |
   Would you like to add another job?
-subquestion: So far you have entered ${ jobs }.
-yesno: jobs.there_is_another
+subquestion: So far you have entered ${ x }.
+yesno: x.there_is_another
 ---
 section: other_income
-generic object: IncomeList
+generic object: Income
 question: |
   Describe the ${ ordinal(i) } source of additional income.
 fields:
@@ -111,19 +109,9 @@ fields:
 ---
 section: other_income
 decoration: hand-holding-usd
+generic object: IncomeList
 question: |
   Would you like to add another source of income?
 subquestion: So far you have entered ${ incomes }.
-yesno: incomes.there_is_another
+yesno: x.there_is_another
 ---
-mandatory: False
-decoration: hand-holding-usd
-question: You've completed the interview!!
-subquestion: |
-  JOBS: ${jobs}
-
-  Total Income From Employment per Month: $ ${'{:,.2f}'.format(jobs.total(12))}
-
-  Total Income From Employment per Week: $ ${'{:,.2f}'.format(jobs.total(52))}
-
-  INCOME: ${incomes}

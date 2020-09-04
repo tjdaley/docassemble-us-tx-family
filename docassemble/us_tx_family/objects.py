@@ -34,8 +34,9 @@ class Attorney(Individual):
 
 class AttorneyList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Attorney
-        return super().init(*pargs, **kwargs)
+        return self
 
     def contains(self, attorney):
         for atty in self.elements:
@@ -48,7 +49,10 @@ class Income(DAObject):
     """
     An Income is an income stream other than through employment and
     is NOT subject to payroll taxes nor union dues. It is might be
-    subject to income taxes.
+    subject to income taxes. There are specific statutes or case law
+    that establish whether a particular source of non-employment income
+    is to be included in net resources. For that reason, for now
+    an *Income* is not just a *Job* with a taxable flag set or cleared.
     """
     def init(self, *pargs, **kwargs):
         if 'income' not in kwargs:
@@ -65,12 +69,16 @@ class Income(DAObject):
     def __unicode__(self):
         return self.summary()
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class IncomeList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Income
         self.complete_attribute = 'complete'
-        return super().init(*pargs, **kwargs)
+        return self
 
     def total(self, desired_period: int = 12):
         """
@@ -92,7 +100,7 @@ class IncomeList(DAList):
 class Job(DAObject):
     """
     A Job is an income stream through employment and is subject to
-    payroll taxes and possibley union dues. It is also subject to
+    payroll taxes and possibly union dues. It is also subject to
     income taxes.
     """
     def init(self, *pargs, **kwargs):
@@ -100,24 +108,40 @@ class Job(DAObject):
             self.initializeAttribute('income', MyPeriodicValue)
         if 'union_dues' not in kwargs:
             self.initializeAttribute('union_dues', MyPeriodicValue)
+        self.complete = 'employer' in kwargs
         return super().init(*pargs, **kwargs)
 
     def summary(self):
         return self.employer or "**NONE**"
 
-    @property
-    def complete(self):
-        return self.employer is not None
+    # @property
+    # def complete(self):
+    #    self.employer
+
+    def period_name(self):
+        period_names = {
+            '1': 'annually',
+            '12': 'monthly',
+            '24': 'semi-monthly',
+            '26': 'bi-weekly',
+            '52': 'weekly',
+        }
+        default_value = f"{str(self.income.period)} times per year"
+        return period_names.get(str(self.income.period), default_value)
 
     def __unicode__(self):
         return self.summary()
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class JobList(DAList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = Job
         self.complete_attribute = 'complete'
-        return super().init(*pargs, **kwargs)
+        return self
 
     def total(self, desired_period: int = 12):
         """
@@ -162,8 +186,9 @@ class RepresentedParty(Individual):
 
 class RepresentedPartyList(PartyList):
     def init(self, *pargs, **kwargs):
+        super().init(*pargs, **kwargs)
         self.object_type = RepresentedParty
-        return super().init(*pargs, **kwargs)
+        return self
 
 
 class MyPeriodicValue(PeriodicValue):
